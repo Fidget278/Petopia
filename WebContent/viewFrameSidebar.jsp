@@ -18,7 +18,7 @@
 					<div class="firstSection-inner-profileInfo">
 						<div>
 						
-							<a href="#">김성중</a> <a href="${pageContext.request.contextPath}/managerIndex.do">관리자</a>
+							<a href="#">${sessionScope.user.nickname }</a> <a href="${pageContext.request.contextPath}/managerIndex.do">관리자</a>
 						</div>
 						<div class="span-right">
 							<div class="div-span-flex">
