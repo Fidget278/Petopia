@@ -27,12 +27,8 @@
 				<c:forEach var="daily" items="${requestScope.dailyList}"
 					varStatus="status">
 					<tr>
-						<td><c:set var="now" value="<%=new java.util.Date()%>" /> <c:set
-								var="sysYear">
-								<fmt:formatDate value="${now}" pattern="yyyy" />
-							</c:set></td>
-						<td>${daily.getDailyBoardCount }</td>
-						<td>${daily.getDailyVisitorsCount }</td>
+						<td>${daily.getDailyBoardCount() }</td>
+						<td>${daily.getDailyVisitorsCount() }</td>
 					</tr>
 				</c:forEach>
 			</tbody>

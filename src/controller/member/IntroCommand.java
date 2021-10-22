@@ -21,6 +21,8 @@ public class IntroCommand implements Command {
 		MemberVo memberProfile = MemberService.getInstance().retreiveMemberProfile(memberVo.getNo());
 
 		session.setAttribute("user", memberProfile);
+		
+		request.setAttribute("content", "/viewHomeContent");
 
 		return new ActionForward("/homeIndex.jsp", false);
 	}
