@@ -13,10 +13,15 @@ public class MemberService {
 
 		return memberService;
 	}
-	
+
 	public MemberVo login(String email, String password) throws Exception {
-		
+
 		System.out.println("memberService login");
 		return MemberDao.getInstance().selectMember(email, password);
+	}
+
+	public MemberVo retreiveMemberProfile(int member_no) throws Exception {
+		System.out.println("retreiveMemberProfile");
+		return MemberDao.getInstance().selectMemberProfile(member_no);
 	}
 }

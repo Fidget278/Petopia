@@ -21,17 +21,17 @@
 					<div class="firstSection-inner-profileInfo">
 						<div>
 						
-							<a href="#">김성중</a> <a href="${pageContext.request.contextPath}/managerIndex.do">관리자</a>
+							<a href="#">${sessionScope.user.nickname }</a> <a href="${pageContext.request.contextPath}/managerIndex.do">${sessionScope.user.grade }</a>
 						</div>
 						<div class="span-right">
 							<div class="div-span-flex">
-								<span class="span-block">방문횟수 : </span> <span>회</span>
+								<span class="span-block">방문횟수 : </span> <span>${sessionScope.user.visits } 회</span>
 							</div>
 							<div class="div-span-flex">
-								<span class="span-block">작성 글 : </span> <span>개</span>
+								<span class="span-block">작성 글 : </span> <span>${sessionScope.user.docs } 개</span>
 							</div>
 							<div class="div-span-flex">
-								<span class="span-block">작성 댓글 : </span> <span>개</span>
+								<span class="span-block">작성 댓글 : </span> <span>${sessionScope.user.comms } 개</span>
 							</div>
 
 						</div>
@@ -39,7 +39,7 @@
 				</div>
 				<div class="lastSection-inner">
 					<a href="#"> <span>비밀번호 변경</span>
-					</a> <a href="#"> <span>로그아웃</span>
+					</a> <a href="${pageContext.request.contextPath}/logout.do"> <span>로그아웃</span>
 					</a>
 				</div>
 			</section>
@@ -47,7 +47,7 @@
 		<article class="sidebar-btn">
 			<section>
 				<span>쪽지함</span>
-				<span onclick="location.href='${pageContext.request.contextPath}/StatisticsForm.do'">통계</span>
+				<span onclick="location.href='${pageContext.request.contextPath}/managerStatistics.do'">통계</span>
 			</section>
 			<section>
 				<span>카페 글쓰기</span> <span>전체 글 보기</span>

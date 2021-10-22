@@ -12,9 +12,12 @@ public class CommandFactory {
 	
 	private CommandFactory() {
 		map.put("/managerIndex.do", "controller.manager.ManagerCommand");
+		map.put("/managerStatistics.do", "controller.statistics.statisticsFormCommand");
+		
 		
 		map.put("/petopia.do", "controller.member.IntroCommand");
 		map.put("/login.do", "controller.member.LoginCommand");
+		map.put("/logout.do", "controller.member.LogOutCommand");
 		
 		// 게시글 목록 조회
 		map.put("/listArticle.do", "controller.article.ListArticleCommand");
