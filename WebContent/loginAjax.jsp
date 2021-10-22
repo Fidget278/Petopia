@@ -5,21 +5,19 @@
 
 
 
-<c:if test="${requestScope.isSuccess == 0}">
 {
 	"isSuccess" : "${requestScope.isSuccess}",
+
+<c:if test="${requestScope.isSuccess eq 1}">
+	 "url" : "${pageContext.request.contextPath}/petopia.do"
+</c:if>
+<c:if test="${requestScope.isSuccess ne 1}">
 	"failText" : "${requestScope.failText}"
-}
 </c:if>
 
-<c:if test="${requestScope.isSuccess == 1}">
-
-{
-	"isSuccess" : "${requestScope.isSuccess}",
-	"url" : "${pageContext.request.contextPath}/petopia.do"
 }
 
-</c:if> 
+
  
 
 

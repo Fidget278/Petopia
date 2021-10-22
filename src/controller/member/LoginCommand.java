@@ -1,5 +1,8 @@
 package controller.member;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,25 +22,26 @@ public class LoginCommand implements Command {
 		if(member == null) {
 			// 로그인 실패
 			System.out.println("로그인 실패");
-			request.setAttribute("failText", "아이디와 비밀번호를 확인해주세요.");
+			request.setAttribute("failText", "아이디 또는 비밀번호가 잘못 입력 되었습니다.");
 			request.setAttribute("isSuccess", 0);
-			
 		}
 		// 현재 날짜랑 비교
-//		else if(member.getBan().length() > 0 && member.getban() 오늘 날짜랑 비교) {
-//		}
-		// 탈퇴 여부
-//		else if(member.isMember()) {
-//			request.setAttribute("failText", "탈퇴한 회원입니다.");
-//			request.setAttribute("isSuccess", 0);
-//		}
+		else if(member.getBan() != null && member.getBan().length() > 0 && 
+				!(LocalDateTime.now().isAfter(LocalDateTime.parse(member.getBan(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))) ) {
+			request.setAttribute("failText", "활동 정지 당한 회원입니다.");
+			request.setAttribute("isSuccess", 2);
+		}
+		//탈퇴 여부
+		else if(member.isMember()) {
+			request.setAttribute("failText", "탈퇴한 회원입니다.");
+			request.setAttribute("isSuccess", 3);
+		}
 		else {
-			// 로그인 성공
-			System.out.println("로그인 성공");
 			request.setAttribute("isSuccess", 1);
 			
 			HttpSession session = request.getSession();
 			session.setAttribute("user", member);
+			session.setMaxInactiveInterval(60*60); // 세션 유지 시간 1시간으로 설정
 		}
 		
 		return new ActionForward("/loginAjax.jsp", false);
