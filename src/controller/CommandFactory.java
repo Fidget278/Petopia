@@ -18,6 +18,17 @@ public class CommandFactory {
 		map.put("/petopia.do", "controller.member.IntroCommand");
 		map.put("/login.do", "controller.member.LoginCommand");
 		map.put("/logout.do", "controller.member.LogOutCommand");
+		
+		// 게시글 목록 조회
+		map.put("/listArticle.do", "controller.article.ListArticleCommand");
+				
+		// 게시글 상세 조회
+		map.put("/detailArticle.do", "controller.article.DetailArticleCommand");
+		
+		// 게시글 작성 페이지로 이동
+		map.put("/writeArticleForm.do", "controller.article.WriteArticleFormCommand");
+		
+		map.put("/writeArticle.do", "controller.article.WriteArticleCommand");
 	}
 	
 	public static CommandFactory getInstance() {
@@ -29,6 +40,7 @@ public class CommandFactory {
 	
 	public Command createCommand(String commandURI) throws Exception {
 		
+		System.out.println("팩진입");
 		String commandClass = map.get(commandURI);
 		System.out.println("fac : " + commandURI);
 		if(commandClass == null)
