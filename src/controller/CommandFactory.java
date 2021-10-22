@@ -15,6 +15,7 @@ public class CommandFactory {
 		
 		map.put("/petopia.do", "controller.member.IntroCommand");
 		map.put("/login.do", "controller.member.LoginCommand");
+		map.put("/logout.do", "controller.member.LogOutCommand");
 	}
 	
 	public static CommandFactory getInstance() {
