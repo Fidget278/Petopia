@@ -29,49 +29,49 @@
 			<tr><h1>게시글 작성</h1></tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>
 				<%-- 게시판 선택 --%>
-					<div class="selectBoard">
-						<select name="board">
-							<option value="">게시판선택</option>
-							<option value="영장류">영장류</option>
-							<option value="파충류">파충류</option>
-							<option value="류">류</option>
-						</select>
-					</div>
-				</td>
-				<td colspan="2">
-					<button type="button" id= "writeBtn">등록</button>
-				</td>
-			</tr>
-			<br>
-			<tr colspan="3">
-				<td>
-					<form>
-						<p><textarea cols="200" rows="5">제목 입력</textarea></p>
-					</form>
-				</td>
-			</tr>
-			<tr height="60">
-				<td>
-					<button type="button" class="btn_image" id="movieBtn"><img src="./video.png"></button>
-				</td>
-				<td>
-					<button type="button" class="btn_image" id="imgBtn"><img src="./camera.jpg"></button>
-				</td>
-				<td>
-					<button type="button" class="btn_image" id="textsBtn"><img src="./clip.png"></button>
-				</td>
-			</tr>
-			<tr  colspan="3">
-				<td>
-					<form>
-						<p><textarea cols="200" rows="20">내용 입력</textarea></p>
-					</form>
-				</td>
-			</tr>
-			
+			<form action="writeArticle.do" accept-charset="utf-8" name="boardSelect">
+					<tr>
+						<td>
+						<div class="selectBoard">
+							<select id="boardSelect" name="boardSelect">
+								<option value="0">게시판선택</option>
+								<option value="1">영장류</option>
+								<option value="2">파충류</option>
+								<option value="3">류</option>
+							</select>
+						</div>
+					</td>
+					<td colspan="2">
+						<input type="submit" value="등록">
+					</td>
+				</tr>
+				<br>
+				<tr colspan="3">
+					<td>
+						<textarea name="subject" cols="200" rows="10">제목을 입력하세요</textarea>
+					</td>
+				</tr>
+				<tr height="60">
+					<td>
+						<button type="button" class="btn_image" id="movieBtn"><img src="./video.png"></button>
+					</td>
+					<td>
+						<button type="button" class="btn_image" id="imgBtn"><img src="./camera.jpg"></button>
+					</td>
+					<td>
+						<button type="button" class="btn_image" id="textsBtn"><img src="./clip.png"></button>
+					</td>
+				</tr>
+				<tr  colspan="3">
+					<td>
+						<form>
+							<textarea name="content" cols="300" rows="10">내용을 입력해주세요</textarea>
+						</form>
+					</td>
+				</tr>
+				
+			</form>
 		</tbody>
 	</table>
 </body>

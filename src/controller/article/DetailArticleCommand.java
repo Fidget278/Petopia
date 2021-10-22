@@ -22,7 +22,7 @@ public class DetailArticleCommand implements Command{
 		
 		request.setAttribute("articles", articles);
 		
-		return new ActionForward("/jsp/boards/article/detailArticle.jsp", false);
+		return new ActionForward("/detailArticle.jsp", false);
 	}
 
 }

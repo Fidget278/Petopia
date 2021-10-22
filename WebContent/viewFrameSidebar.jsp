@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>    
+	
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -56,7 +59,11 @@
 			</div>
 
 			<ul class="sidebar-list-groupList" id="group-list1">
-				<li class="sidebar-list-groupList-content">새로운 게시판 1</li>
+				<li class="sidebar-list-groupList-content">
+				<c:url var="boardUrl_1" value="/selectBoard.do">
+				</c:url>
+				<a href="${boardUrl_1 }">새로운 게시판 1</a>
+				</li>
 				<li class="sidebar-list-groupList-content">새로운 게시판 2</li>
 				<li class="sidebar-list-groupList-content">새로운 게시판 3</li>
 			</ul>

@@ -23,19 +23,6 @@ public class ListArticleCommand implements Command{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) 
 			throws Exception {
 
-/*      //기본 목록 조회
-//		// ArticleDao 객체 생성.
-//		ArticleDao articleDao = ArticleDao.getInsatnce();
-//		
-//		// Dao에 구현되어있는 게시글 목록 조회 메서드를 호출해 ArrayList<>로 받는다.
-//		ArrayList<ArticleVo> articles = articleDao.selectArticleList();
-//		System.out.println("command Vo:" + articles);
-//		// request 영역에 바인딩
-//		request.setAttribute("articles", articles);
-//		
-//		// request 객체를 전달해야 하기 때문에 forward 방식으로 전송
-//		return new ActionForward("/jsp/boards/article/articleList.jsp", false);
-*/
 		// *1. 현재 페이지 번호를 구한다.
 		// 현재 페이지 정보를 저장해 놓을 변수
 		System.out.println("커맨드 호출");
@@ -88,7 +75,7 @@ public class ListArticleCommand implements Command{
 		request.setAttribute("totalPostCount", totalPostCount);
 		request.setAttribute("postSize", POST_PER_PAGE);
 		
-		return new ActionForward("/jsp/boards/article/listArticle.jsp?currentPage=" + currentPage, false);
+		return new ActionForward("/listArticle.jsp?currentPage=" + currentPage, false);
 	}
 	
 }

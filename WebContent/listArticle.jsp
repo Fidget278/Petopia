@@ -42,7 +42,7 @@
 			<c:if test="${not empty requestScope.articles }">
 				<c:forEach var="article" items="${requestScope.articles }" varStatus="loop">
 					<%-- 상세 조회 --%>
-					<c:url var="detailArticleUrl" value="/jsp/boards/article/detailArticle.do">
+					<c:url var="detailArticleUrl" value="/detailArticle.do">
 						<c:param name="articleNo" value="${pageScope.article.articleNo }"/>
 					</c:url>
 					 <tr>
@@ -68,7 +68,7 @@
 	
 		<%-- 1블록을 제외한 모든 경우 --%>
 		<c:if test="${startPage > pageBlock }">
-			<c:url var="prevUrl" value="/jsp/boards/article/listArticle.do">
+			<c:url var="prevUrl" value="/listArticle.do">
 				<c:param name="currentPage" value="${startPage - pageBlock }"/>
 			</c:url>
 			<a href="${prevUrl }">[Prev]</a>
@@ -80,7 +80,7 @@
 			</c:if>
 			<%-- 현재 페이지가 아닌 애들 출력 , 만약에 그 page번호를 클릭한다면 자기 자신을 cuurentPage로 해서 /listArticle.do로 넘겨준다 --%>
 			<c:if test="${i != currentPage }">
-				<c:url var="movePageUrl" value="/jsp/boards/article/listArticle.do">
+				<c:url var="movePageUrl" value="/listArticle.do">
 					<c:param name="currentPage" value="${i}"/>
 				</c:url>
 				<a href="${movePageUrl}">&nbsp;${i}&nbsp;</a>
@@ -88,7 +88,7 @@
 		</c:forEach>
 		<%-- 다음 페이지로 넘긴다. --%>
 		<c:if test="${endPage <= totalPage }">
-			<c:url var="nextUrl" value="/jsp/boards/article/listArticle.do">
+			<c:url var="nextUrl" value="/listArticle.do">
 				<c:param name="currentPage" value="${endPage + 1 }"/>
 			</c:url>
 			<a hrep="${nextUrl }">[Next]</a>

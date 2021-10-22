@@ -25,6 +25,7 @@ public class ControllerServlet extends HttpServlet {
 
 	public void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
+		System.out.println("컨트롤러 진입");
 		
 		String requestURI = request.getRequestURI(); //��û ���� URI (/mvcfileWebApp/writeBoardForm.do)
 		String contextPath = request.getContextPath(); // contextPath (/mvcfileWebApp)

@@ -12,7 +12,6 @@
 	<div class="content">
 		<!-- Content 내용 여기에 추가 -->
 		
-		asdasdad
 	</div>
 </body>
 </html>

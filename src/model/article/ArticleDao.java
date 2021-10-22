@@ -165,15 +165,22 @@ public class ArticleDao {
     	
     	try {
     		StringBuffer sql = new StringBuffer();
-    		sql.append("INSERT INTO article (nickname, subject, content)   ");
-    		sql.append("VALUES(?, ?, ?)");
-    		pstmt = conn.prepareStatement(sql.toString());
+    		sql.append("INSERT INTO article (member_no, board_no, nickname, subject, content)   ");
+    		sql.append("VALUES(?, ?, ?, ?, ?)");
     		
-    		pstmt.setString(1, article.getNickname());
-    		pstmt.setString(2, article.getSubject());
-    		pstmt.setString(3, article.getContent());
+    		pstmt = conn.prepareStatement(sql.toString());
+
+    		pstmt.setInt(1, article.getMemberNo());
+    		pstmt.setInt(2, article.getBoardNo());
+    		pstmt.setString(3, article.getNickname());
+    		pstmt.setString(4, article.getSubject());
+    		pstmt.setString(5, article.getContent());
+    		System.out.println("pstmt");
+    		System.out.println(pstmt);
+    		System.out.println(pstmt.toString());
     		
     		pstmt.executeUpdate();
+//    		pstmt.executeQuery();
     		pstmt.close();
     		
     	} catch(Exception e) {

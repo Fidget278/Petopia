@@ -1,23 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.*, model.article.ArticleVo" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>    
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>게시글 상세보기</title>
 <style>
-	#btn{
-		border-top-left-radius: 10px;
-		border-top-right-radius: 10px;
-		border-bottom-left-radius: 10px;
-		border-bottom-right-radius: 10px;
-		margin-right: -4px;
-	}
-	#btn_group button{
-		border: 3px solid skyblue;
-		background-color: rgba(0,0,0,0);
-		color: skyblue;
-		padding: 5px;
+	.btn{ 
+		font-size: 2rem;
+		color:blue;
+		padding:10px 20px 10px 20px;
+		margin: 20px;
+		display:inline-block;
+		border-radius: 10px;
 	}
 </style>
 
@@ -60,13 +59,15 @@
 				<td colspan="5"> ${requestScope.articles.content }</td>
 			</tr>
 			<tr height="100">
-				<div id="btn_group">
-				 	<td><button id="btn" type="button" onclick="location.href='링크주소';">글쓰기</button></td>
-				 	<td><button id="btn" type="button" onclick="location.href='링크주소';">목록</button></td>
-				 	<td><button id="btn" type="button" onclick="location.href='링크주소';">좋아요</button></td>
+				<div id="btn">
+				 	<td>
+				 		<button id="btn" type="button" onclick="location.href='writeArticleForm.do';">글쓰기</button>
+				 	</td>
+				 	<td>목록</td>
+				 	<td>좋아요</td>
 				 	</tab>
-				 	<td><button id="btn" type="button" onclick="location.href='링크주소';">수정</button></td>
-				 	<td><button id="btn" type="button" onclick="location.href='링크주소';">삭제</button></td>
+				 	<td>수정</td>
+				 	<td>삭제</td>
 			 	</div>
 			 </tr>
 			<tr height="200"> 
@@ -75,7 +76,7 @@
 						<p><textarea cols="200" rows="10"></textarea></p>
 					</form>
 				</td>
-				<td><button id="btn" type="button" onclick="location.href='링크주소';">등록</button></td>
+				<td><button id="writeFormBtn" type="button" onclick="location.href='링크주소';">등록</button></td>
 				
 			</tr>
 			<tr height="200"> 

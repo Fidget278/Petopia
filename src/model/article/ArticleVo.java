@@ -22,6 +22,21 @@ public class ArticleVo {
 	
 	
 	
+	
+	// 게시글 작성
+	public ArticleVo(int memberNo, int boardNo, String subject, String nickname, String content) {
+		super();
+		this.memberNo = memberNo;
+		this.boardNo = boardNo;
+		this.subject = subject;
+		this.nickname = nickname;
+		this.content = content;
+	}
+
+
+
+
+
 	// ArticleDao.selectArticleList() 생성자 (게시판 목록 조회)
 	public ArticleVo(int articleNo, String subject, String nickname, String writedate, int viewcount, int likecount) {
 		super();
