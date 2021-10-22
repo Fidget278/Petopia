@@ -47,10 +47,9 @@ public class StatisticsDao {
 				statVo.setDailyVisitorsCount(rs.getInt(1));
 				statVo.setDailyBoardCount(rs.getInt(2));
 
-				System.out.println(arrayStat);
 				arrayStat.add(statVo);
 			}
-			System.out.println(arrayStat);
+
 		} finally {
 			DBConn.close(conn, pstmt, rs);
 		}
