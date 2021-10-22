@@ -18,17 +18,17 @@
 					<div class="firstSection-inner-profileInfo">
 						<div>
 						
-							<a href="#">${sessionScope.user.nickname }</a> <a href="${pageContext.request.contextPath}/managerIndex.do">관리자</a>
+							<a href="#">${sessionScope.user.nickname }</a> <a href="${pageContext.request.contextPath}/managerIndex.do">${sessionScope.user.grade }</a>
 						</div>
 						<div class="span-right">
 							<div class="div-span-flex">
-								<span class="span-block">방문횟수 : </span> <span>회</span>
+								<span class="span-block">방문횟수 : </span> <span>${sessionScope.user.visits } 회</span>
 							</div>
 							<div class="div-span-flex">
-								<span class="span-block">작성 글 : </span> <span>개</span>
+								<span class="span-block">작성 글 : </span> <span>${sessionScope.user.docs } 개</span>
 							</div>
 							<div class="div-span-flex">
-								<span class="span-block">작성 댓글 : </span> <span>개</span>
+								<span class="span-block">작성 댓글 : </span> <span>${sessionScope.user.comms } 개</span>
 							</div>
 
 						</div>
