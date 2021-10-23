@@ -68,4 +68,53 @@ public class ArticleService {
 		}
 		
 	}
+	// 게시글 수정
+	public void modifyArticle(ArticleVo article) throws Exception{
+		
+		Connection conn = null;
+		
+		try {
+			conn = DBConn.getConnection();
+			
+			ArticleDao articleDao = ArticleDao.getInsatnce();
+			articleDao.updateArticle(article, conn);
+			
+		} catch(Exception e){
+			throw e;
+		} finally {
+			if(conn != null) conn.close();
+		}
+	}
+	
+	
+	// 게시글 삭제
+	public void removeArticle(int articleNo) throws Exception{
+		// 트랜잭션 처리
+		boolean isSuccess = false;
+		Connection conn = null;
+		
+		try {
+			conn = DBConn.getConnection();
+			
+			ArticleDao articleDao = ArticleDao.getInsatnce();
+			articleDao.deleteArticle(articleNo, conn);
+			
+			
+		}catch (Exception e) {
+			throw e;
+		} finally {
+			
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

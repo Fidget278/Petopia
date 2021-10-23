@@ -54,11 +54,20 @@
 				 	<td>목록</td>
 				 	<td>좋아요</td>
 				 	</tab>
-				 	<c:url var="modifyUrl" value="/modifyArticle.do">
-				 		<c:param name="articleNo" value="${requestScope.articles.articleNo }"/>
-				 	</c:url>
-				 	<td><button id="modifyBtn" type="button" onclick="location.href='modifyArticleForm.do';">수정</button></td>
-				 	<td>삭제</td>
+				 	<td>
+					 	<c:url var="modifyUrl" value="/viewModifyArticleForm.do">
+					 		<c:param name="articleNo" value="${param.articleNo }"/>
+					 	</c:url>
+				 		<button id="modifyBtn" type="button" onclick="location.href='${modifyUrl}';">수정</button>
+				 	</td>
+				 	<td>
+				 		<form>
+					 		<c:url var="removeUrl" value="removeArticle.do">
+					 			<c:param name="articleNo" value="${param.articleNo }"/>
+					 		</c:url>
+					 		<button id="reomveBtn" type="button" onclick="location.href='${removeUrl}';">삭제</button>
+				 		</form>
+				 	</td>
 			 	</div>
 			 </tr>
 			<tr height="200"> 

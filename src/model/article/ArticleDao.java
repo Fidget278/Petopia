@@ -44,7 +44,8 @@ public class ArticleDao {
             sql.append("SELECT article_no, subject, nickname,                                 ");
             sql.append("DATE_FORMAT(writedate, '%Y/%m/%d') as writedate, viewcount, likecount ");
             sql.append("FROM article                                                          ");
-            sql.append("ORDER BY writedate DESC                                               ");
+//            sql.append("ORDER BY writedate DESC                                               ");
+            sql.append("ORDER BY article_no DESC                                               ");
             // LIMIT: 몇 개를 출력할지, OFFSET: 어디서 부터 시작할지
             sql.append("LIMIT ? OFFSET ?");
             
@@ -212,7 +213,8 @@ public class ArticleDao {
     		pstmt.setInt(1, article.getBoardNo());
     		pstmt.setString(2, article.getSubject());
     		pstmt.setString(3, article.getContent());
-    		
+    		pstmt.setInt(4, article.getArticleNo());
+    		System.out.println("pstmt: " +pstmt);
     		pstmt.executeUpdate();
     		
     		
@@ -225,7 +227,29 @@ public class ArticleDao {
     	
     }
     
-    
+    // 게시글 삭제
+    public void deleteArticle(int articleNo, Connection conn) throws Exception{
+    	PreparedStatement pstmt = null;
+    	
+    	try {
+    		StringBuffer sql = new StringBuffer();
+    		sql.append("DELETE FROM article        ");
+    		sql.append("WHERE article_no=?");
+    		
+    		pstmt = conn.prepareStatement(sql.toString());
+    		pstmt.setInt(1, articleNo);
+    		
+    		pstmt.executeUpdate();
+    		
+    	}catch (Exception e) {
+    		throw e;
+    	} finally {
+    		if (pstmt != null) pstmt.close();
+    		if (conn != null) conn.close();
+    	}
+    	
+    	
+    }
     
     
     

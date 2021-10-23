@@ -38,9 +38,8 @@ public class WriteArticleCommand implements Command {
 			ArticleDao articleDao = ArticleDao.getInsatnce();
 			articleDao.insertArticle(new ArticleVo(memberNo, boardNo, subject, nickname, content), DBConn.getConnection());
 			
-//			request.setAttribute("content", "viewWriteArticleContent");
 			
-			return new ActionForward("/homeIndex.do", true);
+			return new ActionForward("/viewListArticleContent.do", true);
 		} catch(Exception e) {
 			throw e;
 		}

@@ -11,24 +11,33 @@ public class CommandFactory {
 	private Map<String, String> map = new HashMap<String, String>();
 	
 	private CommandFactory() {
+		// 관리자 화면
 		map.put("/managerIndex.do", "controller.manager.ManagerCommand");
 		map.put("/managerStatistics.do", "controller.statistics.statisticsFormCommand");
-		
 		
 		map.put("/petopia.do", "controller.member.IntroCommand");
 		map.put("/login.do", "controller.member.LoginCommand");
 		map.put("/logout.do", "controller.member.LogOutCommand");
 		
 		// 게시글 목록 조회
-		map.put("/listArticle.do", "controller.article.ListArticleCommand");
+		map.put("/viewListArticleContent.do", "controller.article.ListArticleCommand");
 				
 		// 게시글 상세 조회
-		map.put("/detailArticle.do", "controller.article.DetailArticleCommand");
+		map.put("/viewDetailArticleContent.do", "controller.article.DetailArticleCommand");
 		
 		// 게시글 작성 페이지로 이동
-		map.put("/writeArticleForm.do", "controller.article.WriteArticleFormCommand");
+		map.put("/viewWriteArticleForm.do", "controller.article.WriteArticleFormCommand");
 		
+		// 게시글 작성
 		map.put("/writeArticle.do", "controller.article.WriteArticleCommand");
+
+		// 게시글 삭제
+		map.put("/removeArticle.do", "controller.article.RemoveArticleCommand");
+/* -------------------------------------미구현-------------------------------------------------- */
+		// 게시글 수정폼이동
+		map.put("/viewModifyArticleForm.do", "controller.article.ModifyArticleFormCommand");
+		// 게시글 수정
+		map.put("/modifyArticle.do", "controller.article.ModifyArticleCommand");
 	}
 	
 	public static CommandFactory getInstance() {
