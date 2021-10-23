@@ -12,7 +12,8 @@ public class CommandFactory {
 	
 	private CommandFactory() {
 		map.put("/managerIndex.do", "controller.manager.ManagerCommand");
-		map.put("/managerStatistics.do", "controller.statistics.statisticsFormCommand");
+		map.put("/managerStatisticsDaily.do", "controller.statistics.statisticsDailyFormCommand");
+		map.put("/managerStatisticsTotal.do", "controller.statistics.statisticsTotalFormCommand");
 		
 		
 		map.put("/petopia.do", "controller.member.IntroCommand");
