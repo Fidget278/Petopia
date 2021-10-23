@@ -1,36 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%-- 게시글 세부 조회 --%>
+
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@ page import="java.util.*, model.article.ArticleVo" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>    
 
+
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>게시글 상세보기</title>
-<style>
-	.btn{ 
-		font-size: 2rem;
-		color:blue;
-		padding:10px 20px 10px 20px;
-		margin: 20px;
-		display:inline-block;
-		border-radius: 10px;
-	}
-</style>
-
+<title>Content</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+<link href="./css/viewMainContent.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	<table class="bbs" width="1300" border="2" bgcolor="D8D8D8" padding-left:"250":padding-bottom:"0">
-		<colgroup>
-			<col width="80" /> <%--No --%>
-			<col width="100" /> <%--No --%>
-			<col width="100" /> <%--No --%>
-			<col width="100" /> <%--No --%>
-			<col width="100" /> <%--No --%>
-			<col width="100" /> <%--No --%>
-		</colgroup>
+	<div class="content">
+		<!-- Content 내용 여기에 추가 -->
+		<table class="bbs" width="800" height="900" border="2" bgcolor="D8D8D8">
 		<thead>
 			<tr rowspab="3">카테고리 선택</tr>
 		</thead>
@@ -61,12 +49,15 @@
 			<tr height="100">
 				<div id="btn">
 				 	<td>
-				 		<button id="btn" type="button" onclick="location.href='writeArticleForm.do';">글쓰기</button>
+				 		<button id="btn" type="button" onclick="location.href='viewWriteArticleForm.do';">글쓰기</button>
 				 	</td>
 				 	<td>목록</td>
 				 	<td>좋아요</td>
 				 	</tab>
-				 	<td>수정</td>
+				 	<c:url var="modifyUrl" value="/modifyArticle.do">
+				 		<c:param name="articleNo" value="${requestScope.articles.articleNo }"/>
+				 	</c:url>
+				 	<td><button id="modifyBtn" type="button" onclick="location.href='modifyArticleForm.do';">수정</button></td>
 				 	<td>삭제</td>
 			 	</div>
 			 </tr>
@@ -84,6 +75,7 @@
 			</tr>
 		</tbody>
 	</table>
+		
+	</div>
 </body>
 </html>
-

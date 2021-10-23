@@ -50,7 +50,7 @@
 				<span onclick="location.href='${pageContext.request.contextPath}/managerStatistics.do'">통계</span>
 			</section>
 			<section>
-				<span>카페 글쓰기</span> <span>전체 글 보기</span>
+				<span onclick="location.href='${pageContext.request.contextPath}/viewWriteArticleForm.do'">카페 글쓰기</span> <span>전체 글 보기</span>
 			</section>
 		</article>
 		<article class="sidebar-list">

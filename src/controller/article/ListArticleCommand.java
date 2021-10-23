@@ -17,7 +17,7 @@ public class ListArticleCommand implements Command{
 	// 만약 값이 3이라면
 	// 1,2,3 next
 	// prev 4,5,6 next
-	private static final int PAGE_BLOCK=3;
+	private static final int PAGE_BLOCK=2;
 	
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) 
@@ -75,7 +75,9 @@ public class ListArticleCommand implements Command{
 		request.setAttribute("totalPostCount", totalPostCount);
 		request.setAttribute("postSize", POST_PER_PAGE);
 		
-		return new ActionForward("/listArticle.jsp?currentPage=" + currentPage, false);
+		request.setAttribute("content", "/viewListArticleContent");
+		
+		return new ActionForward("/homeIndex.jsp?currentPage=" + currentPage, false);
 	}
 	
 }

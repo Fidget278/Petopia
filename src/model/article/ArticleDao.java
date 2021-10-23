@@ -196,4 +196,37 @@ public class ArticleDao {
     	}
     	return no;
     }
+    
+    // 게시글 수정
+    public void updateArticle(ArticleVo article, Connection conn) throws Exception{
+    	
+    	PreparedStatement pstmt = null;
+    	
+    	try {
+    		StringBuffer sql = new StringBuffer();
+    		sql.append("UPDATE article                               ");
+    		sql.append("SET board_no = ?, subject = ?, content = ?    ");
+    		sql.append("WHERE article_no = ?");
+    		
+    		pstmt = conn.prepareStatement(sql.toString());
+    		pstmt.setInt(1, article.getBoardNo());
+    		pstmt.setString(2, article.getSubject());
+    		pstmt.setString(3, article.getContent());
+    		
+    		pstmt.executeUpdate();
+    		
+    		
+    	} catch(Exception e) {
+    		throw e;
+    	} finally {
+    		if(pstmt != null) pstmt.close();
+    		if(conn != null) conn.close();
+    	}
+    	
+    }
+    
+    
+    
+    
+    
 }

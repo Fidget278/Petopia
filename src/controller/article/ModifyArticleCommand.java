@@ -6,18 +6,15 @@ import javax.servlet.http.HttpServletResponse;
 import controller.ActionForward;
 import controller.Command;
 
-public class WriteArticleFormCommand implements Command{
+public class ModifyArticleCommand implements Command{
 	
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) 
 			throws Exception {
 
+		int no = Integer.parseInt(request.getParameter("no"));
 		
-		request.setAttribute("content", "viewWriteArticleContent");
-		
-		// 글쓰기 요청이 오면 게시글 작성 폼으로 이동
-		ActionForward forward = new ActionForward("/homeIndex.jsp", false);
-		return forward;
+		return null;
 	}
 
 }
