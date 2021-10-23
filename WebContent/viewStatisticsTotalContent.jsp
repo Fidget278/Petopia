@@ -20,8 +20,12 @@
 		<div class="content-header">
 			<table>
 				<tr>
-					<td onclick="location.href='${pageContext.request.contextPath}/managerStatisticsDaily.do'">일일 통계</td>
-					<td onclick="location.href='${pageContext.request.contextPath}/managerStatisticsTotal.do'">총 통계</td>
+					<td
+						onclick="location.href='${pageContext.request.contextPath}/managerStatisticsDaily.do'">일일
+						통계</td>
+					<td
+						onclick="location.href='${pageContext.request.contextPath}/managerStatisticsTotal.do'">총
+						통계</td>
 				</tr>
 			</table>
 		</div>
@@ -36,15 +40,12 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="total" items="${requestScope.totalList}"
-						varStatus="status">
-						<tr>
-							<td>${total.getTotalMemberCount() }</td>
-							<td>${total.getTotalBoardCount() }</td>
-							<td>${total.getTotalViewCount() }</td>
-							<td>${total.getTotalVisitorsCount() }</td>
-						</tr>
-					</c:forEach>
+					<tr>
+						<td>${requestScope.totalList.getTotalMemberCount() }</td>
+						<td>${requestScope.totalList.getTotalBoardCount() }</td>
+						<td>${requestScope.totalList.getTotalViewCount() }</td>
+						<td>${requestScope.totalList.getTotalVisitorsCount() }</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>
