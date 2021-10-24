@@ -70,14 +70,20 @@
 				 	</td>
 			 	</div>
 			 </tr>
+			 <%-- 댓글 --%>
 			<tr height="200"> 
-				<td colspan="4">
-					<form>
+				<form>
+					<td colspan="4">
+						<c:url var="writeReplyUrl" value="writeReply.do">
+							<%--댓글이 작성된 게시글 번호 --%>
+							<c:param name="articleNo" value="${param.articleNo }"/>
+						</c:url>
 						<p><textarea cols="200" rows="10"></textarea></p>
-					</form>
-				</td>
-				<td><button id="writeFormBtn" type="button" onclick="location.href='링크주소';">등록</button></td>
-				
+					</td>
+					<td>
+						<button id="writeFormBtn" type="button" onclick="location.href='${writeReplyUrl}';">등록</button>
+					</td>
+				</form>
 			</tr>
 			<tr height="200"> 
 				<td colspan="6">댓글 목록창</td>>

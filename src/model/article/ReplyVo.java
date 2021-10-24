@@ -11,6 +11,16 @@ public class ReplyVo {
 	public ReplyVo() {
 		
 	}
+	
+
+	public ReplyVo(int articleNo, int memberNo, String nickname, String content) {
+		super();
+		this.articleNo = articleNo;
+		this.memberNo = memberNo;
+		this.nickname = nickname;
+		this.content = content;
+	}
+
 
 	public ReplyVo(int replyNo, int articleNo, int memberNo, String nickname, String writedate, String content) {
 		super();
