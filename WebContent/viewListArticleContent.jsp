@@ -1,5 +1,5 @@
-ss<%-- 게시글 목록 보기 --%>
-s
+<%-- 게시글 목록 보기 --%>
+
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>

@@ -57,7 +57,6 @@
 					</td>
 					<td>
 						<input type="file" class="form-control" name="fileList" id="file" multiple style="font-size: 13px;">
-						<%--<button type="button" class="btn_image" id="textsBtn"><img src="./img/clip.jpg"></button> --%>
 					</td>
 				</tr>
 				<tr  colspan="3">

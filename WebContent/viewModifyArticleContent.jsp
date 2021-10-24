@@ -25,7 +25,7 @@
 		<table class="bbs" weidth="800" height="600" border="2" bgcolor="D8D8D8">
 			<thead></thead>
 			<tbody>
-				<form action="${pageContext.request.contextPath }/modifyArticle.do" method="POST" accept-charset="utf-8">
+				<form action="${pageContext.request.contextPath }/modifyArticle" method="POST" enctype="multipart/form-data">
 					<input type="hidden" name="articleNo" value="${param.articleNo }">
 						<tr>
 							<td>
@@ -56,7 +56,7 @@
 							<button type="button" class="btn_image" id="imgBtn"><img src="./camera.jpg"></button>
 						</td>
 						<td>
-							<button type="button" class="btn_image" id="textsBtn"><img src="./clip.png"></button>
+							<input type="file" class="form-control" name="fileList" id="file" multiple style="font-size: 13px;">
 						</td>
 					</tr>
 					<tr  colspan="3">
@@ -69,6 +69,13 @@
 				</form>			
 			</tbody>
 		</table>
+		<c:if test="${not empty sessionScope.articles.fileList }">
+			<th>파일명</th><th>파일크기</th>
+			<c:forEach var="file" items="${sessionScope.articles.fileList }">
+				<td>${file.originalFileName }</td>
+				<td>${file.fileSize } bytes</td>
+			</c:forEach>
+		</c:if>	
 	</div>
 </body>
 </html>

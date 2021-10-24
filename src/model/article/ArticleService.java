@@ -89,17 +89,38 @@ public class ArticleService {
 	public void modifyArticle(ArticleVo article) throws Exception{
 		
 		Connection conn = null;
-		
+		boolean isSuccess = false;
 		try {
 			conn = DBConn.getConnection();
+			conn.setAutoCommit(false);
 			
 			ArticleDao articleDao = ArticleDao.getInsatnce();
 			articleDao.updateArticle(article, conn);
 			
+			ArticleFileDao fileDao = ArticleFileDao.getInstance();
+			
+			// 전달받은 ArticleVo 객체에서 파일들을 꺼내 추가한다.
+			for (ArticleFileVo file : article.getFileList()) {
+				file.setArticleNo(article.getArticleNo());
+				fileDao.insertArticleFile(file, conn);
+			}
+			
+			isSuccess=true;
+			
 		} catch(Exception e){
 			throw e;
 		} finally {
-			if(conn != null) conn.close();
+			try{
+				if(conn != null) {
+					if (isSuccess) {
+						conn.commit();
+					} else {
+						conn.rollback();
+					}
+				}
+			} catch(Exception ex) {
+				throw ex;
+			}
 		}
 	}
 	
@@ -145,15 +166,6 @@ public class ArticleService {
 			}
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }

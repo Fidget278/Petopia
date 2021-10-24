@@ -3,6 +3,8 @@ package model.article;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
+import utill.DBConn;
+
 public class ArticleFileDao {
 	
 	private static ArticleFileDao articleFileDao;
@@ -46,7 +48,7 @@ public class ArticleFileDao {
 		}
 	}
 	
-	// 파일 삭제
+	// 게시글 파일 동시삭제시 사용되는 메서드
 	public void deleteFile(int articleNo, Connection conn) throws Exception{
 		PreparedStatement pstmt = null;
 				
@@ -71,6 +73,34 @@ public class ArticleFileDao {
 			}
 			
 		}
+	}
+	
+	// 파일 1개만 지우기
+	public void selectDeleteFile(int fileNo) throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = DBConn.getConnection();
+			
+			StringBuffer sql = new StringBuffer();
+			sql.append("DELETE FROM file    ");
+			sql.append("WHERE file_no = ?");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setInt(1, fileNo);
+			
+			pstmt.executeUpdate();
+			
+		} catch(Exception e) {
+			throw e;
+		} finally {
+			if (pstmt != null) pstmt.close();
+			if (conn != null) conn.close();
+			
+		}
+		
+		
 	}
 	
 	
