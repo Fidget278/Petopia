@@ -1,4 +1,5 @@
-<%-- 게시글 목록 보기 --%>
+ss<%-- 게시글 목록 보기 --%>
+s
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>

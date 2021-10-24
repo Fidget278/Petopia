@@ -17,8 +17,10 @@ public class RemoveArticleCommand implements Command {
 		
 		int no = Integer.parseInt(request.getParameter("articleNo"));
 		
+		System.out.println("remove 실행 전");
 		ArticleService service = ArticleService.getInstance();
 		service.removeArticle(no);
+		System.out.println("remove 실행 후");
 		
 //		request.setAttribute("content", "/viewListArticleContent");
 		

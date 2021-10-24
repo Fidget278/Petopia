@@ -112,15 +112,37 @@ public class ArticleService {
 		
 		try {
 			conn = DBConn.getConnection();
+			// 쿼리문당 자동으로 커밋되는 일 방지
+			conn.setAutoCommit(false);
 			
+			// 해당 게시글의 첨부파일 제거
+			ArticleFileDao articleFileDao = ArticleFileDao.getInstance();
+			articleFileDao.deleteFile(articleNo, conn);
+			System.out.println("파일 삭제 통과");
+			
+			// 게시글 제거
 			ArticleDao articleDao = ArticleDao.getInsatnce();
 			articleDao.deleteArticle(articleNo, conn);
+			System.out.println("게시글 삭제");
 			
+			isSuccess = true;
 			
 		}catch (Exception e) {
+			e.printStackTrace();
 			throw e;
 		} finally {
-			
+			try {
+				if (conn != null) {
+					if(isSuccess) {
+						conn.commit();
+					} else {
+						conn.rollback();
+					}
+				}
+			} catch(Exception e2) {
+				e2.printStackTrace();
+				throw e2;
+			}
 		}
 	}
 	

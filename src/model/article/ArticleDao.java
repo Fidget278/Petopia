@@ -276,7 +276,6 @@ public class ArticleDao {
     		throw e;
     	} finally {
     		if (pstmt != null) pstmt.close();
-    		if (conn != null) conn.close();
     	}
     	
     	

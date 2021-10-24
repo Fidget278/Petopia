@@ -15,6 +15,7 @@ public class ArticleFileDao {
 		return articleFileDao;
 	}
 	
+	// 파일 추가
 	public void insertArticleFile(ArticleFileVo file, Connection conn) throws Exception {
 		PreparedStatement pstmt = null;
 		String fileType = "Jpg";
@@ -44,6 +45,47 @@ public class ArticleFileDao {
 			}
 		}
 	}
+	
+	// 파일 삭제
+	public void deleteFile(int articleNo, Connection conn) throws Exception{
+		PreparedStatement pstmt = null;
+				
+		try {
+			StringBuffer sql = new StringBuffer();
+			sql.append("DELETE FROM file               ");
+			sql.append("WHERE article_no = ?");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			
+			pstmt.setInt(1, articleNo);
+			
+			pstmt.executeUpdate();
+			
+		}catch (Exception e) {
+			throw e;
+		} finally {
+			try {
+				if (pstmt != null) pstmt.close();
+			} catch(Exception e2) {
+				throw e2;
+			}
+			
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

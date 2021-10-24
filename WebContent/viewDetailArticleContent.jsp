@@ -84,18 +84,20 @@
 			</tr>
 		</tbody>
 	</table>
-		<tr>
-				<div class="file">
-					<c:if test="${not empty requestScope.articles.fileList }">
-						<th>파일명</th><th>파일크기</th>
-						<c:forEach var="file" items="${requestScope.article.fileList }">
-							<td>${file.originalFileName }</td>
-							<td>${file.fileSize } bytes</td>
-						</c:forEach>
-					</c:if>				
-				
-				</div>
-			</tr>
+	<%-- 첨부파일 출력. --%>
+	<div class="file">
+		<c:if test="${empty requestScope.articles.fileList }">등록된 파일이 없습니다.
+		</c:if>
+
+		<c:if test="${not empty requestScope.articles.fileList }">
+			<th>파일명</th><th>파일크기</th>
+			<c:forEach var="file" items="${requestScope.articles.fileList }">
+				<td>${file.originalFileName }</td>
+				<td>${file.fileSize } bytes</td>
+			</c:forEach>
+		</c:if>				
+			
+	</div>
 		
 	</div>
 </body>
