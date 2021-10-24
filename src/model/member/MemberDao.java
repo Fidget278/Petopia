@@ -86,4 +86,202 @@ public class MemberDao {
 		
 		return member;
 	}
+	
+	// 회원인지 아닌지 확인
+		public int userCheck(String email, String password) {
+			int result = -1;
+
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+
+			try {
+
+				conn = DBConn.getConnection();
+
+				StringBuffer sql = new StringBuffer();
+				sql.append("SELECT pwd FROM member WHERE email=?");
+				pstmt = conn.prepareStatement(sql.toString());
+
+				pstmt.setString(1, email);
+				rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					if (rs.getString("password") != null && rs.getString("password").equals(password)) {
+						result = 1; // 회원
+					} else {
+						result = 0; // 비번 틀림
+					}
+				} else {
+					result = -1; // 회원아님
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return result;
+		}
+
+		// 아이디로 회원 정보 가져오는 메소드
+		public MemberVo getMember(String email) throws Exception {
+			MemberVo mVo = null;
+
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+
+			try {
+				conn = DBConn.getConnection();
+
+				StringBuffer sql = new StringBuffer();
+				sql.append("SELECT * FROM member WHERE userid=?");
+
+				pstmt = conn.prepareStatement(sql.toString());
+				pstmt.setString(1, email);
+
+				rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					mVo = new MemberVo();
+					mVo.setEmail(rs.getString("email"));
+					mVo.setPassword(rs.getString("password"));
+					mVo.setNickname(rs.getString("nickname"));
+
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return mVo;
+		} // getMember end
+
+		// 회원가입시 아이디 중복 체크하는 메소드, 아이디 중복=1, 중복아니면 -1
+		public int selectEmail(String email) throws Exception {
+			int result = -1;
+
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			try {
+				conn = DBConn.getConnection();
+
+				StringBuffer sql = new StringBuffer();
+				sql.append("SELECT userid FROM member WHERE userid=?");
+				pstmt = conn.prepareStatement(sql.toString());
+
+				pstmt.setString(1, email);
+
+				rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					result = 1;
+				} else {
+					result = -1;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return result;
+		}
+
+		// 회원가입 메소드
+		public int insertMember(MemberVo mVo) throws Exception {
+			int result = -1;
+
+			String sql = "insert into member values(?,?,?)";
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+
+			try {
+				conn = DBConn.getConnection();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, mVo.getEmail());
+				pstmt.setString(2, mVo.getPassword());
+				pstmt.setString(3, mVo.getNickname());
+
+				result = pstmt.executeUpdate();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return result;
+		}
+
+		// 프로필 수정
+		public int updateProfile(MemberVo mVo) {
+
+			int result = -1;
+
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			try {
+				conn = DBConn.getConnection();
+
+				StringBuffer sql = new StringBuffer();
+				sql.append("UPDATE member SET photo=?, password=?,");
+
+				pstmt = conn.prepareStatement(sql.toString());
+
+				pstmt.setString(1, mVo.getEmail());
+				pstmt.setString(2, mVo.getPassword());
+
+				result = pstmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return result;
+
+		}
+	
+	
+
 }
