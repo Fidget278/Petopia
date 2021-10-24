@@ -23,10 +23,12 @@
 			<tr><h1>게시글 작성</h1></tr>
 		</thead>
 		<tbody>
-				<%-- 게시판 선택 --%>
-			<form action="writeArticle.do" accept-charset="utf-8" name="boardSelect">
+				
+			<%--<form action="writeArticle.do" accept-charset="utf-8" name="boardSelect"> --%>
+			<form action="${pageContext.request.contextPath }/uploadFile" method="POST" enctype="multipart/form-data">
 					<tr>
 						<td>
+						<%-- 게시판 선택 --%>
 						<div class="selectBoard">
 							<select id="boardSelect" name="boardSelect">
 								<option value="0">게시판선택</option>
@@ -36,14 +38,14 @@
 							</select>
 						</div>
 					</td>
-					<td colspan="2">
+					<%--<td colspan="2">
 						<input type="submit" value="등록">
-					</td>
+					</td> --%>
 				</tr>
 				<br>
 				<tr colspan="3">
 					<td>
-						<textarea name="subject" cols="100" rows="5">제목을 입력하세요</textarea>
+						<textarea class="form-control" id="subject" name="subject" cols="100" rows="5">제목을 입력하세요</textarea>
 					</td>
 				</tr>
 				<tr height="60">
@@ -54,16 +56,19 @@
 						<button type="button" class="btn_image" id="imgBtn"><img src="./camera.jpg"></button>
 					</td>
 					<td>
-						<button type="button" class="btn_image" id="textsBtn"><img src="./clip.png"></button>
+						<input type="file" class="form-control" name="fileList" id="file" multiple style="font-size: 13px;">
+						<%--<button type="button" class="btn_image" id="textsBtn"><img src="./img/clip.jpg"></button> --%>
 					</td>
 				</tr>
 				<tr  colspan="3">
 					<td>
-						<form>
-							<textarea name="content" cols="100" rows="10">내용을 입력해주세요</textarea>
-						</form>
+						<div class="wa-3">
+							<label for="content"></label>
+							<textarea class="form-control" id="content" name="content" cols="100" rows="10" placeholder="내용을 입력해 주세요"></textarea>
+						</div>
 					</td>
 				</tr>
+				<button type="submit" class="btn btn-sm btn-primary" id="wrtieBtn">등록</button>
 				
 			</form>
 		</tbody>

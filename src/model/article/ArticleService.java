@@ -51,17 +51,33 @@ public class ArticleService {
 			// tx.begin
 			conn.setAutoCommit(false);
 			
-			// 게시글 등록
+			// 게시글 등록 -----------------------------------------------
 			ArticleDao articleDao = ArticleDao.getInsatnce();
 			int no = articleDao.insertArticle(article, conn);
 			
-			// 파일 등록(미구현)
+			// 파일 등록-------------------------------------------------
+			ArticleFileDao fileDao = ArticleFileDao.getInstance();
+			
+			// ArticleVo에 있는 ArrayList<ArticleFileVo> 객체를 받아온다.
+			for (ArticleFileVo file : article.getFileList()) {
+				// ArticleFileVo에 게시글 번호를 바인딩. 
+				file.setArticleNo(no);
+				// DB에 파일을 저장
+				fileDao.insertArticleFile(file, conn);
+			}
 			
 		} catch(Exception e) {
 			throw e;
 		} finally {
 			try{
-				if(conn != null) conn.close();
+				if(conn != null) {
+					if (isSuccess) {
+						conn.commit();
+					} else {
+						conn.rollback();
+					}
+					conn.close();
+				}
 			} catch(Exception e2) {
 				throw e2;
 			}

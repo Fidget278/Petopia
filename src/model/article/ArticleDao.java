@@ -162,12 +162,17 @@ public class ArticleDao {
     	
     	int no = 0;
     	PreparedStatement pstmt = null;
+    	Statement stmt = null;
     	ResultSet rs = null;
+    	System.out.println("*********************************************");
+    	System.out.println("insertArticle: " + article.toString());
     	
     	try {
     		StringBuffer sql = new StringBuffer();
     		sql.append("INSERT INTO article (member_no, board_no, nickname, subject, content)   ");
     		sql.append("VALUES(?, ?, ?, ?, ?)");
+    		
+    		System.out.println("ArticleDao로 넘어온 Vo객체: " + article.toString());
     		
     		pstmt = conn.prepareStatement(sql.toString());
 
@@ -183,14 +188,25 @@ public class ArticleDao {
     		pstmt.executeUpdate();
 //    		pstmt.executeQuery();
     		pstmt.close();
+
+    		// 파일 업로드를 하기 위해 게시글 번호를 반환
+    		stmt = conn.createStatement();
+    		
+    		// StringBuffer 비우기
+    		sql.delete(0, sql.length());
+    		sql.append("SELECT LAST_INSERT_ID()");
+    		rs = stmt.executeQuery(sql.toString());
+    		
+    		if(rs.next()) {
+    			no = rs.getInt(1);
+    		}
     		
     	} catch(Exception e) {
     		throw e;
     	} finally {
     		try {
     			if (rs != null) rs.close();
-    			if (pstmt != null) pstmt.close();
-    			if (conn != null) conn.close();
+    			if (stmt != null) stmt.close();
     		} catch(Exception e2) {
     			throw e2;
     		}
@@ -216,6 +232,8 @@ public class ArticleDao {
     		pstmt.setInt(4, article.getArticleNo());
     		System.out.println("pstmt: " +pstmt);
     		pstmt.executeUpdate();
+    		
+    		
     		
     		
     	} catch(Exception e) {

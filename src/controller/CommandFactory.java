@@ -29,7 +29,7 @@ public class CommandFactory {
 		map.put("/viewWriteArticleForm.do", "controller.article.WriteArticleFormCommand");
 		
 		// 게시글 작성
-		map.put("/writeArticle.do", "controller.article.WriteArticleCommand");
+//		map.put("/writeArticle.do", "controller.article.WriteArticleCommand");
 
 		// 게시글 삭제
 		map.put("/removeArticle.do", "controller.article.RemoveArticleCommand");
