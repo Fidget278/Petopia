@@ -84,6 +84,18 @@
 			</tr>
 		</tbody>
 	</table>
+		<tr>
+				<div class="file">
+					<c:if test="${not empty requestScope.articles.fileList }">
+						<th>파일명</th><th>파일크기</th>
+						<c:forEach var="file" items="${requestScope.article.fileList }">
+							<td>${file.originalFileName }</td>
+							<td>${file.fileSize } bytes</td>
+						</c:forEach>
+					</c:if>				
+				
+				</div>
+			</tr>
 		
 	</div>
 </body>

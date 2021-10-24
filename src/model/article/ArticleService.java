@@ -65,6 +65,7 @@ public class ArticleService {
 				// DB에 파일을 저장
 				fileDao.insertArticleFile(file, conn);
 			}
+			isSuccess = true;
 			
 		} catch(Exception e) {
 			throw e;

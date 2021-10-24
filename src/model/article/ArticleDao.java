@@ -127,21 +127,34 @@ public class ArticleDao {
     		conn = DBConn.getConnection();
     		
     		StringBuffer sql = new StringBuffer();
-    		sql.append("SELECT subject, nickname,                                  ");
-    		sql.append("DATE_FORMAT(writedate, '%Y%m%d') as writedate, content     ");
-    		sql.append("FROM article                                               ");
-    		sql.append("WHERE article_no = ?");
+    		sql.append("SELECT a.subject, a.nickname,                                  ");
+    		sql.append("DATE_FORMAT(a.writedate, '%Y%m%d') as writedate, a.content,     ");
+    		sql.append("f.originalFileName, f.systemFileName, f.fileSize               ");
+    		sql.append("FROM article as a LEFT JOIN file as f                        ");
+    		sql.append("ON a.article_no = f.article_no                              ");
+    		sql.append("WHERE a.article_no = ?");
     		
     		pstmt = conn.prepareStatement(sql.toString());
     		pstmt.setInt(1, articleNo);
     		
     		rs = pstmt.executeQuery();
     		
+    		boolean isFirst = true;
     		while (rs.next()) {
-    			articleVo.setSubject(rs.getString(1));
-    			articleVo.setNickname(rs.getString(2));
-    			articleVo.setWritedate(rs.getString(3));
-    			articleVo.setContent(rs.getString(4));
+    			if(isFirst) {
+	    			articleVo.setSubject(rs.getString(1));
+	    			articleVo.setNickname(rs.getString(2));
+	    			articleVo.setWritedate(rs.getString(3));
+	    			articleVo.setContent(rs.getString(4));
+    			}
+
+    			if(rs.getString(5) != null) { // 파일이 존재한다면
+    				ArticleFileVo file = new ArticleFileVo();
+    				file.setOriginalFileName(rs.getString(5));
+    				file.setSystemFileName(rs.getString(6));
+    				file.setFileSize(rs.getInt(7));
+    				articleVo.addArticleFile(file);
+    			}
     		}
     		
     		
