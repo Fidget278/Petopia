@@ -15,6 +15,15 @@ public class CommandFactory {
 		
 		map.put("/petopia.do", "controller.member.IntroCommand");
 		map.put("/login.do", "controller.member.LoginCommand");
+		
+		// 회원 목록
+		map.put("/viewMemberList.do", "controller.manager.MemberListCommand");
+		
+		// 회원 검색 시
+		map.put("/searchMember.do", "controller.manager.SearchMemberCommand");
+		
+		// 회원 상세 정보
+		map.put("/viewDetailMember.do", "controller.manager.DetailMemberCommand");
 	}
 	
 	public static CommandFactory getInstance() {

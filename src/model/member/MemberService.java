@@ -1,5 +1,7 @@
 package model.member;
 
+import java.util.ArrayList;
+
 public class MemberService {
 	private static MemberService memberService;
 
@@ -18,5 +20,26 @@ public class MemberService {
 		
 		System.out.println("memberService login");
 		return MemberDao.getInstance().selectMember(email, password);
+	}
+	
+	
+	// 회원 목록 조회
+	public ArrayList<MemberVo> retrieveMemberList(int startRow, int memberPerPage) throws Exception {
+		return  MemberDao.getInstance().selectMemberList(startRow, memberPerPage);
+	}
+	
+	// 회원의 총 멤버 수 카운트
+	public int  retrieveTotalMember() throws Exception {
+		return MemberDao.getInstance().selectTotalMember();
+	}
+	
+	// 회원 상세 조회
+	public MemberVo retrieveMember(int no) throws Exception {
+		return MemberDao.getInstance().selectMemberByManager(no);
+	}
+	
+	// 회원 검색 조회
+	public ArrayList<MemberVo> retrieveSearchMember(String keyfield, String keyword) throws Exception {
+		return MemberDao.getInstance().selectSearchMember(keyfield, keyword);
 	}
 }

@@ -21,8 +21,8 @@ public class MemberVo {
 
 	
 	
-	public MemberVo(String email, String grade, String nickname, String regDate, String lastDate, int docs, int comms,
-			int visits, String ban) {
+	public MemberVo(String email, String nickname, String regDate, String lastDate, String grade, int docs, int comms,
+			int visits, String ban, boolean isMember) {
 		super();
 		this.email = email;
 		this.nickname = nickname;
@@ -33,6 +33,7 @@ public class MemberVo {
 		this.comms = comms;
 		this.visits = visits;
 		this.ban = ban;
+		this.isMember = isMember;
 	}
 
 
