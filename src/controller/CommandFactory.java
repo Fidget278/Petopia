@@ -20,6 +20,7 @@ public class CommandFactory {
 		map.put("/login.do", "controller.member.LoginCommand");
 		map.put("/logout.do", "controller.member.LogOutCommand");
 		
+		map.put("/side.do", "controller.SideCommand");
 		// 게시글 목록 조회
 		map.put("/viewListArticleContent.do", "controller.article.ListArticleCommand");
 				

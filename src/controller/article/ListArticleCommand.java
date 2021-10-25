@@ -81,7 +81,10 @@ public class ListArticleCommand implements Command{
 //		request.setAttribute("content", "/viewListArticleContent");
 		
 //		return new ActionForward("/homeIndex.jsp?currentPage=" + currentPage, false);
-		return new ActionForward("/viewHomeTemplate.jsp?side=/petopia.do&content=/viewListArticleContent.jsp?currentPage=" + currentPage, false);
+		//request.setAttribute("side", "/viewFrameSidebar.jsp");
+		request.setAttribute("content", "/viewListArticleContent.jsp?currentPage=" + currentPage);
+		return new ActionForward("/side.do", false);
+		//return new ActionForward("/viewHomeTemplate.jsp?side=/petopia.do&content=/viewListArticleContent.jsp?currentPage=" + currentPage, false);
 	}
 	
 }

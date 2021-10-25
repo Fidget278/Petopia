@@ -26,7 +26,8 @@ public class IntroCommand implements Command {
 
 		session.setAttribute("user", memberProfile);
 		
-		request.setAttribute("content", "/viewHomeContent");
+		request.setAttribute("side", "/viewFrameSidebar.jsp");
+		request.setAttribute("content", "/viewHomeContent.jsp");
 		
 		CategoryService categoryService = CategoryService.getInstance();
 		ArrayList<CategoryVo> categoryList = categoryService.retrieveCategoryList();
@@ -34,7 +35,7 @@ public class IntroCommand implements Command {
 		//리스트 출력페이지로 
 		request.setAttribute("categoryList", categoryList);
 
-		return new ActionForward("/homeIndex.jsp", false);
+		return new ActionForward("/viewHomeTemplate.jsp", false);
 	}
 
 }
