@@ -54,14 +54,14 @@
 			</thead>
 			<tbody>
 				<%-- 만약에 request영역에 바인딩된 자료가 비어 있는 경우 --%>
-				<c:if test="${empty requestScope.articles }">
+				<c:if test="${empty requestScope.searchArticle }">
 					<tr>
 						<td colspan="6">등록된 게시글이 없습니다.</td>
 					</tr>
 				</c:if>
 
-				<c:if test="${not empty requestScope.articles }">
-					<c:forEach var="article" items="${requestScope.articles }"
+				<c:if test="${not empty requestScope.searchArticle }">
+					<c:forEach var="article" items="${requestScope.searchArticle }"
 						varStatus="loop">
 						<%-- 상세 조회 --%>
 						<c:url var="detailArticleUrl" value="/viewDetailArticleContent.do">
@@ -94,7 +94,7 @@
 
 			<%-- 1블록을 제외한 모든 경우 --%>
 			<c:if test="${startPage > pageBlock }">
-				<c:url var="prevUrl" value="/viewListArticleContent.do">
+				<c:url var="prevUrl" value="/viewListSearchArticleContent.do">
 					<c:param name="currentPage" value="${startPage - pageBlock }" />
 				</c:url>
 				<a href="${prevUrl }">[Prev]</a>
@@ -106,7 +106,7 @@
 				</c:if>
 				<%-- 현재 페이지가 아닌 애들 출력 , 만약에 그 page번호를 클릭한다면 자기 자신을 cuurentPage로 해서 /listArticle.do로 넘겨준다 --%>
 				<c:if test="${i != currentPage }">
-					<c:url var="movePageUrl" value="/viewListArticleContent.do">
+					<c:url var="movePageUrl" value="/viewListSearchArticleContent.do">
 						<c:param name="currentPage" value="${i}" />
 					</c:url>
 					<a href="${movePageUrl}">&nbsp;${i}&nbsp;</a>
@@ -114,7 +114,7 @@
 			</c:forEach>
 			<%-- 다음 페이지로 넘긴다. --%>
 			<c:if test="${endPage < totalPage }">
-				<c:url var="nextUrl" value="/viewListArticleContent.do">
+				<c:url var="nextUrl" value="/viewListSearchArticleContent.do">
 					<c:param name="currentPage" value="${endPage + 1 }" />
 				</c:url>
 				<a href="${nextUrl }">[Next]</a>
