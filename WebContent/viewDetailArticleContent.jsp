@@ -5,6 +5,11 @@
 <%@ page import="java.util.*, model.article.ArticleVo" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>    
+<%@ page session="true" %>
+<% session = request.getSession();
+	session.setAttribute("articleNo", request.getParameter("articleNo"));
+%>
+
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -38,7 +43,7 @@
                 });
             }   
     		 
-    		const removeReply = function(url, no) {
+    		const removeReply = function(url, no, articleNo) {
                 // resolve, reject는 자바스크립트에서 지원하는 콜백 함수이다.
                 return new Promise( (resolve, reject) => {
                     $.ajax({                        
@@ -46,12 +51,14 @@
                         method: 'GET',
                         dataType: 'json',
                         data: {
-                        	no: no                            
+                        	no: no,   
+                        	articleNo: articleNo
                         },
                         success: function(data) {                    	
                             resolve(data);
                         }, 
-                        error: function(e) {                    	
+                        error: function(e) {
+                        	console.trace();
                             reject(e);
                         }
                     });
@@ -60,12 +67,14 @@
     		
             async function requestProcess(url, no, content) {
                 try {
+                	console.log(content);
+                	console.log(no);
                     
                 	let replyList = null;
                 	if(content != null || content != '') {
                 		replyList = await getAjax(url, no, content);	
                 	} else {
-                		replyList = await removeReply(url, no);
+                		/*replyList = await removeReply(url, no);*/
                 	}
                 	     
                                        
@@ -94,6 +103,7 @@
 				 	
 				 	$('#ListReply').html(htmlStr.join(""));
                 } catch (error) {
+                	console.trace();
                     console.log("error : ", error);   
                 }
             }
@@ -122,7 +132,8 @@
             $('.ListReply').on('click', '.removeBtn', function() {
             	const articleNo = '${param.articleNo}';
             	const no = $(this).parents('table').attr('id');
-            	requestProcess('${pageContext.request.contextPath}/removeReply.do', no);        	
+            	console.log(2,no);
+            	removeReply('${pageContext.request.contextPath}/removeReply.do', no, articleNo);        	
             });
             
             
@@ -135,7 +146,7 @@
             });
             
             //댓글 수정
-            $('#modifyBtn').on('click', function() {
+            $('.modifyBtn').on('click', function() {
             	const articleNo = '${param.articleNo}';
             	const no = $('#no').val();
             	const content = $('#modifyReplyContent').val();
@@ -143,13 +154,13 @@
             
             });
 				
-            
+            <%--
             //댓글 삭제
             $('.ListReply').on('click', '.removeBtn', function() {      
             	console.log("call");
             	const no = $(this).parents('table').attr('id');
             	         	
-            }); 
+            }); --%>
     
 	});
 	
@@ -277,7 +288,7 @@
 		</div>
 		<div>
 			<button id="cancel">취소</button>
-			<button id="modifyBtn">수정하기</button>
+			<button class="modifyBtn">수정하기</button>
 		</div>
 	</div>	
 </body>

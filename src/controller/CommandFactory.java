@@ -44,7 +44,7 @@ public class CommandFactory {
 		// 댓글 수정
 		map.put("/modifyReply.do", "controller.reply.ModifyReplyCommand");
 		// 댓글 삭제
-		map.put("/removeReply.do", "controller.RemoveReplyCommand");
+		map.put("/removeReply.do", "controller.reply.RemoveReplyCommand");
 	}
 	
 	public static CommandFactory getInstance() {
@@ -68,6 +68,7 @@ public class CommandFactory {
 			Constructor<?> constructor = cls.getConstructor();
 			Command command = (Command)constructor.newInstance();
 			
+			System.out.println("팩 아웃");
 			return command;
 		} catch(Exception e) {
 			throw e;

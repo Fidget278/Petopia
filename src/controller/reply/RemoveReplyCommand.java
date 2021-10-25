@@ -25,12 +25,11 @@ public class RemoveReplyCommand implements Command{
 		
 		for (ReplyVo replyVo : replyList) {
 			System.out.println(replyVo);
-		}
 		
 		request.setAttribute("replyList", replyList);
 		// 얘도 ajax
 		
+	}
 		return new ActionForward("/listReply.jsp",false);
 	}
-
 }
