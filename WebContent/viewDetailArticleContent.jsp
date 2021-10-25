@@ -6,6 +6,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>    
 
+<%
+	pageContext.setAttribute("CR", "\n");
+	pageContext.setAttribute("BR", "<br>");
+%>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+		crossorigin="anonymous">
+</script>
+
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -14,6 +25,80 @@
 <title>Content</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
 <link href="./css/viewMainContent.css" rel="stylesheet" type="text/css">
+<script>
+	$(document).ready(function() {
+	
+		// 댓글 작성	
+		const getAjax = function(url, no, contet){
+			
+			return new Promise( (resolve, reject) => {
+				$.ajax({
+					url: url,
+					method: 'get',
+					dataType: 'json', // return받을 데이터 타입
+					data: {
+						no:no
+						content: content
+					},
+					success: function(data){
+						resolve(data);
+					},
+					error: function(e){
+						rejectO(e);
+					}
+				}); 
+			}); // Promise End
+		} // get Ajax End
+		
+		
+		async function requestProcess(url, no, content){
+			
+			
+			try{
+				let replyList = null;
+				if(content != null || content != ''){ // 댓글 내용이 없을 떄
+					replyList = await getAjax(url, no, content);
+				} else{
+					replyList = await removeReply(url, no);
+				}
+			}
+			
+			$('#ListReply').html("");
+			
+			let htmlStr =[];
+			for (let i=0; i<replyList.length; i++){
+				htmlStr.push('<table id=' + replyList[i].no + '>');
+				htmlStr.push('<tbody>');
+				htmlStr.push('<tr>');
+				htmlStr.push('<td>' + replyList[i].nickname + '</td>');
+				htmlStr.push();
+				htmlStr.push();
+				htmlStr.push();
+				htmlStr.push();
+				htmlStr.push();
+				htmlStr.push();
+				htmlStr.push();
+				htmlStr.push();
+				htmlStr.push();
+				htmlStr.push();
+				htmlStr.push();
+				htmlStr.push();
+				htmlStr.push();
+				htmlStr.push();
+				htmlStr.push();
+				htmlStr.push();
+			}
+		}
+		
+		
+		
+			
+	});	// docu.ready End
+	
+</script>
+
+
+
 </head>
 <body>
 	<div class="content">
@@ -72,17 +157,19 @@
 				 	</td>
 			 	</div>
 			 </tr>
+			<%-- 댓글 --%>
 			<tr height="200"> 
 				<td colspan="4">
-					<form>
-						<p><textarea cols="200" rows="10"></textarea></p>
-					</form>
+					<textarea class="form-control" id="replyContent" placeholder="내용을 입력해 주세요" cols="100" rows="5"></textarea>
 				</td>
-				<td><button id="writeFormBtn" type="button" onclick="location.href='링크주소';">등록</button></td>
-				
+				<td>
+					<button onclick="writeReply(${param.articleNo},${sessionScope.user.no },${sessionScope.user.nickname })" class="btn btn-primary pull-right">등록</button>
+					<%--<button id="writeReplyBtn" name="wr" onClick="writeReply()" class="btn btn-primary pull-right">등록</button>--%>
+				</td>
 			</tr>
-			<tr height="200"> 
-				<td colspan="6">댓글 목록창</td>>
+				댓ㄱ글 리스트
+			<tr>
+				<div class="reply_List"></div>
 			</tr>
 		</tbody>
 	</table>
@@ -101,6 +188,8 @@
 				<td><a href="${downloadUrl}">${file.originalFileName }</a></td>
 				<td>${file.fileSize } bytes</td>
 			</c:forEach>
-		</c:if>				
+		</c:if>
+	</div>		
 </body>
+
 </html>
