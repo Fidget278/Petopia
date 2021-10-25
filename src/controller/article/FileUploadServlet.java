@@ -35,7 +35,7 @@ public class FileUploadServlet extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		MemberVo member = (MemberVo) session.getAttribute("user");
-
+		
 		try {
 			
 			System.out.println("fileServlet 진입");
@@ -49,21 +49,11 @@ public class FileUploadServlet extends HttpServlet {
 			// 회원 정보 저장
 			article.setMemberNo(member.getNo());
 			article.setNickname(member.getNickname());
-			for (Part part : parts) {
-				
-				String name = part.getName();
-				System.out.println(part.getHeader("content-disposition"));
-				System.out.println(part.getName());
-				if (name.equals("boardSelect")) {
-					System.out.println("보셀");
-				}
-				else if(name.equals("subject")) {
-					System.out.println("subject!!P!)!)!)");
-				};
-			}
 			
 			// 게시글 내용 저장
 			for (Part part : parts) {
+//				System.out.println(part.getHeader("content-disposition"));
+//				System.out.println(part.getName());
 				if(!part.getHeader("Content-Disposition").contains("filename=")) {
 					// 만약 파트 객체의 Content-Disposiotion 헤더에 filename=을 포함하고 있지 않다면
 					// form data이니 받아준다 (subject, content 등)
@@ -102,7 +92,9 @@ public class FileUploadServlet extends HttpServlet {
 			ArticleService articleService = ArticleService.getInstance();
 			articleService.registerArticle(article);
 			
-			response.sendRedirect(request.getContextPath() + "/viewListArticleContent.do");
+			int boardNo = article.getBoardNo();
+			
+			response.sendRedirect(request.getContextPath() + "/viewListArticleContent.do?boardNo="  + boardNo);
 			
 		}catch (Exception e) {
 			request.setAttribute("exception", e);

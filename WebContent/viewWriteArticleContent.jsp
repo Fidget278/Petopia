@@ -26,7 +26,7 @@
 				
 			<%--<form action="writeArticle.do" accept-charset="utf-8" name="boardSelect"> --%>
 			<form action="${pageContext.request.contextPath }/uploadFile" method="POST" enctype="multipart/form-data">
-					<input type="hidden" name="boardNo" value="${parma.boardNo }">
+					<input type="hidden" name="boardNo" value="${param.boardNo }">
 					<tr>
 						<td>
 						<%-- 게시판 선택 --%>

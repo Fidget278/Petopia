@@ -83,7 +83,10 @@ public class ModifyArticleServlet extends HttpServlet {
 			// 세션에 저장되어 있던 게시글 정보 제거
 			session.removeAttribute("article");
 			
-			response.sendRedirect(request.getContextPath() + "/viewListArticleContent.do");
+			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+			int articleNo = article.getArticleNo();
+			
+			response.sendRedirect(request.getContextPath() + "/viewDetailArticleContent.do?articleNo="+ articleNo + "&boardNo=" + boardNo);
 			
 		} catch (Exception e) {
 			request.setAttribute("excetion", e);

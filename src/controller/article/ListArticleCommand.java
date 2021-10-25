@@ -31,7 +31,6 @@ public class ListArticleCommand implements Command{
 		System.out.println("커맨드 호출");
 		int currentPage = 0;
 		HttpSession session = request.getSession();
-		int boardNo = 0;
 		
 		try {
 			// 현재 페이지에 대한 정보를 받아온다.
@@ -46,14 +45,9 @@ public class ListArticleCommand implements Command{
 		// currentPage에 -1을 해주는 이유는 mysqlDB는 index가 0부터 시작이기 떄문이다.
 		int startRow = (currentPage - 1) * POST_PER_PAGE;
 		
-//		int boardNo= Integer.parseInt(request.getParameter("boardNo"));
+		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+
 		System.out.println("목록조회 커맨드 boardNo: " + boardNo);
-		
-		if (session.getAttribute("boardNo") == null) { 
-			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
-		} else {
-			int boardNo = Integer.parseInt((String) session.getAttribute("boardNo"));
-		}
 		
 		// *3. DB에 접근하여 게시글 정보를 불러온다.
 		ArrayList<ArticleVo> articles = ArticleService.getInstance().retrieveArticleList(boardNo,startRow, POST_PER_PAGE);
@@ -97,9 +91,6 @@ public class ListArticleCommand implements Command{
 		
 		request.setAttribute("categoryList", categoryList);
 		
-
-//		request.setAttribute("side", "/side.do");
-
 		request.setAttribute("side", "/viewFrameSidebar.jsp");
 		request.setAttribute("content", "/viewListArticleContent.jsp?currentPage="+ currentPage);
 

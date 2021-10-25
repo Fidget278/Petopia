@@ -27,6 +27,7 @@
 			<tbody>
 				<form action="${pageContext.request.contextPath }/modifyArticle" method="POST" enctype="multipart/form-data">
 					<input type="hidden" name="articleNo" value="${param.articleNo }">
+					<input type="hidden" name="boardNo" value="${param.boardNo }">
 						<tr>
 							<td>
 							<div class="selectBoard">

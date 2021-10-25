@@ -16,8 +16,10 @@
 <link href="./css/viewMainContent.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+	
 	<div class="content">
 		<!-- Content 내용 여기에 추가 -->
+		<h1>${param.boardName }</h1>		
 		<table class="bbs" weidth="800" height="600" border="2" bgcolor="D8D8D8">
 			<colgroup>
 				<col width="80" /> <%--No --%>

@@ -19,9 +19,6 @@
 	<div class="content">
 		<!-- Content 내용 여기에 추가 -->
 		<table class="bbs" width="800" height="900" border="2" bgcolor="D8D8D8">
-		<thead>
-			<tr rowspab="3">카테고리 선택</tr>
-		</thead>
 		<tbody>
 			<tr>
 				<p>
@@ -51,7 +48,10 @@
 				 	<td>
 				 		<button id="btn" type="button" onclick="location.href='viewWriteArticleForm.do';">글쓰기</button>
 				 	</td>
-				 	<td>목록</td>
+				 	<td>
+				 		<c:url var="backUrl" value="/viewListArticleContent.do?boardNo=${param.boardNo }"/>
+				 		<button id="backBtn" type="button" onclick="location.href='${backUrl}';">목록</button>
+				 	</td>
 				 	<td>좋아요</td>
 				 	</tab>
 				 	<td>
@@ -102,9 +102,5 @@
 				<td>${file.fileSize } bytes</td>
 			</c:forEach>
 		</c:if>				
-			
-	</div>
-		
-	</div>
 </body>
 </html>
