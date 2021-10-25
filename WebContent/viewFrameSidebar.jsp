@@ -46,8 +46,8 @@
 		</article>
 		<article class="sidebar-btn">
 			<section>
-				<span>쪽지함</span>
 				<span onclick="location.href='${pageContext.request.contextPath}/managerStatisticsDaily.do'">통계</span>
+				<span onclick="location.href='${pageContext.request.contextPath}/noteList.do?isRecieve=1'">쪽지함</span>
 			</section>
 			<section>
 				<span onclick="location.href='${pageContext.request.contextPath}/viewWriteArticleForm.do'">카페 글쓰기</span> <span>전체 글 보기</span>
