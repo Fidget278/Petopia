@@ -40,8 +40,11 @@ public class ListArticleCommand implements Command{
 		// currentPage에 -1을 해주는 이유는 mysqlDB는 index가 0부터 시작이기 떄문이다.
 		int startRow = (currentPage - 1) * POST_PER_PAGE;
 		
+		int boardNo= Integer.parseInt(request.getParameter("boardNo"));
+		System.out.println("목록조회 커맨드 boardNo: " + boardNo);
+		
 		// *3. DB에 접근하여 게시글 정보를 불러온다.
-		ArrayList<ArticleVo> articles = ArticleService.getInstance().retrieveArticleList(startRow, POST_PER_PAGE);
+		ArrayList<ArticleVo> articles = ArticleService.getInstance().retrieveArticleList(boardNo,startRow, POST_PER_PAGE);
 		
 		
 		// *4. request영역에 바인딩
@@ -75,9 +78,10 @@ public class ListArticleCommand implements Command{
 		request.setAttribute("totalPostCount", totalPostCount);
 		request.setAttribute("postSize", POST_PER_PAGE);
 		
-		request.setAttribute("content", "/viewListArticleContent");
+//		request.setAttribute("content", "/viewListArticleContent");
 		
-		return new ActionForward("/homeIndex.jsp?currentPage=" + currentPage, false);
+//		return new ActionForward("/homeIndex.jsp?currentPage=" + currentPage, false);
+		return new ActionForward("/viewHomeTemplate.jsp?side=/petopia.do&content=/viewListArticleContent.jsp?currentPage=" + currentPage, false);
 	}
 	
 }

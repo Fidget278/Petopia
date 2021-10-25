@@ -26,7 +26,7 @@ public class ArticleDao {
 
 
     // 게시글 목록 조회
-    public ArrayList<ArticleVo> selectArticleList(int startRow, int postSize) throws Exception{
+    public ArrayList<ArticleVo> selectArticleList(int boardNo, int startRow, int postSize) throws Exception{
         ArrayList<ArticleVo> articles = new ArrayList<ArticleVo>();
         
         Connection conn = null;
@@ -44,15 +44,16 @@ public class ArticleDao {
             sql.append("SELECT article_no, subject, nickname,                                 ");
             sql.append("DATE_FORMAT(writedate, '%Y/%m/%d') as writedate, viewcount, likecount ");
             sql.append("FROM article                                                          ");
-//            sql.append("ORDER BY writedate DESC                                               ");
+            sql.append("WHERE board_no=?                                                      ");
             sql.append("ORDER BY article_no DESC                                               ");
             // LIMIT: 몇 개를 출력할지, OFFSET: 어디서 부터 시작할지
             sql.append("LIMIT ? OFFSET ?");
             
             pstmt = conn.prepareStatement(sql.toString());
             
-            pstmt.setInt(1, postSize);
-            pstmt.setInt(2, startRow);
+            pstmt.setInt(1, boardNo);
+            pstmt.setInt(2, postSize);
+            pstmt.setInt(3, startRow);
             
             rs = pstmt.executeQuery();
             

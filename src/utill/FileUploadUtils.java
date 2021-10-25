@@ -3,6 +3,7 @@ package utill;
 import java.io.File;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 
 import model.article.ArticleFileVo;
@@ -10,9 +11,11 @@ import model.article.ArticleFileVo;
 public class FileUploadUtils {
 	
 	// 파일이 저장될 폴더
-	public static final String UPLOAD_PATH = "C:/upload";
+	public static String UPLOAD_PATH = "";
 
-	public static ArticleFileVo upload(Part part) throws Exception{
+	public static ArticleFileVo upload(Part part, HttpServletRequest req) throws Exception{
+		UPLOAD_PATH = req.getServletContext().getRealPath("/upload");
+		System.out.println("UPLOAD_PATH : " + UPLOAD_PATH);
 		
 		// 전송된 파일의 이름, 업로드한 파일의 이름을 구한다.
 		String originalFileName = part.getSubmittedFileName();

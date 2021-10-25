@@ -23,9 +23,9 @@ public class ArticleService {
 	}
 	
 	// 게시글 목록 조회
-	public ArrayList<ArticleVo> retrieveArticleList(int startRow, int postSize) throws Exception{
+	public ArrayList<ArticleVo> retrieveArticleList(int boardNo, int startRow, int postSize) throws Exception{
 		ArticleDao articleDao = ArticleDao.getInsatnce();	
-		return articleDao.selectArticleList(startRow, postSize);
+		return articleDao.selectArticleList(boardNo, startRow, postSize);
 		
 	}
 	

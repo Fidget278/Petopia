@@ -71,7 +71,7 @@
 				</tr>
 				
 				<c:forEach var="board" items="${pageScope.category.boardList }">
-					<c:url var="url" value="/.do">				 <%-- 게시판별 게시글 목록 조회.do --%>
+					<c:url var="url" value="/viewListArticleContent.do"> <%-- 게시판별 게시글 목록 조회.do --%>
 					<c:param name="boardNo" value="${pageScope.board.boardNo}" />
 					</c:url>
 					<tr id=board>

@@ -70,7 +70,7 @@ public class ModifyArticleServlet extends HttpServlet {
 					// != 0 이라면 파일이 존재한다는 의미
 					if (part.getSize() != 0) {
 						// originalFileName, systemFileName, fileSize가 담긴 FileVo객체 반환
-						ArticleFileVo file = FileUploadUtils.upload(part);
+						ArticleFileVo file = FileUploadUtils.upload(part, request);
 						// 반환된 객체를 articleVo에 추가
 						article.addArticleFile(file);
 					}

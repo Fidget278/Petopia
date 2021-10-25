@@ -89,7 +89,7 @@ public class FileUploadServlet extends HttpServlet {
 					// 만약 part객체가 있다면.
 					if(part.getSize() != 0) {
 						// file은 ArticlefileVo객체 반환
-						ArticleFileVo file = FileUploadUtils.upload(part);
+						ArticleFileVo file = FileUploadUtils.upload(part, request);
 						// ArticleVo의  ArrayList<ArticleFileVo> 객체에 file을 add
 						article.addArticleFile(file);
 					}
