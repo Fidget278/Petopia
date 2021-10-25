@@ -28,7 +28,7 @@ public class RegisterReplyCommand implements Command{
 		service.registerReply(reply);
 		
 		// ajax로 바로 작성되고 밑에 보이도록 해야됨.
-		return null;
+		return new ActionForward();
 	}
 
 }

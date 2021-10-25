@@ -30,12 +30,15 @@ public class CommandFactory {
 
 		// 게시글 삭제
 		map.put("/removeArticle.do", "controller.article.RemoveArticleCommand");
-/* -------------------------------------미구현-------------------------------------------------- */
+
 		// 게시글 수정폼이동
 		map.put("/viewModifyArticleForm.do", "controller.article.ModifyArticleFormCommand");
 		
-		// 게시글 수정
-//		map.put("/modifyArticle.do", "controller.article.ModifyArticleCommand");
+		// 댓글 목록 불러오기
+		map.put("/getReply.do", "controller.reply.RetrieveReplyCommand");
+		
+		// 댓글 작성
+		map.put("/writeReply.do", "controller.reply.RegisterReplyCommand");
 	}
 	
 	public static CommandFactory getInstance() {
