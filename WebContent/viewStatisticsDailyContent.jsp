@@ -20,12 +20,16 @@
 		<div class="content-header">
 			<table>
 				<tr>
-					<td onclick="location.href='${pageContext.request.contextPath}/managerStatisticsDaily.do'">일일 통계</td>
-					<td onclick="location.href='${pageContext.request.contextPath}/managerStatisticsTotal.do'">총 통계</td>
+					<td
+						onclick="location.href='${pageContext.request.contextPath}/managerStatisticsDaily.do'">일일
+						통계</td>
+					<td
+						onclick="location.href='${pageContext.request.contextPath}/managerStatisticsTotal.do'">총
+						통계</td>
 				</tr>
 			</table>
 		</div>
-		<div id="line_top_x"></div>
+		<!-- <div id="line_top_x" class="chart-style"></div> -->
 		<div class="content-text">
 			<table>
 				<thead>
@@ -48,6 +52,15 @@
 			</table>
 		</div>
 	</div>
+	<!-- <script>
+		function getParameter(name) {
+			name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+			var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex
+					.exec(location.search);
+			return results === null ? "" : decodeURIComponent(results[1]
+					.replace(/\+/g, " "));
+		}
+	</script>
 	<script type="text/javascript"
 		src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">
@@ -59,30 +72,25 @@
 		function drawChart() {
 
 			var data = new google.visualization.DataTable();
-			data.addColumn('number', 'Day');
-			data.addColumn('number', 'Guardians of the Galaxy');
-			data.addColumn('number', 'The Avengers');
-			data.addColumn('number', 'Transformers: Age of Extinction');
+			data.addColumn('number', '날짜');
+			data.addColumn('number', '일일 게시글 수');
+			data.addColumn('number', '일일 방문자 수');
 
-			data.addRows([ [ 1, 37.8, 80.8, 41.8 ], [ 2, 30.9, 69.5, 32.4 ],
-					[ 3, 25.4, 57, 25.7 ], [ 4, 11.7, 18.8, 10.5 ],
-					[ 5, 11.9, 17.6, 10.4 ], [ 6, 8.8, 13.6, 7.7 ],
-					[ 7, 7.6, 12.3, 9.6 ], [ 8, 12.3, 29.2, 10.6 ],
-					[ 9, 16.9, 42.9, 14.8 ], [ 10, 12.8, 30.9, 11.6 ],
-					[ 11, 5.3, 7.9, 4.7 ], [ 12, 6.6, 8.4, 5.2 ],
-					[ 13, 4.8, 6.3, 3.6 ], [ 14, 4.2, 6.2, 3.4 ] ]);
+			data.addRows([ [ 1, 37.8, 80.8 ], [ 2, 30.9, 69.5 ],
+					[ 3, 25.4, 57 ], [ 4, 11.7, 18.8 ], [ 5, 11.9, 17.6 ],
+					[ 6, 8.8, 13.6 ], [ 7, 7.6, 12.3 ] ]);
 
 			var options = {
 				chart : {
-					title : 'Box Office Earnings in First Two Weeks of Opening',
-					subtitle : 'in millions of dollars (USD)'
+					title : '',
+					subtitle : ''
 				},
-				width : 900,
-				height : 500,
+				width : 1000,
+				height : 400,
 				axes : {
 					x : {
 						0 : {
-							side : 'top'
+							side : 'bottom'
 						}
 					}
 				}
@@ -93,7 +101,8 @@
 
 			chart.draw(data, google.charts.Line.convertOptions(options));
 		}
-	</script>
+	</script> -->
+
 	<script>
 		function daily(url) {
 
