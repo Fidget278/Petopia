@@ -12,8 +12,11 @@ public class WriteArticleFormCommand implements Command{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) 
 			throws Exception {
 
+		
+		request.setAttribute("content", "viewWriteArticleContent.jsp");
+		
 		// 글쓰기 요청이 오면 게시글 작성 폼으로 이동
-		ActionForward forward = new ActionForward("/writeArticleForm.jsp", false);
+		ActionForward forward = new ActionForward("/homeIndex.jsp", false);
 		return forward;
 	}
 

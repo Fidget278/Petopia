@@ -13,8 +13,8 @@ public class ArticleVo {
 	private String content; // 내용
 	private int viewcount; // 조회수
 	private int likecount; // 좋아요(추천) 수
-	private ArrayList<ArticleFileVo> file = new ArrayList<ArticleFileVo>(); // 첨부파일 List
-	private ArrayList<ReplyVo> reply = new ArrayList<ReplyVo>(); // 댓글 List
+	private ArrayList<ArticleFileVo> fileList = new ArrayList<ArticleFileVo>(); // 첨부파일 List
+	private ArrayList<ReplyVo> replyList = new ArrayList<ReplyVo>(); // 댓글 List
 
 	public ArticleVo() {
 
@@ -134,20 +134,20 @@ public class ArticleVo {
 		this.likecount = likecount;
 	}
 
-	public ArrayList<ArticleFileVo> getFile() {
-		return file;
+	public ArrayList<ArticleFileVo> getFileList() {
+		return fileList;
 	}
 
-	public void setFile(ArrayList<ArticleFileVo> file) {
-		this.file = file;
+	public void setFileList(ArrayList<ArticleFileVo> file) {
+		this.fileList = file;
 	}
 
-	public ArrayList<ReplyVo> getReply() {
-		return reply;
+	public ArrayList<ReplyVo> getReplyList() {
+		return replyList;
 	}
 
-	public void setReply(ArrayList<ReplyVo> reply) {
-		this.reply = reply;
+	public void setReplyList(ArrayList<ReplyVo> reply) {
+		this.replyList = reply;
 	}
 
 
@@ -158,7 +158,9 @@ public class ArticleVo {
 				+ writedate + ", viewcount=" + viewcount + ", likecount=" + likecount + "]";
 	}
 	
-	
+	public void addArticleFile(ArticleFileVo file) {
+		this.fileList.add(file);
+	}
 	
 	
 

@@ -26,7 +26,7 @@ public class ArticleDao {
 
 
     // 게시글 목록 조회
-    public ArrayList<ArticleVo> selectArticleList(int startRow, int postSize) throws Exception{
+    public ArrayList<ArticleVo> selectArticleList(int boardNo, int startRow, int postSize) throws Exception{
         ArrayList<ArticleVo> articles = new ArrayList<ArticleVo>();
         
         Connection conn = null;
@@ -44,14 +44,16 @@ public class ArticleDao {
             sql.append("SELECT article_no, subject, nickname,                                 ");
             sql.append("DATE_FORMAT(writedate, '%Y/%m/%d') as writedate, viewcount, likecount ");
             sql.append("FROM article                                                          ");
-            sql.append("ORDER BY writedate DESC                                               ");
+            sql.append("WHERE board_no=?                                                      ");
+            sql.append("ORDER BY article_no DESC                                               ");
             // LIMIT: 몇 개를 출력할지, OFFSET: 어디서 부터 시작할지
             sql.append("LIMIT ? OFFSET ?");
             
             pstmt = conn.prepareStatement(sql.toString());
             
-            pstmt.setInt(1, postSize);
-            pstmt.setInt(2, startRow);
+            pstmt.setInt(1, boardNo);
+            pstmt.setInt(2, postSize);
+            pstmt.setInt(3, startRow);
             
             rs = pstmt.executeQuery();
             
@@ -126,21 +128,34 @@ public class ArticleDao {
     		conn = DBConn.getConnection();
     		
     		StringBuffer sql = new StringBuffer();
-    		sql.append("SELECT subject, nickname,                                  ");
-    		sql.append("DATE_FORMAT(writedate, '%Y%m%d') as writedate, content     ");
-    		sql.append("FROM article                                               ");
-    		sql.append("WHERE article_no = ?");
+    		sql.append("SELECT a.subject, a.nickname,                                  ");
+    		sql.append("DATE_FORMAT(a.writedate, '%Y%m%d') as writedate, a.content,     ");
+    		sql.append("f.originalFileName, f.systemFileName, f.fileSize               ");
+    		sql.append("FROM article as a LEFT JOIN file as f                        ");
+    		sql.append("ON a.article_no = f.article_no                              ");
+    		sql.append("WHERE a.article_no = ?");
     		
     		pstmt = conn.prepareStatement(sql.toString());
     		pstmt.setInt(1, articleNo);
     		
     		rs = pstmt.executeQuery();
     		
+    		boolean isFirst = true;
     		while (rs.next()) {
-    			articleVo.setSubject(rs.getString(1));
-    			articleVo.setNickname(rs.getString(2));
-    			articleVo.setWritedate(rs.getString(3));
-    			articleVo.setContent(rs.getString(4));
+    			if(isFirst) {
+	    			articleVo.setSubject(rs.getString(1));
+	    			articleVo.setNickname(rs.getString(2));
+	    			articleVo.setWritedate(rs.getString(3));
+	    			articleVo.setContent(rs.getString(4));
+    			}
+
+    			if(rs.getString(5) != null) { // 파일이 존재한다면
+    				ArticleFileVo file = new ArticleFileVo();
+    				file.setOriginalFileName(rs.getString(5));
+    				file.setSystemFileName(rs.getString(6));
+    				file.setFileSize(rs.getInt(7));
+    				articleVo.addArticleFile(file);
+    			}
     		}
     		
     		
@@ -161,12 +176,17 @@ public class ArticleDao {
     	
     	int no = 0;
     	PreparedStatement pstmt = null;
+    	Statement stmt = null;
     	ResultSet rs = null;
+    	System.out.println("*********************************************");
+    	System.out.println("insertArticle: " + article.toString());
     	
     	try {
     		StringBuffer sql = new StringBuffer();
     		sql.append("INSERT INTO article (member_no, board_no, nickname, subject, content)   ");
     		sql.append("VALUES(?, ?, ?, ?, ?)");
+    		
+    		System.out.println("ArticleDao로 넘어온 Vo객체: " + article.toString());
     		
     		pstmt = conn.prepareStatement(sql.toString());
 
@@ -182,18 +202,85 @@ public class ArticleDao {
     		pstmt.executeUpdate();
 //    		pstmt.executeQuery();
     		pstmt.close();
+
+    		// 파일 업로드를 하기 위해 게시글 번호를 반환
+    		stmt = conn.createStatement();
+    		
+    		// StringBuffer 비우기
+    		sql.delete(0, sql.length());
+    		sql.append("SELECT LAST_INSERT_ID()");
+    		rs = stmt.executeQuery(sql.toString());
+    		
+    		if(rs.next()) {
+    			no = rs.getInt(1);
+    		}
     		
     	} catch(Exception e) {
     		throw e;
     	} finally {
     		try {
     			if (rs != null) rs.close();
-    			if (pstmt != null) pstmt.close();
-    			if (conn != null) conn.close();
+    			if (stmt != null) stmt.close();
     		} catch(Exception e2) {
     			throw e2;
     		}
     	}
     	return no;
     }
+    
+    // 게시글 수정
+    public void updateArticle(ArticleVo article, Connection conn) throws Exception{
+    	
+    	PreparedStatement pstmt = null;
+    	
+    	try {
+    		StringBuffer sql = new StringBuffer();
+    		sql.append("UPDATE article                               ");
+    		sql.append("SET board_no = ?, subject = ?, content = ?    ");
+    		sql.append("WHERE article_no = ?");
+    		
+    		pstmt = conn.prepareStatement(sql.toString());
+    		pstmt.setInt(1, article.getBoardNo());
+    		pstmt.setString(2, article.getSubject());
+    		pstmt.setString(3, article.getContent());
+    		pstmt.setInt(4, article.getArticleNo());
+    		System.out.println("pstmt: " +pstmt);
+    		pstmt.executeUpdate();
+    		
+    		
+    		
+    		
+    	} catch(Exception e) {
+    		throw e;
+    	} finally {
+    		if(pstmt != null) pstmt.close();
+    	}
+    	
+    }
+    
+    // 게시글 삭제
+    public void deleteArticle(int articleNo, Connection conn) throws Exception{
+    	PreparedStatement pstmt = null;
+    	
+    	try {
+    		StringBuffer sql = new StringBuffer();
+    		sql.append("DELETE FROM article        ");
+    		sql.append("WHERE article_no=?");
+    		
+    		pstmt = conn.prepareStatement(sql.toString());
+    		pstmt.setInt(1, articleNo);
+    		
+    		pstmt.executeUpdate();
+    		
+    	}catch (Exception e) {
+    		throw e;
+    	} finally {
+    		if (pstmt != null) pstmt.close();
+    	}
+    	
+    	
+    }
+    
+    
+    
 }

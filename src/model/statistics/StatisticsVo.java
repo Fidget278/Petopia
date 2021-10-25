@@ -1,6 +1,7 @@
 package model.statistics;
 
 public class StatisticsVo {
+	private String dailyDate;
 	private int dailyBoardCount;
 	private int dailyVisitorsCount;
 	private int totalMemberCount;
@@ -12,8 +13,9 @@ public class StatisticsVo {
 		super();
 	}
 
-	public StatisticsVo(int dailyBoardCount, int dailyVisitorsCount) {
+	public StatisticsVo(String dailyDate, int dailyBoardCount, int dailyVisitorsCount) {
 		super();
+		this.dailyDate = dailyDate;
 		this.dailyBoardCount = dailyBoardCount;
 		this.dailyVisitorsCount = dailyVisitorsCount;
 	}
@@ -24,6 +26,14 @@ public class StatisticsVo {
 		this.totalBoardCount = totalBoardCount;
 		this.totalViewCount = totalViewCount;
 		this.totalVisitorsCount = totalVisitorsCount;
+	}
+
+	public String getDailyDate() {
+		return dailyDate;
+	}
+
+	public void setDailyDate(String dailyDate) {
+		this.dailyDate = dailyDate;
 	}
 
 	public int getDailyBoardCount() {
@@ -76,10 +86,11 @@ public class StatisticsVo {
 
 	@Override
 	public String toString() {
-		return "StatisticsVo [dailyBoardCount=" + dailyBoardCount + ", dailyVisitorsCount=" + dailyVisitorsCount
-				+ ", totalMemberCount=" + totalMemberCount + ", totalBoardCount=" + totalBoardCount
+		return "StatisticsVo [dailyDate=" + dailyDate + ", dailyBoardCount=" + dailyBoardCount + ", dailyVisitorsCount="
+				+ dailyVisitorsCount + ", totalMemberCount=" + totalMemberCount + ", totalBoardCount=" + totalBoardCount
 				+ ", totalViewCount=" + totalViewCount + ", totalVisitorsCount=" + totalVisitorsCount + "]";
 	}
+
 	
 	
 
