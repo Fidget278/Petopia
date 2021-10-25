@@ -16,6 +16,7 @@
 <link href="./css/viewMainContent.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+
 	
 	<div class="content">
 		<!-- Content 내용 여기에 추가 -->
@@ -57,7 +58,10 @@
 						 <tr>
 							<td>${pageScope.article.articleNo }</td>
 						 	<td><a href="${detailArticleUrl}">${pageScope.article.subject }</a></td>
-						 	<td>${pageScope.article.nickname }</td>
+						 		<c:url var="noteUrl" value="/writeNote.do">
+								<c:param name="memberNo" value = "${pageScope.article.memberNo}" /> 
+								</c:url>
+						 	<td><a href="javascript:void(window.open('${pageScope.noteUrl}', '쪽지작성창','width=500px, height=500px'))">${pageScope.article.nickname }</a></td>
 						 	<td>${pageScope.article.writedate }</td>
 						 	<td>${pageScope.article.viewcount }</td>
 						 	<td>${pageScope.article.likecount }</td>

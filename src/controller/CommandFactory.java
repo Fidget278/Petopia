@@ -21,6 +21,12 @@ public class CommandFactory {
 		map.put("/logout.do", "controller.member.LogOutCommand");
 		map.put("/side.do", "controller.SideCommand");
 		
+		// 쪽지
+		map.put("/noteList.do", "controller.NoteListFormCommand");
+		map.put("/noteDetailBoard.do", "controller.NoteDetailFormCommand");
+		map.put("/writeNote.do", "controller.WriteNoteCommand");
+		map.put("/deleteNote.do", "controller.NoteDeleteCommand");
+		
 		// 게시글 목록 조회
 		map.put("/viewListArticleContent.do", "controller.article.ListArticleCommand");
 				

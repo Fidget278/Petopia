@@ -102,7 +102,7 @@ public class MemberDao {
 			StringBuffer sql = new StringBuffer();
 			sql.append("SELECT member.member_no, member.email, member.password, member.nickname, grade.name, member.docs, member.comms, member.visits ");
 			sql.append("FROM member, grade ");
-			sql.append("where member.grade_no = grade.grade_no and member_no = ?;");
+			sql.append("where member.grade_no = grade.grade_no and member_no = ?");
 
 			pstmt = conn.prepareStatement(sql.toString());
 
