@@ -6,7 +6,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>    
 
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -14,6 +13,14 @@
 <title>Content</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
 <link href="./css/viewMainContent.css" rel="stylesheet" type="text/css">
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<script>
+	$(document).ready(function() {
+		
+	});
+	
+
+</script>
 </head>
 <body>
 	<div class="content">
@@ -53,7 +60,6 @@
 				 		<button id="backBtn" type="button" onclick="location.href='${backUrl}';">목록</button>
 				 	</td>
 				 	<td>좋아요</td>
-				 	</tab>
 				 	<td>
 					 	<c:url var="modifyUrl" value="/viewModifyArticleForm.do">
 					 		<c:param name="articleNo" value="${param.articleNo }"/>
@@ -72,20 +78,42 @@
 				 	</td>
 			 	</div>
 			 </tr>
+			 <%-- 댓글 --%>
 			<tr height="200"> 
 				<td colspan="4">
-					<form>
-						<p><textarea cols="200" rows="10"></textarea></p>
-					</form>
+					<textarea class="form-control" id="replyContent" cols="100" rows="5"></textarea>
 				</td>
-				<td><button id="writeFormBtn" type="button" onclick="location.href='링크주소';">등록</button></td>
+				<td>
+					<%--<button onclick="writeReply(${param.articleNo},${sessionScope.user.no },${sessionScope.user.nickname })" class="btn btn-primary pull-right">등록</button>--%>
+					<button onclick="writeReply()" class="btn btn-primary pull-right">등록</button>
+				</td>
+			</tr>
+			
+			<tr>
+				<div class="reply_List"></div>
+			</tr>
+			<script>
+				// 댓글 작성					
+				function writeReply(){
 				
-			</tr>
-			<tr height="200"> 
-				<td colspan="6">댓글 목록창</td>>
-			</tr>
+					var data ={
+						articleNo: articleNo,
+						memberNo: memberNo,
+						nickname: nickname,
+						content:$("#replyContent").val();
+					}
+					
+					$.ajax({
+						type:"post",
+						url:"commandPactoryurl",
+						data: data,
+					});
+					
+				};
+			</script>
 		</tbody>
 	</table>
+	</div>
 	<%-- 첨부파일 출력. --%>
 	<div class="file">
 		<c:if test="${empty requestScope.articles.fileList }">등록된 파일이 없습니다.
@@ -93,14 +121,23 @@
 
 		<c:if test="${not empty requestScope.articles.fileList }">
 			<th>파일명</th><th>파일크기</th>
+<<<<<<< HEAD
 			<c:forEach var="file" items="${requestScope.articles.fileList }">
 				<c:url var="downloadUrl" value="/fileDownload">
 					<c:param name="originalFileName" value="${file.originalFileName}"/>
 					<c:param name="systemFileName" value="${file.systemFileName}"/>
 				</c:url>
 				<td><a href="${downloadUrl}">${file.originalFileName }</a></td>
+=======
+	q		<c:forEach var="file" items="${requestScope.articles.fileList }">
+				<td>${file.originalFileName }</td>
+>>>>>>> branch 'feature/24' of https://github.com/Fidget278/petopia.git
 				<td>${file.fileSize } bytes</td>
 			</c:forEach>
 		</c:if>				
+<<<<<<< HEAD
+=======
+	</div>	
+>>>>>>> branch 'feature/24' of https://github.com/Fidget278/petopia.git
 </body>
 </html>

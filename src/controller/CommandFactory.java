@@ -36,6 +36,14 @@ public class CommandFactory {
 		// 게시글 수정폼이동
 		map.put("/viewModifyArticleForm.do", "controller.article.ModifyArticleFormCommand");
 		
+<<<<<<< HEAD
+=======
+		// 댓글 목록 불러오기
+		map.put("/getReply.do", "controller.reply.RetrieveReplyCommand");
+		
+		// 댓글 작성
+		map.put("/writeReply.do", "controller.reply.RegisterReplyCommand");
+>>>>>>> branch 'feature/24' of https://github.com/Fidget278/petopia.git
 	}
 	
 	public static CommandFactory getInstance() {
