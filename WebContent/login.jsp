@@ -16,11 +16,13 @@
  		<input type="text" name="password" id="password">
 		<h1></h1>
  		<button type="button" id="loginBtn">로그인</button>
+ 		<a href = "${pageContext.request.contextPath}/join.jsp">회원가입</a>
+ 		<a href = "${pageContext.request.contextPath}/">비밀번호 찾기</a>
  	</div>
 	<!--  비동기 메시시 처리 방식 -->
 	<script>      
 
-        const getAjax = function(url, email, password) {
+        const getAjax = function (url, email, password) {
             // resolve, reject는 자바스크립트에서 지원하는 콜백 함수이다.
             return new Promise( (resolve, reject) => {
                 $.ajax({                        

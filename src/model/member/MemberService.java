@@ -19,4 +19,15 @@ public class MemberService {
 		System.out.println("memberService login");
 		return MemberDao.getInstance().selectMember(email, password);
 	}
-}
+	
+	public void registerMember(MemberVo mVo) throws Exception {
+		MemberDao.getInstance().insertMember(mVo);	
+	}
+	
+	public void modifyPassword(int memNo, String newPassword) throws Exception {
+		MemberDao.getInstance().updatePassword(memNo, newPassword);	
+	}
+
+
+	}
+
