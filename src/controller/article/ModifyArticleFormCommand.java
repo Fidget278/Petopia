@@ -26,7 +26,7 @@ public class ModifyArticleFormCommand implements Command {
 		HttpSession session = request.getSession();
 		session.setAttribute("article", article);
 		
-		request.setAttribute("content", "viewModifyArticleContent");
+		request.setAttribute("content", "viewModifyArticleContent.jsp");
 		
 		return new ActionForward("/homeIndex.jsp", false);
 	}

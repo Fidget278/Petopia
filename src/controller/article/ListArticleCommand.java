@@ -4,11 +4,14 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import controller.ActionForward;
 import controller.Command;
 import model.article.ArticleService;
 import model.article.ArticleVo;
+import model.category.CategoryService;
+import model.category.CategoryVo;
 
 public class ListArticleCommand implements Command{
 	// 1page에 몇 개의 게시글을 보여줄지
@@ -27,6 +30,9 @@ public class ListArticleCommand implements Command{
 		// 현재 페이지 정보를 저장해 놓을 변수
 		System.out.println("커맨드 호출");
 		int currentPage = 0;
+		HttpSession session = request.getSession();
+		int boardNo = 0;
+		
 		try {
 			// 현재 페이지에 대한 정보를 받아온다.
 			// 만약, 이 때 페이지에 대한 정보가 없다면 catch문으로 이동
@@ -40,11 +46,19 @@ public class ListArticleCommand implements Command{
 		// currentPage에 -1을 해주는 이유는 mysqlDB는 index가 0부터 시작이기 떄문이다.
 		int startRow = (currentPage - 1) * POST_PER_PAGE;
 		
-		int boardNo= Integer.parseInt(request.getParameter("boardNo"));
+//		int boardNo= Integer.parseInt(request.getParameter("boardNo"));
 		System.out.println("목록조회 커맨드 boardNo: " + boardNo);
+		
+		if (session.getAttribute("boardNo") == null) { 
+			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+		} else {
+			int boardNo = Integer.parseInt((String) session.getAttribute("boardNo"));
+		}
 		
 		// *3. DB에 접근하여 게시글 정보를 불러온다.
 		ArrayList<ArticleVo> articles = ArticleService.getInstance().retrieveArticleList(boardNo,startRow, POST_PER_PAGE);
+		
+		session.removeAttribute("boardNo");
 		
 		
 		// *4. request영역에 바인딩
@@ -78,10 +92,18 @@ public class ListArticleCommand implements Command{
 		request.setAttribute("totalPostCount", totalPostCount);
 		request.setAttribute("postSize", POST_PER_PAGE);
 		
-//		request.setAttribute("content", "/viewListArticleContent");
+		CategoryService categoryService = CategoryService.getInstance();
+		ArrayList<CategoryVo> categoryList = categoryService.retrieveCategoryList();
 		
-//		return new ActionForward("/homeIndex.jsp?currentPage=" + currentPage, false);
-		return new ActionForward("/viewHomeTemplate.jsp?side=/petopia.do&content=/viewListArticleContent.jsp?currentPage=" + currentPage, false);
+		request.setAttribute("categoryList", categoryList);
+		
+
+//		request.setAttribute("side", "/side.do");
+
+		request.setAttribute("side", "/viewFrameSidebar.jsp");
+		request.setAttribute("content", "/viewListArticleContent.jsp?currentPage="+ currentPage);
+
+		return new ActionForward("/viewHomeTemplate.jsp", false);
 	}
 	
 }

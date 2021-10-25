@@ -57,6 +57,7 @@
 				 	<td>
 					 	<c:url var="modifyUrl" value="/viewModifyArticleForm.do">
 					 		<c:param name="articleNo" value="${param.articleNo }"/>
+					 		<c:param name="boardNo" value="${param.boardNo }"/>
 					 	</c:url>
 				 		<button id="modifyBtn" type="button" onclick="location.href='${modifyUrl}';">수정</button>
 				 	</td>
@@ -64,6 +65,7 @@
 				 		<form>
 					 		<c:url var="removeUrl" value="removeArticle.do">
 					 			<c:param name="articleNo" value="${param.articleNo }"/>
+					 			<c:param name="boardNo" value="${param.boardNo }"/>
 					 		</c:url>
 					 		<button id="reomveBtn" type="button" onclick="location.href='${removeUrl}';">삭제</button>
 				 		</form>
@@ -92,7 +94,11 @@
 		<c:if test="${not empty requestScope.articles.fileList }">
 			<th>파일명</th><th>파일크기</th>
 			<c:forEach var="file" items="${requestScope.articles.fileList }">
-				<td>${file.originalFileName }</td>
+				<c:url var="downloadUrl" value="/fileDownload">
+					<c:param name="originalFileName" value="${file.originalFileName}"/>
+					<c:param name="systemFileName" value="${file.systemFileName}"/>
+				</c:url>
+				<td><a href="${downloadUrl}">${file.originalFileName }</a></td>
 				<td>${file.fileSize } bytes</td>
 			</c:forEach>
 		</c:if>				

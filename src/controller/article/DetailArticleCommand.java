@@ -23,7 +23,7 @@ public class DetailArticleCommand implements Command{
 		request.setAttribute("articles", articles);
 		
 		// 템플릿에 추가하기 위해 바인딩
-		request.setAttribute("content", "/viewDetailArticleContent");
+		request.setAttribute("content", "/viewDetailArticleContent.jsp");
 		
 		return new ActionForward("/homeIndex.jsp", false);
 	}

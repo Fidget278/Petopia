@@ -13,7 +13,7 @@ public class WriteArticleFormCommand implements Command{
 			throws Exception {
 
 		
-		request.setAttribute("content", "viewWriteArticleContent");
+		request.setAttribute("content", "viewWriteArticleContent.jsp");
 		
 		// 글쓰기 요청이 오면 게시글 작성 폼으로 이동
 		ActionForward forward = new ActionForward("/homeIndex.jsp", false);
