@@ -46,7 +46,7 @@
 		</article>
 		<article class="sidebar-btn">
 			<section>
-				<span>쪽지함</span>
+				<span onclick="location.href='${pageContext.request.contextPath}/noteList.do?isRecieve=1'">쪽지함</span>
 				<span onclick="location.href='${pageContext.request.contextPath}/managerStatistics.do'">통계</span>
 			</section>
 			<section>
