@@ -23,6 +23,7 @@
 	<a href="${listUrl}">Back</a>
 	
 	<!-- 표 -->
+	<form action="modifyBan.do">
 	<table border = "1">
 		<tr>
 			<td>ID</td>
@@ -67,8 +68,9 @@
 		</tr>
 	</table>
 	
-	<button type="button">저장</button>
+	<button type="submit" id="saveBtn">저장</button>
 	<button type="button" id="outBtn">회원 탈퇴</button>
+	</form>
 </div>
 </body>
 </html>

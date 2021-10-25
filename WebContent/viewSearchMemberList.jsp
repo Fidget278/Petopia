@@ -1,4 +1,4 @@
-<%-- memberList.jsp --%>
+<%-- viewSearchMemberList.jsp --%>
 
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*, model.member.MemberVo" %>
@@ -52,7 +52,6 @@
 						resolve(data);
 					},
 					error : function(e) {
-						console.log("error : ", e);
 						reject(e);
 					}
 				});
@@ -84,7 +83,7 @@
 		</thead>
 		
 		<tbody>
-			<c:forEach var="member" items="${members}" varStatus="loop">
+			<c:forEach var="member" items="${searchMembers}" varStatus="loop">
 				<c:url var="URL" value="/viewDetailMember.do">
 					<c:param name="no" value="${member.no}"/>
 				</c:url>

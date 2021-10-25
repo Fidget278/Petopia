@@ -48,6 +48,7 @@ public class ControllerServlet extends HttpServlet {
 			request.setAttribute("exception", e);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
 			dispatcher.forward(request, response);
+			e.printStackTrace();
 		}
 	}	
 }

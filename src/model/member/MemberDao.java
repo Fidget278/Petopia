@@ -77,7 +77,7 @@ public class MemberDao {
 				member.setEmail(rs.getString(2));
 				member.setPassword(rs.getString(3));
 				member.setBan(rs.getString(4));
-				member.setMember(rs.getBoolean(5));
+				member.setIsMember(rs.getInt(5));
 				System.out.println("DB에 멤버 정보 있음");
 			}
 			System.out.println("DB에 멤버 정보 없음");
@@ -103,6 +103,7 @@ public class MemberDao {
 			sql.append("SELECT member_no, email, name, regdate, visits, ban    ");
 			sql.append("FROM member M RIGHT JOIN grade G    ");
 			sql.append("ON M.grade_no = G.grade_no     ");
+			sql.append("WHERE email IS NOT NULL     ");
 			sql.append("ORDER BY member_no ASC    ");
 			sql.append("LIMIT ? OFFSET ?");
 			
@@ -196,7 +197,7 @@ public class MemberDao {
 				member.setComms(rs.getInt(7));
 				member.setVisits(rs.getInt(8));
 				member.setBan(rs.getString(9));
-				member.setMember(rs.getBoolean(10));
+				member.setIsMember(rs.getInt(10));
 			}
 		} catch (Exception e) {
 			throw e;
@@ -210,7 +211,8 @@ public class MemberDao {
 		return member;
 	}
 	
-	public ArrayList<MemberVo> selectSearchMember(String keyfield, String keyword) throws Exception {
+	// DB에서 해당 검색 회원 조회 
+	public ArrayList<MemberVo> selectSearchMember(int startRow, int memberPerPage, String keyfield, String keyword) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -220,14 +222,42 @@ public class MemberDao {
 			conn = DBConn.getConnection();
 			StringBuffer sql = new StringBuffer();
 			
-			sql.append("SELECT member_no, email, name, regdate, visits, ban    ");
-			sql.append("FROM member M RIGHT JOIN grade G    ");
-			sql.append("ON M.grade_no = G.grade_no     ");
-			sql.append("WHERE ? = ? ");
-			sql.append("ORDER BY member_no ASC    ");
-			sql.append("LIMIT ? OFFSET ?");
+			if(keyfield == "email") {
+				sql.append("SELECT member_no, email, name, regdate, visits, ban    ");
+				sql.append("FROM member M RIGHT JOIN grade G    ");
+				sql.append("ON M.grade_no = G.grade_no     ");
+				sql.append("WHERE email = ?     ");
+				sql.append("ORDER BY member_no ASC    ");
+				sql.append("LIMIT ? OFFSET ?");
+			}
 			
+			else {
+				sql.append("SELECT member_no, email, name, regdate, visits, ban    ");
+				sql.append("FROM member M RIGHT JOIN grade G    ");
+				sql.append("ON M.grade_no = G.grade_no     ");
+				sql.append("WHERE M.grade_no = ");
+				sql.append("( SELECT grade_no    ");
+				sql.append("FROM grade G    ");
+				sql.append("WHERE name = ? )      ");
+				sql.append("ORDER BY member_no ASC    ");
+				sql.append("LIMIT ? OFFSET ?");
+			}
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, memberPerPage);
+			pstmt.setInt(3, startRow);
 			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int no = rs.getInt(1);
+				String email = rs.getString(2);
+				String grade = rs.getString(3);
+				String regDate = rs.getString(4);
+				int visits = rs.getInt(5);
+				String ban = rs.getString(6);
+				members.add(new MemberVo(no, email, regDate, grade,  visits, ban));
+			}
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -237,6 +267,53 @@ public class MemberDao {
 				throw e2;
 			}
 		}
-		return null;
+		return members;
 	}
+	
+	// 검색에 해당되는 회원의 수 카운트
+	public int selectTotalSearchMember(String keyfield, String keyword) throws Exception {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBConn.getConnection();
+			StringBuffer sql = new StringBuffer();
+			
+			if(keyfield == "email") {
+				sql.append("SELECT COUNT(*)     ");
+				sql.append("FROM member    ");
+				sql.append("WHERE email = ?");
+			}
+			
+			else {
+				sql.append("SELECT COUNT(*)     ");
+				sql.append("FROM member    ");
+				sql.append("WHERE grade_no =     ");
+				sql.append("(SELECT grade_no    ");
+				sql.append("FROM grade G    ");
+				sql.append("WHERE name = ? )");
+			}
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, keyword);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			try {
+				DBConn.close(conn, pstmt, rs);
+			} catch (Exception e2) {
+				throw e2;
+			}
+		}
+		return result;
+	}
+	
+	// 회원 관리 정지 기간 적용
 }

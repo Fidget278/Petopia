@@ -13,7 +13,7 @@ public class MemberVo {
 	private int comms;
 	private int visits;
 	private String ban;
-	private boolean isMember;
+	private int isMember;
 	
 	public MemberVo() {
 		super();
@@ -21,14 +21,14 @@ public class MemberVo {
 
 	
 	
-	public MemberVo(String email, String nickname, String regDate, String lastDate, String grade, int docs, int comms,
-			int visits, String ban, boolean isMember) {
+	public MemberVo(String email, String grade, String nickname, String regDate, String lastDate, int docs, int comms,
+			int visits, String ban, int isMember) {
 		super();
 		this.email = email;
+		this.grade = grade;
 		this.nickname = nickname;
 		this.regDate = regDate;
 		this.lastDate = lastDate;
-		this.grade = grade;
 		this.docs = docs;
 		this.comms = comms;
 		this.visits = visits;
@@ -53,7 +53,7 @@ public class MemberVo {
 	
 
 	public MemberVo(int no, String email, String password, String nickname, String regDate, String lastDate,
-			String grade, int docs, int comms, int visits, String ban, boolean isMember) {
+			String grade, int docs, int comms, int visits, String ban, int isMember) {
 		super();
 		this.no = no;
 		this.email = email;
@@ -94,6 +94,18 @@ public class MemberVo {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public int getIsMember() {
+		return isMember;
+	}
+
+
+
+	public void setIsMember(int isMember) {
+		this.isMember = isMember;
+	}
+
+
 
 	public String getNickname() {
 		return nickname;
@@ -160,14 +172,4 @@ public class MemberVo {
 	}
 
 
-
-	public boolean isMember() {
-		return isMember;
-	}
-
-
-
-	public void setMember(boolean isMember) {
-		this.isMember = isMember;
-	}
 }

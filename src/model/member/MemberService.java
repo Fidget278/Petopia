@@ -39,7 +39,12 @@ public class MemberService {
 	}
 	
 	// 회원 검색 조회
-	public ArrayList<MemberVo> retrieveSearchMember(String keyfield, String keyword) throws Exception {
-		return MemberDao.getInstance().selectSearchMember(keyfield, keyword);
+	public ArrayList<MemberVo> retrieveSearchMember(int startRow, int memberPerPage, String keyfield, String keyword) throws Exception {
+		return MemberDao.getInstance().selectSearchMember(startRow, memberPerPage, keyfield, keyword);
+	}
+	
+	// 검색된 회원 수 카운트
+	public int retrieveTotalSearchMember(String keyfield, String keyword) throws Exception {
+		return MemberDao.getInstance().selectTotalSearchMember(keyfield, keyword);
 	}
 }

@@ -24,6 +24,16 @@ public class CommandFactory {
 		
 		// 회원 상세 정보
 		map.put("/viewDetailMember.do", "controller.manager.DetailMemberCommand");
+		
+		
+		//등급 조회 시
+		map.put("/viewGradeList.do", "controller.grade.GradeListCommand");
+		
+		// 등급 수정 시
+		map.put("/modifyGradeList.do", "controller.grade.ModifyGradeListCommand");
+		
+		// 등급 확인 시
+		map.put("/viewGradeBoardList.do", "controller.grade.GradeBoardListCommand");
 	}
 	
 	public static CommandFactory getInstance() {

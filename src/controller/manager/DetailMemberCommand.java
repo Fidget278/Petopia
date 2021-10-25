@@ -18,9 +18,8 @@ public class DetailMemberCommand implements Command{
 		MemberVo member = MemberService.getInstance().retrieveMember(no);
 		
 		request.setAttribute("member", member);
-		
 		request.setAttribute("viewheader", "viewManagerHeader");
-		request.setAttribute("content", "viewMemberList");
+		request.setAttribute("content", "viewDetailMember");
 		return new ActionForward("managerIndex.jsp", false);
 	}
 
