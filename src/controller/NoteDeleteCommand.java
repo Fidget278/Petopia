@@ -28,8 +28,7 @@ public class NoteDeleteCommand implements Command {
 		notelist.add(note);
 		
 		NoteService.getInstance().removeNote(notelist, isRecieve);
-		
-		System.out.println("받았나요? : " + isRecieve);
+
 		return new ActionForward("/noteList.do?isRecieve="+isRecieve, false);
 	}
 

@@ -19,8 +19,12 @@ public class NoteDetailFormCommand implements Command {
 		int noteNo = Integer.parseInt(request.getParameter("no"));
 		int userNo = user.getNo();
 		int isRecieve = Integer.parseInt(request.getParameter("isRecieve"));
-		NoteService.getInstance().updateRead(noteNo, userNo, isRecieve);
 		
+		// 받은 쪽지를 상세조회 할 경우
+		if(isRecieve == 1)
+			NoteService.getInstance().updateRead(noteNo, userNo, isRecieve);
+		
+		System.out.println("쪽지함 : " + isRecieve);
 		NoteVo note = NoteService.getInstance().retriveNote(noteNo, userNo, isRecieve);
 		
 		request.setAttribute("note", note);

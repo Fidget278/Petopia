@@ -29,16 +29,27 @@ a:hover {
 }
 </style>
 <body>
+<div>
+<span onclick="location.href='${pageContext.request.contextPath}/noteList.do?isRecieve=1'">받은쪽지함</span>
+<span onclick="location.href='${pageContext.request.contextPath}/noteList.do?isRecieve=0'">보낸쪽지함</span>
+</div>
 <table>
 	<thead>
 	<tr>
-	<th>번호</th><th>보낸사람</th><th>내용</th><th>보낸날짜</th><th>읽은날짜</th><th>선택</th>
+	<th>번호</th>
+	<c:if test= "${ param.isRecieve == 1}">
+	<th>보낸사람</th>
+	</c:if>
+	<c:if test= "${ param.isRecieve == 0}">
+	<th>받은사람</th>
+	</c:if>
+	<th>내용</th><th>보낸날짜</th><th>읽은날짜</th><th>선택</th>
 	</tr>
 	</thead>
 	<tbody>
 	 <c:forEach var = "note" items = "${requestScope.NoteList }" varStatus = "loop">
 			<c:url var="url" value="/noteDetailBoard.do">
-				<c:param name="isRecieve" value = "1" /> 
+				<c:param name="isRecieve" value = "${ param.isRecieve }" /> 
 				<c:param name="no" value = "${pageScope.note.note_no}" /> 
 			</c:url>
 			<tr>

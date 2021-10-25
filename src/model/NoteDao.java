@@ -188,15 +188,34 @@ public class NoteDao {
 			StringBuffer sql = new StringBuffer();
 			sql.append("UPDATE note ");
 			sql.append("SET readDate = NOW() ");
-			sql.append("WHERE member_no = ? and note.sendrecieve = ? and note.note_no = ?");
+			sql.append("WHERE note.note_no = ? and member_no = ? and note.sendrecieve = ?");
 
 			pstmt = conn.prepareStatement(sql.toString());
-
-			pstmt.setInt(1, userNo);
-			pstmt.setInt(2, isRecieve);
-			pstmt.setInt(3, noteNo);
+			
+			pstmt.setInt(1, noteNo);
+			pstmt.setInt(2, userNo);
+			pstmt.setInt(3, isRecieve);
+			
 
 			pstmt.executeUpdate();
+			pstmt.close();
+			
+			sql.delete(0,  sql.length());
+			sql.append("UPDATE note ");
+			sql.append("SET readDate = NOW() ");
+			sql.append("WHERE note.note_no = ? and counterpart_no = ? and note.sendrecieve = ?");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			
+			pstmt.setInt(1, noteNo);
+			pstmt.setInt(2, userNo);
+			if(isRecieve == 1)
+				pstmt.setInt(3, 0);
+			else
+				pstmt.setInt(3, 1);
+			
+			pstmt.executeUpdate();
+			
 		} finally {
 			DBConn.close(conn, pstmt, null);
 		}
