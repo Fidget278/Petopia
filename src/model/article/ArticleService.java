@@ -24,20 +24,20 @@ public class ArticleService {
 	
 	// 게시글 목록 조회
 	public ArrayList<ArticleVo> retrieveArticleList(int boardNo, int startRow, int postSize) throws Exception{
-		ArticleDao articleDao = ArticleDao.getInsatnce();	
+		ArticleDao articleDao = ArticleDao.getInstance();	
 		return articleDao.selectArticleList(boardNo, startRow, postSize);
 		
 	}
 	
 	// 총 게시글 수를 구한다.
 	public int retrieveTotalPostCount(int boardNo) throws Exception{
-		return ArticleDao.getInsatnce().selectTotalPostCount(boardNo);
+		return ArticleDao.getInstance().selectTotalPostCount(boardNo);
 		
 	}
 	
 	// 게시글 세부 조회.
 	public ArticleVo retrieveArticle(int articleNo) throws Exception{
-		ArticleDao articleDao = ArticleDao.getInsatnce();
+		ArticleDao articleDao = ArticleDao.getInstance();
 		return articleDao.selectArticle(articleNo);
 	}
 	
@@ -52,7 +52,7 @@ public class ArticleService {
 			conn.setAutoCommit(false);
 			
 			// 게시글 등록 -----------------------------------------------
-			ArticleDao articleDao = ArticleDao.getInsatnce();
+			ArticleDao articleDao = ArticleDao.getInstance();
 			int no = articleDao.insertArticle(article, conn);
 			
 			// 파일 등록-------------------------------------------------
@@ -94,7 +94,7 @@ public class ArticleService {
 			conn = DBConn.getConnection();
 			conn.setAutoCommit(false);
 			
-			ArticleDao articleDao = ArticleDao.getInsatnce();
+			ArticleDao articleDao = ArticleDao.getInstance();
 			articleDao.updateArticle(article, conn);
 			
 			ArticleFileDao fileDao = ArticleFileDao.getInstance();
@@ -142,7 +142,7 @@ public class ArticleService {
 			System.out.println("파일 삭제 통과");
 			
 			// 게시글 제거
-			ArticleDao articleDao = ArticleDao.getInsatnce();
+			ArticleDao articleDao = ArticleDao.getInstance();
 			articleDao.deleteArticle(articleNo, conn);
 			System.out.println("게시글 삭제");
 			

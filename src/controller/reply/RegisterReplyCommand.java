@@ -22,7 +22,9 @@ public class RegisterReplyCommand implements Command{
 		
 		try {
 			// 받아온 데이터 변수에 저장
-			int articleNo = Integer.parseInt(request.getParameter("no")); // 게시글 번호 getAjax 값을 받는다.
+			int articleNo = Integer.parseInt(request.getParameter("articleNo")); // 게시글 번호 getAjax 값을 받는다.
+			System.out.println("리무커 아넘: " + articleNo);
+			
 			int memberNo = member.getNo(); // 회원 번호
 			String nickname = member.getNickname();
 			String content = request.getParameter("content");
@@ -30,6 +32,7 @@ public class RegisterReplyCommand implements Command{
 			// DB insert
 			ReplyDao replyDao = ReplyDao.getInstance();
 			replyDao.insertReply(new ReplyVo(articleNo, memberNo, nickname, content));
+			
 			
 			List<ReplyVo> replyList = replyDao.selectReplyList(articleNo);
 			request.setAttribute("replyList", replyList);

@@ -45,6 +45,8 @@ public class CommandFactory {
 		map.put("/modifyReply.do", "controller.reply.ModifyReplyCommand");
 		// 댓글 삭제
 		map.put("/removeReply.do", "controller.reply.RemoveReplyCommand");
+	
+	
 	}
 	
 	public static CommandFactory getInstance() {

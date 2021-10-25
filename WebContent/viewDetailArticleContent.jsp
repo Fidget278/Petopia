@@ -5,11 +5,9 @@
 <%@ page import="java.util.*, model.article.ArticleVo" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>    
-<%@ page session="true" %>
-<% session = request.getSession();
-	session.setAttribute("articleNo", request.getParameter("articleNo"));
+<% int articleNo = Integer.parseInt(request.getParameter("articleNo"));
+	request.setAttribute("articleNo", articleNo);
 %>
-
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -22,6 +20,43 @@
 <script>
     	$(document).ready(function() {
     		
+    		// 추천 버튼 클릭시
+    		$('#rec_update').click(function(){
+    			$.ajax({
+    				url: "/RecUpdate.do",
+    				type: "POST",
+    				data:{
+    					no: '${param.articleNo}',
+    					id: '${requestScope.articles.nickname }'
+    				},
+    				success: function(){
+    					recCount();
+    				},
+    			})
+    		})
+    		
+    		// 게시글 추천수
+    		function recCount(){
+    			$.ajax({
+    				url: "/RecCount.do",
+    				type: "POST",
+    				data: {
+    					no: '${param.articleNo}'
+    				},
+    				success: function(count){
+    					// rec_count 내용을 비우고 count로 갱신
+    					$(".rec_count").html(count);
+    				},
+    			})
+    		};
+    		
+    		
+    		
+    		
+    		
+    		
+    		
+    		
     		 const getAjax = function(url, no, content) {
                 // resolve, reject는 자바스크립트에서 지원하는 콜백 함수이다.
                 return new Promise( (resolve, reject) => {
@@ -31,7 +66,9 @@
                         dataType: 'json',
                         data: {
                         	no: no,
-                        	content: content
+                        	content: content,
+                        	articleNo: '${param.articleNo}'
+                        	
                         },
                         success: function(data) {                    	
                             resolve(data);
@@ -43,7 +80,7 @@
                 });
             }   
     		 
-    		const removeReply = function(url, no, articleNo) {
+    		const removeReply = function(url, no) {
                 // resolve, reject는 자바스크립트에서 지원하는 콜백 함수이다.
                 return new Promise( (resolve, reject) => {
                     $.ajax({                        
@@ -51,8 +88,8 @@
                         method: 'GET',
                         dataType: 'json',
                         data: {
-                        	no: no,   
-                        	articleNo: articleNo
+                        	no: no,
+                        	articleNo: '${param.articleNo}'
                         },
                         success: function(data) {                    	
                             resolve(data);
@@ -67,20 +104,19 @@
     		
             async function requestProcess(url, no, content) {
                 try {
-                	console.log(content);
-                	console.log(no);
                     
                 	let replyList = null;
-                	if(content != null || content != '') {
-                		replyList = await getAjax(url, no, content);	
+                	if(content == null || content == '' || typeof content == "undefined") {
+                		replyList = await removeReply(url, no);
                 	} else {
-                		/*replyList = await removeReply(url, no);*/
+                		replyList = await getAjax(url, no, content);	
                 	}
                 	     
-                                       
+                    console.log('알이큐프로스옴&&&')
                     $('#ListReply').html("");
                    
 				 	let htmlStr = [];
+				 	console.log(htmlStr);
 				 	for(let i = 0; i< replyList.length; i++) {
 				 		htmlStr.push('<table id=' + replyList[i].replyNo +'>');
 				 		htmlStr.push('<tbody>');
@@ -89,7 +125,7 @@
 				 		htmlStr.push('<td>' + replyList[i].writedate  + '</td>');
 				 		htmlStr.push('</tr>');		
 				 		htmlStr.push('<tr>');	
-				 		htmlStr.push('<td colspan="2" class="cmtContent">' + replyList[i].content + '</td>');
+				 		htmlStr.push('<td colspan="2" class="Content">' + replyList[i].content + '</td>');
 				 		htmlStr.push('</tr>');
 				 		htmlStr.push('<tr>');	
 				 		htmlStr.push('<td colspan="2">');
@@ -100,8 +136,9 @@
 				 		htmlStr.push('</tbody>');
 				 		htmlStr.push('</table>');				 		
 				 	}         
+				 	console.log(htmlStr);
+				 	$('.ListReply').html(htmlStr.join(""));
 				 	
-				 	$('#ListReply').html(htmlStr.join(""));
                 } catch (error) {
                 	console.trace();
                     console.log("error : ", error);   
@@ -116,24 +153,23 @@
             	console.log('ajax후');
             });
             
-            
+            //댓글 수정폼
             $('.ListReply').on('click', '.modifyFormBtn', function() {                
             	const no = $(this).parents('table').attr('id');
-            	$('#modifyReply').insertAfter('#' + no);                	
-            	const content = $(this).parents('tbody').find('.Content').text();                
-            	$('#modifyReplyContent').val(content);
-            	$('#no').val(no);
-            	$('#modifyReply').show();
-            	$('#' + no).hide();                	
+            	$('#modifyReply').insertAfter('#' + no);   
+            	const content = $(this).parents('tbody').find('.Content').text();   
+                $('#modifyReplyContent').val(content);            	
+            	$('#no').val(no);            	
+            	$('#modifyReply').show();            	
+            	$('#' + no).hide();
             });
             
 
             //댓글 삭제
             $('.ListReply').on('click', '.removeBtn', function() {
-            	const articleNo = '${param.articleNo}';
             	const no = $(this).parents('table').attr('id');
-            	console.log(2,no);
-            	removeReply('${pageContext.request.contextPath}/removeReply.do', no, articleNo);        	
+            	console.log(1, no)
+            	requestProcess('${pageContext.request.contextPath}/removeReply.do', no);        	
             });
             
             
@@ -147,21 +183,13 @@
             
             //댓글 수정
             $('.modifyBtn').on('click', function() {
-            	const articleNo = '${param.articleNo}';
             	const no = $('#no').val();
             	const content = $('#modifyReplyContent').val();
-            	requestProcess('${pageContext.request.contextPath}/modifyReply.do', no, content);   
-            
+            	requestProcess('${pageContext.request.contextPath}/modifyReply.do', no, content); 
+            	$('#modifyReply').insertAfter('#addReply');
+            	$('#modifyReply').html();            	
             });
 				
-            <%--
-            //댓글 삭제
-            $('.ListReply').on('click', '.removeBtn', function() {      
-            	console.log("call");
-            	const no = $(this).parents('table').attr('id');
-            	         	
-            }); --%>
-    
 	});
 	
 
@@ -170,7 +198,7 @@
 <body>
 	<div class="content">
 		<!-- Content 내용 여기에 추가 -->
-		<table class="bbs" width="800" height="500" border="2" bgcolor="D8D8D8">
+		<table class="bbs" width="600" border="2" bgcolor="D8D8D8">
 		<tbody>
 			<tr>
 				<p>
@@ -204,7 +232,15 @@
 				 		<c:url var="backUrl" value="/viewListArticleContent.do?boardNo=${param.boardNo }"/>
 				 		<button id="backBtn" type="button" onclick="location.href='${backUrl}';">목록</button>
 				 	</td>
-				 	<td>좋아요</td>
+				 	<!-- 추천 기능 -->
+				 	<td>
+				 		<div class="w3-border w3-center w3-padding">
+							<button class="w3-button w3-black w3-round" id="rec_update">
+								<i class="fa fa-heart" style="font-size:30px;color:red"></i>
+								&nbsp;<span class="rec_count"></span>
+							</button>				 		
+				 		</div>
+				 	</td>
 				 	<td>
 					 	<c:url var="modifyUrl" value="/viewModifyArticleForm.do">
 					 		<c:param name="articleNo" value="${param.articleNo }"/>
@@ -226,7 +262,7 @@
 		</tbody>
 	</table>
 	</div>
-	</br>
+	&nbsp;
 	<%-- 첨부파일 출력. --%>
 	<div class="file">
 		<c:if test="${empty requestScope.articles.fileList }">등록된 파일이 없습니다.
@@ -247,7 +283,7 @@
 			</c:forEach>
 		</c:if>				
 	</div>
-	
+	&nbsp;
 	 <%-- 댓글 --%>
 	 <div class="ListReply">
 		<c:forEach var="reply" items="${requestScope.replyList }">

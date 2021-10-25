@@ -15,13 +15,12 @@ public class ModifyReplyCommand implements Command{
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) 
 			throws Exception {
-		HttpSession session = request.getSession();
 
 		try {
 		System.out.println("수정 커맨드 진입");
 		int replyNo = Integer.parseInt(request.getParameter("no"));
 		String content = request.getParameter("content");
-		int articleNo = Integer.parseInt((String)session.getAttribute("articleNo"));
+		int articleNo = Integer.parseInt(request.getParameter("articleNo")); // 게시글 번호 getAjax 값을 받는다.
 		
 		
 		System.out.println("수정 커맨드 진입2");
@@ -32,6 +31,8 @@ public class ModifyReplyCommand implements Command{
 		replyDao.updateReply(reply);
 		System.out.println("수정 커맨드 진입3");
 		List<ReplyVo> replyList = replyDao.selectReplyList(articleNo);
+		
+		
 		
 		for (ReplyVo replyVo: replyList) {
 			System.out.println(replyVo);

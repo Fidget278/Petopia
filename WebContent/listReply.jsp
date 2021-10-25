@@ -7,7 +7,7 @@
 [
 	<c:forEach var="reply" items="${requestScope.replyList }" varStatus="status">
 		{
-			"no": ${reply.replyNo },
+			"replyNo": ${reply.replyNo },
 			"articleNo": "${reply.articleNo }",
 			"memberNo": "${reply.memberNo }",
 			"nickname" : "${reply.nickname}",
