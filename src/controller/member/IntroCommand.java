@@ -22,9 +22,12 @@ public class IntroCommand implements Command {
 
 		session.setAttribute("user", memberProfile);
 		
-		request.setAttribute("content", "/viewHomeContent");
+		
+		request.setAttribute("side", "/viewFrameSidebar.jsp");
+		request.setAttribute("content", "/viewHomeContent.jsp");
 
-		return new ActionForward("/homeIndex.jsp", false);
+		//return new ActionForward("/viewHomeTemplate.jsp?side=viewFrameSidebar.jsp&content=viewHomeContent.jsp", false);
+		return new ActionForward("/viewHomeTemplate.jsp", false);
 	}
 
 }
