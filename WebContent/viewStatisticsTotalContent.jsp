@@ -29,7 +29,7 @@
 				</tr>
 			</table>
 		</div>
-		<div id="line_top_x"></div>
+		<!-- <div id="line_top_x"></div> -->
 		<div class="content-text">
 			<table>
 				<thead>
@@ -51,7 +51,7 @@
 			</table>
 		</div>
 	</div>
-	<script type="text/javascript"
+	<!-- <script type="text/javascript"
 		src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">
 		google.charts.load('current', {
@@ -96,7 +96,7 @@
 
 			chart.draw(data, google.charts.Line.convertOptions(options));
 		}
-	</script>
+	</script> -->
 	<script>
 		function daily(url) {
 
