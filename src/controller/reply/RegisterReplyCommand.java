@@ -1,12 +1,14 @@
 package controller.reply;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controller.ActionForward;
 import controller.Command;
-import model.article.ReplyService;
+import model.article.ReplyDao;
 import model.article.ReplyVo;
 import model.member.MemberVo;
 
@@ -14,21 +16,30 @@ public class RegisterReplyCommand implements Command{
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) 
 			throws Exception {
+
 		HttpSession session = request.getSession();
 		MemberVo member = (MemberVo) session.getAttribute("user");
 		
-		int articleNo = Integer.parseInt(request.getParameter("articleNo"));
-		int memberNo = member.getNo();
-		String nickname = member.getNickname();
-		String content = request.getParameter("content");
+		try {
+			// 받아온 데이터 변수에 저장
+			int articleNo = Integer.parseInt(request.getParameter("articleNo")); // 게시글 번호
+			int memberNo = member.getNo(); // 회원 번호
+			String nickname = member.getNickname();
+			String content = request.getParameter("content");
+			
+			// DB insert
+			ReplyDao replyDao = ReplyDao.getInstance();
+			replyDao.insertReply(new ReplyVo(articleNo, memberNo, nickname, content));
+			
+			List<ReplyVo> replyList = replyDao.selectReplyList();
+			request.setAttribute("replyList", replyList);
+			
+			return new ActionForward("/listReply.jsp", false);
+			
+		} catch(Exception e) {
+			throw e;
+		}
 		
-		ReplyVo reply = new ReplyVo(articleNo, memberNo, nickname, content);
-		
-		ReplyService service = ReplyService.getInstance();
-		service.registerReply(reply);
-		
-		// ajax로 바로 작성되고 밑에 보이도록 해야됨.
-		return new ActionForward();
 	}
 
 }

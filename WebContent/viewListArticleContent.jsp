@@ -74,33 +74,35 @@
 			<c:set var="endPage" value="${requestScope.endPage }" scope="page"/>
 			<c:set var="totalPage" value="${requestScope.totalPage }" scope="page"/>
 			<c:set var="currentPage" value="${param.currentPage }" scope="page"/>
-		
-			<%-- 1블록을 제외한 모든 경우 --%>
-			<c:if test="${startPage > pageBlock }">
-				<c:url var="prevUrl" value="/viewListArticleContent.do">
-					<c:param name="currentPage" value="${startPage - pageBlock }"/>
-				</c:url>
-				<a href="${prevUrl }">[Prev]</a>
-			</c:if>
-			<%-- page 숫자 출력 부분 --%>
-			<c:forEach var="i" begin="${startPage }" end="${endPage }">
-				<c:if test="${i == currentPage }">
-					&nbsp;${i }&nbsp;
-				</c:if>
-				<%-- 현재 페이지가 아닌 애들 출력 , 만약에 그 page번호를 클릭한다면 자기 자신을 cuurentPage로 해서 /listArticle.do로 넘겨준다 --%>
-				<c:if test="${i != currentPage }">
-					<c:url var="movePageUrl" value="/viewListArticleContent.do">
-						<c:param name="currentPage" value="${i}"/>
+			<c:if test="${totalPage > 0}" >
+				<%-- 1블록을 제외한 모든 경우 --%>
+				<c:if test="${startPage > pageBlock }">
+					<c:url var="prevUrl" value="/viewListArticleContent.do">
+						<c:param name="currentPage" value="${startPage - pageBlock }"/>
 					</c:url>
-					<a href="${movePageUrl}">&nbsp;${i}&nbsp;</a>
+					<a href="${prevUrl }">[Prev]</a>
 				</c:if>
-			</c:forEach>
-			<%-- 다음 페이지로 넘긴다. --%>
-			<c:if test="${endPage < totalPage }">
-				<c:url var="nextUrl" value="/viewListArticleContent.do">
-					<c:param name="currentPage" value="${endPage + 1 }"/>
-				</c:url>
-				<a href="${nextUrl }">[Next]</a>
+				<%-- page 숫자 출력 부분 --%>
+				<c:forEach var="i" begin="${startPage }" end="${endPage }">
+					<c:if test="${i == currentPage }">
+						&nbsp;${i }&nbsp;
+					</c:if>
+					<%-- 현재 페이지가 아닌 애들 출력 , 만약에 그 page번호를 클릭한다면 자기 자신을 cuurentPage로 해서 /listArticle.do로 넘겨준다 --%>
+					<c:if test="${i != currentPage }">
+						<c:url var="movePageUrl" value="/viewListArticleContent.do">
+							<c:param name="currentPage" value="${i}"/>
+							<c:param name="boardNo" value="${param.boardNo }"/>
+						</c:url>
+						<a href="${movePageUrl}">&nbsp;${i}&nbsp;</a>
+					</c:if>
+				</c:forEach>
+				<%-- 다음 페이지로 넘긴다. --%>
+				<c:if test="${endPage < totalPage }">
+					<c:url var="nextUrl" value="/viewListArticleContent.do">
+						<c:param name="currentPage" value="${endPage + 1 }"/>
+					</c:url>
+					<a href="${nextUrl }">[Next]</a>
+				</c:if>
 			</c:if>
 		</div>
 	</div>

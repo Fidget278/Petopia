@@ -88,21 +88,25 @@ public class ArticleDao {
 
     
     // 게시글 목록 조회 시 총 게시글 수를 구한다.
-    public int selectTotalPostCount() throws Exception{
+    public int selectTotalPostCount(int boardNo) throws Exception{
     	int count = 0;
     	Connection conn = null;
-    	Statement stmt = null;
+    	PreparedStatement pstmt = null;
     	ResultSet rs = null;
     	
     	try {
     		conn = DBConn.getConnection();
-    		stmt = conn.createStatement();
     		
     		StringBuffer sql = new StringBuffer();
     		sql.append("SELECT COUNT(*)    ");
-    		sql.append("FROM article");
+    		sql.append("FROM article       ");
+    		sql.append("WHERE board_no=?");
     		
-    		rs = stmt.executeQuery(sql.toString());
+    		pstmt = conn.prepareStatement(sql.toString());
+    		pstmt.setInt(1, boardNo);
+    		
+    		rs = pstmt.executeQuery();
+    		
     		if(rs.next()) {
     			count = rs.getInt(1);
     		}
@@ -110,7 +114,7 @@ public class ArticleDao {
     	} catch(Exception e) {
     		throw e;
     	} finally {
-    		DBConn.close(conn, stmt, rs);
+    		DBConn.close(conn, pstmt, rs);
     	}
     	return count;
     }

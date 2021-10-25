@@ -30,8 +30,8 @@ public class ArticleService {
 	}
 	
 	// 총 게시글 수를 구한다.
-	public int retrieveTotalPostCount() throws Exception{
-		return ArticleDao.getInsatnce().selectTotalPostCount();
+	public int retrieveTotalPostCount(int boardNo) throws Exception{
+		return ArticleDao.getInsatnce().selectTotalPostCount(boardNo);
 		
 	}
 	

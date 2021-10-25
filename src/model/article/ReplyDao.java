@@ -3,6 +3,9 @@ package model.article;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import utill.DBConn;
 
@@ -17,41 +20,49 @@ public class ReplyDao {
 		return replyDao;
 	}
 	// 세부조회에서 띄워줄 때 불러와햐 할 것 같은데
-	public ReplyVo selectReply(int replyNo) throws Exception{
+	public List<ReplyVo> selectReplyList() throws Exception{
+		List<ReplyVo> replyList = new ArrayList<ReplyVo>();
 		Connection conn = null;
-		PreparedStatement pstmt = null;
+		Statement stmt = null;
 		ResultSet rs = null;
-		ReplyVo reply = null;
 		
 		try {
+			System.out.println("리플셀렉 진입");
 			conn = DBConn.getConnection();
+			
+			stmt = conn.createStatement();
+			
 			StringBuffer sql = new StringBuffer();
 			
-			sql.append("SELECT * FROM reply WHERE reply_no=?");
-			pstmt = conn.prepareStatement(sql.toString());
-			pstmt.setInt(1, replyNo);
+			sql.append("SELECT reply_no, article_no, member_no, nickname,");
+			sql.append("DATE_FORMAT(writedate, '%Y/%m/%d') as writedate, content  ");
+			sql.append("FROM reply  ");
+			sql.append("ORDER BY writedate DESC");
 			
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				reply = new ReplyVo();
+			rs = stmt.executeQuery(sql.toString());
+			System.out.println(rs);
+			while(rs.next()) {
+				ReplyVo reply = new ReplyVo();
 				reply.setReplyNo(rs.getInt(1));
 				reply.setArticleNo(rs.getInt(2));
 				reply.setMemberNo(rs.getInt(3));
 				reply.setNickname(rs.getString(4));
 				reply.setWritedate(rs.getString(5));
 				reply.setContent(rs.getString(6));
+				replyList.add(reply);
 			}
+			return replyList;
 			
 		} catch (Exception e) {
 			throw e;
 		} finally {
-			DBConn.close(conn, pstmt, rs);
+			try {
+				DBConn.close(conn, stmt, rs);
+			} catch(Exception e2) {
+				throw e2;
+			}
 			
 		}
-		// 조회한 게시글의 정보를 ReplyVo 객체로 반환
-		return reply;
-		
 		
 	}
 	
@@ -74,8 +85,7 @@ public class ReplyDao {
     		pstmt.setString(3, reply.getNickname()); // nickname
     		pstmt.setString(4, reply.getContent()); // content
     		
-    		rows = pstmt.executeUpdate();
-    		System.out.println("insertReply의 rows: " + rows);
+    		pstmt.executeUpdate();
 			
     		
 		} catch (Exception e) {
@@ -95,8 +105,27 @@ public class ReplyDao {
 		try {
 			conn = DBConn.getConnection();
 			
+			StringBuffer sql = new StringBuffer();
+			sql.append("UPDATE reply      ");
+			sql.append("SET content = ?   ");
+			sql.append("WHERE reply_no= ? ");
+			pstmt = conn.prepareStatement(sql.toString());
+			
+			pstmt.setString(1, reply.getContent());
+			pstmt.setInt(2, reply.getReplyNo());
+			
+			pstmt.executeUpdate();
+					
 		} catch (Exception e) {
-		
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close();
+			} catch (Exception e2) {
+				throw e2;
+			}
 		}
 		
 	}
@@ -123,8 +152,12 @@ public class ReplyDao {
 		} catch (Exception e) {
 			throw e;
 		} finally {
-			if (pstmt != null) pstmt.close();
-			if (conn != null) conn.close();
+			try {
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close();
+			} catch (Exception e2) {
+				throw e2;
+			}
 		}
 	}
 	

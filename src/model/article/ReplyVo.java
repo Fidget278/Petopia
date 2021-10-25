@@ -12,6 +12,15 @@ public class ReplyVo {
 		
 	}
 	
+	
+
+	public ReplyVo(int replyNo, String content) {
+		super();
+		this.replyNo = replyNo;
+		this.content = content;
+	}
+
+
 
 	public ReplyVo(int articleNo, int memberNo, String nickname, String content) {
 		super();
@@ -78,6 +87,13 @@ public class ReplyVo {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+
+	@Override
+	public String toString() {
+		return "ReplyVo [replyNo=" + replyNo + ", articleNo=" + articleNo + ", memberNo=" + memberNo + ", nickname="
+				+ nickname + ", writedate=" + writedate + ", content=" + content + "]";
 	}
 	
 	
