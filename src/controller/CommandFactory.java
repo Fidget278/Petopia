@@ -13,7 +13,8 @@ public class CommandFactory {
 	private CommandFactory() {
 		// 관리자 화면
 		map.put("/managerIndex.do", "controller.manager.ManagerCommand");
-		map.put("/managerStatistics.do", "controller.statistics.statisticsFormCommand");
+		map.put("/managerStatisticsDaily.do", "controller.statistics.statisticsDailyFormCommand");
+		map.put("/managerStatisticsTotal.do", "controller.statistics.statisticsTotalFormCommand");
 		
 		map.put("/petopia.do", "controller.member.IntroCommand");
 		map.put("/login.do", "controller.member.LoginCommand");

@@ -34,7 +34,7 @@ public class StatisticsDao {
 			conn = DBConn.getConnection();
 
 			StringBuffer sql = new StringBuffer();
-			sql.append("SELECT daily_visits , daily_article ");
+			sql.append("SELECT daily_date, daily_visits , daily_article ");
 			sql.append("FROM cafedb.daliystatistics ");
 			sql.append("WHERE daily_date BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK ) AND NOW();");
 
@@ -44,22 +44,51 @@ public class StatisticsDao {
 
 			while (rs.next()) {
 				statVo = new StatisticsVo();
-				statVo.setDailyVisitorsCount(rs.getInt(1));
-				statVo.setDailyBoardCount(rs.getInt(2));
+				statVo.setDailyDate(rs.getString(1));
+				statVo.setDailyVisitorsCount(rs.getInt(2));
+				statVo.setDailyBoardCount(rs.getInt(3));
 
-				System.out.println(arrayStat);
+				
 				arrayStat.add(statVo);
+				
 			}
-			System.out.println(arrayStat);
+
 		} finally {
 			DBConn.close(conn, pstmt, rs);
 		}
 		return arrayStat;
 	}
 
-	public StatisticsVo selectTotalData() {
+	public StatisticsVo selectTotalData() throws Exception{
 		StatisticsVo statVo = null;
-		// 오늘 날짜 기준으로 데이터 총합 Vo에 저장후 리턴
+		Connection conn = null;
+		Statement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBConn.getConnection();
+
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT total_article, total_member, total_view, total_visits ");
+			sql.append("FROM cafedb.totalstatistics ");
+			sql.append("ORDER BY totalstatistics.total_no DESC LIMIT 1;");
+
+			pstmt = conn.prepareStatement(sql.toString());
+
+			rs = pstmt.executeQuery(sql.toString());
+
+			if (rs.next()) {
+				statVo = new StatisticsVo();
+				statVo.setTotalBoardCount(rs.getInt(1));
+				statVo.setTotalMemberCount(rs.getInt(2));
+				statVo.setTotalViewCount(rs.getInt(3));
+				statVo.setTotalVisitorsCount(rs.getInt(4));
+			}
+
+		} finally {
+			DBConn.close(conn, pstmt, rs);
+		}
+
 		return statVo;
 	}
 }
