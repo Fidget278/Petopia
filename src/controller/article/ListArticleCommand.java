@@ -86,15 +86,11 @@ public class ListArticleCommand implements Command{
 		request.setAttribute("totalPostCount", totalPostCount);
 		request.setAttribute("postSize", POST_PER_PAGE);
 		
-		CategoryService categoryService = CategoryService.getInstance();
-		ArrayList<CategoryVo> categoryList = categoryService.retrieveCategoryList();
-		
-		request.setAttribute("categoryList", categoryList);
-		
-		request.setAttribute("side", "/viewFrameSidebar.jsp");
-		request.setAttribute("content", "/viewListArticleContent.jsp?currentPage="+ currentPage);
 
-		return new ActionForward("/viewHomeTemplate.jsp", false);
+
+		request.setAttribute("content", "/viewListArticleContent.jsp?currentPage=" + currentPage);
+		return new ActionForward("/side.do", false);
+
 	}
 	
 }

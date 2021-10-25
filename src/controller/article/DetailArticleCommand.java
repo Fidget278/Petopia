@@ -25,7 +25,8 @@ public class DetailArticleCommand implements Command{
 		// 템플릿에 추가하기 위해 바인딩
 		request.setAttribute("content", "/viewDetailArticleContent.jsp");
 		
-		return new ActionForward("/homeIndex.jsp", false);
+		
+		return new ActionForward("/side.do", false);
 	}
 
 }
