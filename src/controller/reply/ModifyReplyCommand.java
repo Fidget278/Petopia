@@ -15,16 +15,18 @@ public class ModifyReplyCommand implements Command{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) 
 			throws Exception {
 		
-		int no = Integer.parseInt(request.getParameter("replyNo"));
+		int replyNo = Integer.parseInt(request.getParameter("no"));
 		String content = request.getParameter("content");
+		int articleNo = Integer.parseInt(request.getParameter("articleNo"));
 		
-		ReplyVo reply = new ReplyVo(no, content);
+		
+		ReplyVo reply = new ReplyVo(replyNo, content);
 		System.out.println("수정 내용: " + content);
 		ReplyDao replyDao = ReplyDao.getInstance();
 		
 		replyDao.updateReply(reply);
 		
-		List<ReplyVo> replyList = replyDao.selectReplyList();
+		List<ReplyVo> replyList = replyDao.selectReplyList(articleNo);
 		
 		for (ReplyVo replyVo: replyList) {
 			System.out.println(replyVo);

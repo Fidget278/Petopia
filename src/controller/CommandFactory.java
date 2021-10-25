@@ -40,7 +40,7 @@ public class CommandFactory {
 		map.put("/getReply.do", "controller.reply.RetrieveReplyCommand");
 		
 		// 댓글 작성
-		map.put("/writeReply.do", "controller.reply.RegisterReplyCommand");
+		map.put("/addReply.do", "controller.reply.RegisterReplyCommand");
 		// 댓글 수정
 		map.put("/modifyReply.do", "controller.reply.ModifyReplyCommand");
 		// 댓글 삭제

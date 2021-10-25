@@ -16,12 +16,12 @@ public class RemoveReplyCommand implements Command{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) 
 			throws Exception {
 		
-		int no = Integer.parseInt(request.getParameter("replyNo"));
-		
+		int no = Integer.parseInt(request.getParameter("no")); // replyNo
+		int articleNo = Integer.parseInt(request.getParameter("articleNo"));
 		ReplyDao replyDao = ReplyDao.getInstance();
 		replyDao.deleteReply(no);
 		
-		List<ReplyVo> replyList = replyDao.selectReplyList();
+		List<ReplyVo> replyList = replyDao.selectReplyList(articleNo);
 		
 		for (ReplyVo replyVo : replyList) {
 			System.out.println(replyVo);

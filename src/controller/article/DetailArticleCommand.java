@@ -27,7 +27,7 @@ public class DetailArticleCommand implements Command{
 		request.setAttribute("articles", articles);
 		
 		// 댓글 정보 불러와서 저장.
-		List<ReplyVo> replyList = ReplyDao.getInstance().selectReplyList();
+		List<ReplyVo> replyList = ReplyDao.getInstance().selectReplyList(articleNo);
 		// 값 확인용
 //		for (ReplyVo re: replyList) {
 //			System.out.println("리플: " + re.toString());

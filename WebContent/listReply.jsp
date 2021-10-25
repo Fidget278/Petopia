@@ -10,13 +10,14 @@
 			"no": ${reply.replyNo },
 			"articleNo": "${reply.articleNo }",
 			"memberNo": "${reply.memberNo }",
+			"nickname" : "${reply.nickname}",
 			"writedate": "${reply.writedate }",
 			"content": "${reply.content }"
-			
-			<c:if test="${fn:length(requestScope.replyList) - status.index > 1 }"> 
-				,
-			</c:if>
 		}
+			
+		<c:if test="${fn:length(requestScope.replyList) - status.index > 1}"> 
+				,
+		</c:if>
 	</c:forEach>
 ]
 

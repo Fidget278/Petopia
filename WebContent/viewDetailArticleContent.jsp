@@ -77,7 +77,7 @@
 				 		htmlStr.push('<tbody>');
 				 		htmlStr.push('<tr>');
 				 		htmlStr.push('<td>' + replyList[i].nickname + '</td>');
-				 		htmlStr.push('<td>' + replyList[i].writeday + '</td>');
+				 		htmlStr.push('<td>' + replyList[i].writedate  + '</td>');
 				 		htmlStr.push('</tr>');		
 				 		htmlStr.push('<tr>');	
 				 		htmlStr.push('<td colspan="2" class="cmtContent">' + replyList[i].content + '</td>');
@@ -107,8 +107,7 @@
             });
             
             
-            
-            $('#ListReply').on('click', '.modifyFormBtn', function() {                
+            $('.ListReply').on('click', '.modifyFormBtn', function() {                
             	const no = $(this).parents('table').attr('id');
             	$('#modifyReply').insertAfter('#' + no);                	
             	const content = $(this).parents('tbody').find('.Content').text();                
@@ -120,7 +119,8 @@
             
 
             //댓글 삭제
-            $('#ListReply').on('click', '.removeBtn', function() {                
+            $('.ListReply').on('click', '.removeBtn', function() {
+            	const articleNo = '${param.articleNo}';
             	const no = $(this).parents('table').attr('id');
             	requestProcess('${pageContext.request.contextPath}/removeReply.do', no);        	
             });
@@ -136,6 +136,7 @@
             
             //댓글 수정
             $('#modifyBtn').on('click', function() {
+            	const articleNo = '${param.articleNo}';
             	const no = $('#no').val();
             	const content = $('#modifyReplyContent').val();
             	requestProcess('${pageContext.request.contextPath}/modifyReply.do', no, content);   
@@ -144,7 +145,8 @@
 				
             
             //댓글 삭제
-            $('#ListReply').on('click', '.removeBtn', function() {                
+            $('.ListReply').on('click', '.removeBtn', function() {      
+            	console.log("call");
             	const no = $(this).parents('table').attr('id');
             	         	
             }); 

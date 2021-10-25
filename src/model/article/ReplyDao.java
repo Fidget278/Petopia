@@ -20,26 +20,29 @@ public class ReplyDao {
 		return replyDao;
 	}
 	// 세부조회에서 띄워줄 때 불러와햐 할 것 같은데
-	public List<ReplyVo> selectReplyList() throws Exception{
+	public List<ReplyVo> selectReplyList(int articleNo) throws Exception{
 		List<ReplyVo> replyList = new ArrayList<ReplyVo>();
 		Connection conn = null;
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try {
 			System.out.println("리플셀렉 진입");
 			conn = DBConn.getConnection();
 			
-			stmt = conn.createStatement();
 			
 			StringBuffer sql = new StringBuffer();
 			
-			sql.append("SELECT reply_no, article_no, member_no, nickname,");
-			sql.append("DATE_FORMAT(writedate, '%Y/%m/%d') as writedate, content  ");
-			sql.append("FROM reply  ");
+			sql.append("SELECT reply_no, article_no, member_no, nickname,            ");
+			sql.append("DATE_FORMAT(writedate, '%Y/%m/%d') as writedate, content     ");
+			sql.append("FROM reply                                                   ");
+			sql.append("WHERE article_no = ?                                         ");
 			sql.append("ORDER BY writedate DESC");
 			
-			rs = stmt.executeQuery(sql.toString());
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setInt(1,articleNo);
+			
+			rs = pstmt.executeQuery();
 			System.out.println(rs);
 			while(rs.next()) {
 				ReplyVo reply = new ReplyVo();
@@ -57,7 +60,7 @@ public class ReplyDao {
 			throw e;
 		} finally {
 			try {
-				DBConn.close(conn, stmt, rs);
+				DBConn.close(conn, pstmt, rs);
 			} catch(Exception e2) {
 				throw e2;
 			}
@@ -139,7 +142,7 @@ public class ReplyDao {
 			conn = DBConn.getConnection();
 			
 			StringBuffer sql = new StringBuffer();
-			sql.append("DELET FROM reply  ");
+			sql.append("DELETE FROM reply  ");
 			sql.append("WHERE reply_no = ?");
 			
 			pstmt = conn.prepareStatement(sql.toString());
