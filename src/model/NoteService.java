@@ -47,8 +47,8 @@ public class NoteService {
 		}
 	}
 	
-	public ArrayList<NoteVo> retriveNoteList(int userNo, int isUserReciever) throws Exception {
-		return NoteDao.getInstance().selectNoteList(userNo, isUserReciever);
+	public ArrayList<NoteVo> retriveNoteList(int userNo, int isUserReciever, int pageSize, int startOffset) throws Exception {
+		return NoteDao.getInstance().selectNoteList(userNo, isUserReciever, pageSize, startOffset);
 	}
 	
 	public NoteVo retriveNote(int noteNo, int userNo, int isRecieve) throws Exception {
@@ -57,6 +57,10 @@ public class NoteService {
 
 	public void updateRead(int noteNo, int userNo, int isRecieve) throws Exception {
 		NoteDao.getInstance().updateRead(noteNo, userNo, isRecieve);
+	}
+	
+	public int retriveTotalNoteCount(int userNo, int isRecieve) throws Exception {
+		return NoteDao.getInstance().selectTotalNoteCount(userNo, isRecieve);
 	}
 	
 	public void removeNote(ArrayList<NoteVo> notelist, int isRecieve) throws Exception {

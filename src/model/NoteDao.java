@@ -112,8 +112,9 @@ public class NoteDao {
 			sql.append("SELECT note.note_no, note.counterpart_no, note.counterpart_nickname, notecontent.content, ");
 			sql.append("note.sendDate, note.readDate, note.sendrecieve   ");
 			sql.append("FROM note, notecontent ");
-			sql.append("where note.member_no = ? and note.sendrecieve = ? and note.note_no = ? and note.note_no = notecontent.note_no");
-
+			sql.append("where note.member_no = ? and note.sendrecieve = ? ");
+			sql.append("and note.note_no = ? and note.note_no = notecontent.note_no ");
+			
 			pstmt = conn.prepareStatement(sql.toString());
 
 			pstmt.setInt(1, memberNo);
@@ -134,13 +135,15 @@ public class NoteDao {
 		return note;
 	}
 
-	public ArrayList<NoteVo> selectNoteList(int userNo, int isUserReciever) throws Exception {
+	public ArrayList<NoteVo> selectNoteList(int userNo, int isUserReciever, int pageSize, int startOffset) throws Exception {
 		ArrayList<NoteVo> notelist = null;
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
+		System.out.println("pageSize : " + pageSize);
+		System.out.println("startOffset : " + startOffset);
 		try {
 			conn = DBConn.getConnection();
 
@@ -148,12 +151,18 @@ public class NoteDao {
 			sql.append("SELECT note.note_no, note.counterpart_no, note.counterpart_nickname, notecontent.content, ");
 			sql.append("note.sendDate, note.readDate, note.sendrecieve  ");
 			sql.append("FROM note, notecontent ");
-			sql.append("where note.member_no = ? and note.sendrecieve = ? and note.note_no = notecontent.note_no");
-
+			sql.append("where note.member_no = ? and note.sendrecieve = ? and note.note_no = notecontent.note_no ");
+			sql.append("ORDER BY note_no DESC ");
+			sql.append("LIMIT ? OFFSET ? ");
+			
 			pstmt = conn.prepareStatement(sql.toString());
 
 			pstmt.setInt(1, userNo);
 			pstmt.setInt(2, isUserReciever);
+			pstmt.setInt(3, pageSize);
+			pstmt.setInt(4, startOffset);
+
+			
 			rs = pstmt.executeQuery();
 
 			notelist = new ArrayList<NoteVo>();
@@ -292,4 +301,44 @@ public class NoteDao {
 //			DBConn.close(null, stmt, null);
 //		}
 	}
+	
+	public int selectTotalNoteCount(int userNo, int isRecieve) throws Exception {
+
+		int postCount = 0;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBConn.getConnection();
+			
+
+			StringBuffer sql = new StringBuffer();
+			
+			
+			sql.append("SELECT COUNT(*) ");
+			sql.append("FROM note ");
+			sql.append("WHERE member_no = ? and sendrecieve = ?");
+			pstmt = conn.prepareStatement(sql.toString());
+			
+			pstmt.setInt(1, userNo);
+			pstmt.setInt(2, isRecieve);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				postCount = rs.getInt(1);
+			}
+		} catch(Exception e){
+			throw e;
+		} finally {
+			if( rs != null)
+				rs.close();
+			if (pstmt != null)
+				pstmt.close();
+			if (conn != null)
+				conn.close();
+		}
+		return postCount;
+	}
+
 }
