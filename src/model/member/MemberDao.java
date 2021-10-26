@@ -47,22 +47,21 @@ public class MemberDao {
 			DBConn.close(conn, pstmt, rs);
 		}
 	}
-	
-	
+
 	public MemberVo selectMember(String email, String password) throws Exception {
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		MemberVo member = null;
-		
 
 		try {
 			conn = DBConn.getConnection();
 
 			StringBuffer sql = new StringBuffer();
-			sql.append("SELECT member_no, email, password, ban, member.out FROM member where email = ? AND password = ?");
+			sql.append(
+					"SELECT member_no, email, password, ban, member.out FROM member where email = ? AND password = ?");
 
 			pstmt = conn.prepareStatement(sql.toString());
 
@@ -72,7 +71,7 @@ public class MemberDao {
 			rs = pstmt.executeQuery();
 
 			System.out.println("멤버 dao 쿼리 실행했음");
-			if(rs.next()) {
+			if (rs.next()) {
 				member = new MemberVo();
 				member.setNo(rs.getInt(1));
 				member.setEmail(rs.getString(2));
@@ -85,10 +84,86 @@ public class MemberDao {
 		} finally {
 			DBConn.close(conn, pstmt, rs);
 		}
-		
+
 		return member;
 	}
 	
+	public MemberVo selectMember(String email) throws Exception {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		MemberVo member = null;
+
+		try {
+			conn = DBConn.getConnection();
+
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT member_no FROM member where email = ?");
+
+			pstmt = conn.prepareStatement(sql.toString());
+
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				member = new MemberVo();
+				member.setNo(rs.getInt(1));
+
+			}
+		} finally {
+			DBConn.close(conn, pstmt, rs);
+		}
+
+		return member;
+	}
+
+	public MemberVo selectMemberProfile(int member_no) throws Exception {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		MemberVo member = null;
+
+		
+		try {
+			conn = DBConn.getConnection();
+
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT member.member_no, member.email, member.password, member.nickname, grade.name, member.docs, member.comms, member.visits ");
+			sql.append("FROM member, grade ");
+			sql.append("where member.grade_no = grade.grade_no and member_no = ?");
+
+			pstmt = conn.prepareStatement(sql.toString());
+
+			pstmt.setInt(1, member_no);
+			System.out.println("멤버 dao 쿼리 실행하기 전");
+			rs = pstmt.executeQuery();
+
+			System.out.println("멤버 dao 쿼리 실행했음");
+			if (rs.next()) {
+				member = new MemberVo();
+				member.setNo(rs.getInt(1));
+				member.setEmail(rs.getString(2));
+				member.setPassword(rs.getString(3));
+				member.setNickname(rs.getString(4));
+				member.setGrade(rs.getString(5));
+				member.setDocs(rs.getInt(6));
+				member.setComms(rs.getInt(7));
+				member.setVisits(rs.getInt(8));
+				System.out.println("DB에 멤버 정보 있음");
+			}
+			System.out.println("DB에 멤버 정보 없음");
+		} finally {
+			DBConn.close(conn, pstmt, rs);
+		}
+
+		return member;
+	}
+	
+
 	// 회원 목록을 DB에서 조회한다.
 	public ArrayList<MemberVo> selectMemberList(int startRow, int  memberPerPage) throws Exception {
 		Connection conn = null;
@@ -315,9 +390,8 @@ public class MemberDao {
 		}
 		return result;
 	}
-	
-	// 회원 관리 정지 기간 DB 적용
-	public void updateBan(String banSelect, Connection conn) throws Exception {
+  
+  public void updateBan(String banSelect, Connection conn) throws Exception {
 		PreparedStatement pstmt = null;
 		
 		try {
@@ -328,4 +402,32 @@ public class MemberDao {
 			// TODO: handle exception
 		}
 	}
+	
+  public void updatePassword(int memNo, String newPassword) throws Exception {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = DBConn.getConnection();
+
+			StringBuffer sql = new StringBuffer();
+			 
+
+			sql.append("UPDATE member ");
+			sql.append("SET password = ? ");
+			sql.append("WHERE member_no = ? ");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+
+			pstmt.setString(1, newPassword);
+			pstmt.setInt(2, memNo);
+			System.out.println("memNo : " + memNo);
+			pstmt.executeUpdate();
+			
+		} finally {
+			DBConn.close(conn, pstmt, null);
+		}
+	}
+
 }

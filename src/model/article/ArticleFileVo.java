@@ -11,6 +11,17 @@ public class ArticleFileVo {
 	public ArticleFileVo() {
 		
 	}
+	
+	
+
+	public ArticleFileVo(String originalFileName, String systemFileName, int fileSize) {
+		super();
+		this.originalFileName = originalFileName;
+		this.systemFileName = systemFileName;
+		this.fileSize = fileSize;
+	}
+
+
 
 	public ArticleFileVo(int fileNo, int articleNo, String originalFileName, String systemFileName, int fileSize,
 			String fileType) {

@@ -11,12 +11,18 @@ public class CommandFactory {
 	private Map<String, String> map = new HashMap<String, String>();
 	
 	private CommandFactory() {
+		// 관리자 화면
 		map.put("/managerIndex.do", "controller.manager.ManagerCommand");
+		map.put("/managerStatisticsDaily.do", "controller.statistics.statisticsDailyFormCommand");
+		map.put("/managerStatisticsTotal.do", "controller.statistics.statisticsTotalFormCommand");
 		
 		map.put("/petopia.do", "controller.member.IntroCommand");
 		map.put("/login.do", "controller.member.LoginCommand");
-		
-		// 회원 목록
+		map.put("/logout.do", "controller.member.LogOutCommand");
+		map.put("/side.do", "controller.SideCommand");
+    
+     
+    // 회원 목록
 		map.put("/viewMemberList.do", "controller.manager.MemberListCommand");
 		
 		// 회원 검색 시
@@ -37,6 +43,34 @@ public class CommandFactory {
 		
 		// 등급 확인 시
 		map.put("/viewGradeBoardList.do", "controller.grade.GradeBoardListCommand");
+		
+		// 쪽지
+		map.put("/noteList.do", "controller.NoteListFormCommand");
+		map.put("/noteDetailBoard.do", "controller.NoteDetailFormCommand");
+		map.put("/writeNote.do", "controller.WriteNoteCommand");
+		map.put("/deleteNote.do", "controller.NoteDeleteCommand");
+		map.put("/sendMail.do", "controller.MailCommand");
+		
+		// 게시글 목록 조회
+		map.put("/viewListArticleContent.do", "controller.article.ListArticleCommand");
+				
+		// 게시글 상세 조회
+		map.put("/viewDetailArticleContent.do", "controller.article.DetailArticleCommand");
+		
+		// 게시글 작성 페이지로 이동
+		map.put("/viewWriteArticleForm.do", "controller.article.WriteArticleFormCommand");
+
+		// 게시글 삭제
+		map.put("/removeArticle.do", "controller.article.RemoveArticleCommand");
+
+		// 게시글 수정폼이동
+		map.put("/viewModifyArticleForm.do", "controller.article.ModifyArticleFormCommand");
+		
+		//게시글 검색
+		map.put("/searchAjax.do", "controller.article.SearchAjaxCommand");
+		
+		/* ----------------------댓글------------------------------------- */
+		map.put("/writeReply.do", "controller.reply.RegisterReplyCommand");
 	}
 	
 	public static CommandFactory getInstance() {
@@ -48,6 +82,7 @@ public class CommandFactory {
 	
 	public Command createCommand(String commandURI) throws Exception {
 		
+		System.out.println("팩진입");
 		String commandClass = map.get(commandURI);
 		System.out.println("fac : " + commandURI);
 		if(commandClass == null)
@@ -66,3 +101,4 @@ public class CommandFactory {
 
 	}
 }
+

@@ -12,10 +12,13 @@
 	<div>
 		<label for="email">이메일 : </label>
  		<input type="text" name="email" id="email">
+ 		<p id = "topText"></p>
 		<label for="password">비밀번호 : </label>
  		<input type="text" name="password" id="password">
-		<h1></h1>
+		<p id = "bottomText"></p>
  		<button type="button" id="loginBtn">로그인</button>
+ 		<a href = "${pageContext.request.contextPath}/join.jsp">회원가입</a>
+ 		<a href = "${pageContext.request.contextPath}/findPassword.jsp">비밀번호 찾기</a>
  	</div>
 	<!--  비동기 메시시 처리 방식 -->
 	<script>      
@@ -49,9 +52,13 @@
                 console.log(result);
                 
                 if( result.isSuccess == 0){
-                    $('h1').text(result.failText);	
+                    $('#bottomText').text(result.failText);	
                 } else if (result.isSuccess == 1) {
                 	location.href = result.url;
+                } else if(result.isSuccess == 2){
+                	alert(result.failText);
+                } else if(result.isSuccess == 3){
+                	alert(result.failText);
                 }
                 
                   
@@ -62,11 +69,24 @@
         
         
         
-	    $('#loginBtn').on('click', function() {				
+	    $('#loginBtn').on('click', function() {		
+	    	$('#topText').text("");
+	    	$('#bottomText').text("");	
 			const email = $('#email').val();
 	    	const password = $('#password').val();
-	    	requestProcess('/petopiaWebApp/login.do', email, password);
-	   
+	    	
+	    	let doRequest = true;
+	    	if(email == ""){
+	    		$('#topText').text("아이디를 입력해주세요.");
+	    		doRequest = false;
+	    	}
+	    	if(password == ""){
+	    		$('#bottomText').text("비밀번호를 입력해주세요.");
+	    		doRequest = false;
+	    	}
+	    	if(doRequest == true){
+	    		requestProcess('/petopiaWebApp/login.do', email, password);	
+	    	}
 	    });
 	</script>
 </body>

@@ -6,9 +6,7 @@ public class BoardVo {
 	private int boardNo;
 	private String boardName;
 	private int categoryNo;
-	private int readGrade;
-	private int writeGrade;
-	private ArrayList<BoardVo> boradList = new ArrayList<>();
+	private String categoryName;
 	
 	public BoardVo() {
 	}
@@ -16,14 +14,21 @@ public class BoardVo {
 	public BoardVo(String boardName) {
 		this.boardName = boardName;
 	}
+	
+	public BoardVo(int boardNo, String boardName) {
+		this.boardNo = boardNo;
+		this.boardName = boardName;
+		
+	}
 
-	public BoardVo(int boardNo, String boardName, int categoryNo, int readGrade, int writeGrade) {
+	
+
+	public BoardVo(int boardNo, String boardName, int categoryNo, String categoryName) {
 		super();
 		this.boardNo = boardNo;
 		this.boardName = boardName;
 		this.categoryNo = categoryNo;
-		this.readGrade = readGrade;
-		this.writeGrade = writeGrade;
+		this.categoryName = categoryName;
 	}
 
 	public int getBoardNo() {
@@ -54,31 +59,17 @@ public class BoardVo {
 	public void setCategoryNo(int categoryNo) {
 		this.categoryNo = categoryNo;
 	}
-
-	public int getReadGrade() {
-		return readGrade;
-	}
-
-	public void setReadGrade(int readGrade) {
-		this.readGrade = readGrade;
-	}
-
-	public int getWriteGrade() {
-		return writeGrade;
-	}
-
-	public void setWriteGrade(int writeGrade) {
-		this.writeGrade = writeGrade;
-	}
-
-	public ArrayList<BoardVo> getBoradList() {
-		return boradList;
-	}
-
-	public void setBoradList(ArrayList<BoardVo> boradList) {
-		this.boradList = boradList;
-	}
 	
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+
 	
 	
 	

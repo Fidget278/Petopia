@@ -1,9 +1,12 @@
+
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<c:set var="side" value="${param.side}.jsp" />
-<c:set var="content" value="${param.content}.jsp" />
+
+<c:set var = "side" value = "${requestScope.side }"/> 
+<c:set var = "content" value = "${requestScope.content }"/> 
+
 
 <!DOCTYPE html>
 <html lang="ko">

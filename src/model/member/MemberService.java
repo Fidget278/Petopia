@@ -18,12 +18,13 @@ public class MemberService {
 
 		return memberService;
 	}
-	
+
 	public MemberVo login(String email, String password) throws Exception {
-		
+
 		System.out.println("memberService login");
 		return MemberDao.getInstance().selectMember(email, password);
 	}
+
 	
 	
 	// 회원 목록 조회
@@ -68,5 +69,20 @@ public class MemberService {
 				throw e2;
 			}
 		}
+  }
+
+
+	public MemberVo retreiveMemberProfile(int member_no) throws Exception {
+		System.out.println("retreiveMemberProfile");
+		return MemberDao.getInstance().selectMemberProfile(member_no);
+	}
+	
+	public int isAlreadyMember(String email) throws Exception {
+		
+		if( MemberDao.getInstance().selectMember(email) == null )
+			return 0;
+		
+		return 1;
+
 	}
 }
