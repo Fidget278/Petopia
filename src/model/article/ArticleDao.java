@@ -294,7 +294,7 @@ public class ArticleDao {
 
 			if (keyfield.equals("subject") ) {
 				sql.append("SELECT article_no, subject, nickname,                                 ");
-				sql.append("DATE_FORMAT(writedate, '%Y/%m/%d') as writedate, viewcount, likecount ");
+				sql.append("DATE_FORMAT(writedate, '%Y/%m/%d') as writedate, viewcount, likecount, member_no ");
 				sql.append("FROM article                                                          ");
 				sql.append("WHERE board_no=? and subject = ?                                      ");
 
@@ -310,7 +310,7 @@ public class ArticleDao {
 
 			else {
 				sql.append("SELECT article_no, subject, nickname,                                 ");
-				sql.append("DATE_FORMAT(writedate, '%Y/%m/%d') as writedate, viewcount, likecount ");
+				sql.append("DATE_FORMAT(writedate, '%Y/%m/%d') as writedate, viewcount, likecount, member_no ");
 				sql.append("FROM article                                                          ");
 				sql.append("WHERE board_no=? and nickname = '?'                                      ");
 				sql.append("ORDER BY article_no DESC                                               ");
@@ -333,7 +333,8 @@ public class ArticleDao {
 				String writedate = rs.getString(4);
 				int viewcount = rs.getInt(5);
 				int likecount = rs.getInt(6);
-				articles.add(new ArticleVo(articleNo, subject, nickname, writedate, viewcount, likecount));
+				int memberNo = rs.getInt(7);
+				articles.add(new ArticleVo(articleNo, subject, nickname, writedate, viewcount, likecount, memberNo));
 				System.out.println("articles : " + articles.size());
 			}
 			
