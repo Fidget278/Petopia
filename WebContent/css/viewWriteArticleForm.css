@@ -4,6 +4,10 @@
 	flex-direction: column;
 }
 
+.content.writeForm{
+	background: #c5fef5;
+	color: #fff;
+}
 
 table.writeForm{
 	border-collapse:collapse;
@@ -16,7 +20,7 @@ table.writeForm{
 table.writeForm thead{
 	border-right: 1px solid #ccc;
 	border-left: 1px solid #ccc;
-	background: #e7708d;
+	background: #c5fef5;
 }
 
 table.writeForm thead th{
@@ -33,7 +37,7 @@ table.writeForm tbody th{
 	font-weight: bold;
 	vertical-align: top;
 	border-botton: 1px solid #ccc;
-	background: #fcf1f4;
+	background: #c5fef5;
 }
 
 table.writeForm td{
@@ -43,3 +47,8 @@ table.writeForm td{
 	border-bottom: 1px solid #ccc;
 	text-align: center;
 }
+
+table #writeBtn{
+	text-align: right;
+}
+

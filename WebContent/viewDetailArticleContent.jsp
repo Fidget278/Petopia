@@ -13,6 +13,27 @@
 <title>Content</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
 <link href="./css/viewMainContent.css" rel="stylesheet" type="text/css">
+<style>
+table{
+	width: 100%;
+}
+div .file{
+	width: 100%;
+}
+div .addReply{
+	width: 100%;
+}
+
+div #modifyReply{
+	width: 100%;
+}
+div .ListReply{
+	width: 100%;
+
+}
+
+
+</style>
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script>
     	$(document).ready(function() {
@@ -196,134 +217,139 @@
 <body>
 	<div class="content">
 		<!-- Content 내용 여기에 추가 -->
-		<table class="bbs" width="600" border="2" bgcolor="D8D8D8">
-		<tbody>
-			<tr>
-				<p>
+		<table class="bbs"  border="2" bgcolor="D8D8D8">
+			<tbody>
+				<tr>
+					<p>
 					<td>제목:</td>
-					<td colspan="5"> ${requestScope.articles.subject } </td>
-				</p>
-			</tr>
-			<tr>
-				<p>
+					<td colspan="5">${requestScope.articles.subject }</td>
+					</p>
+				</tr>
+				<tr>
+					<p>
 					<td>작성자:</td>
-					<td colspan="5"> ${requestScope.articles.nickname } </td>
-				</p>
-			</tr>
-			<tr>
-				<p>
+					<td colspan="5">${requestScope.articles.nickname }</td>
+					</p>
+				</tr>
+				<tr>
+					<p>
 					<td>작성일:</td>
-					<td colspan="5"> ${requestScope.articles.writedate } </td>
-				</p>
-			</tr>
+					<td colspan="5">${requestScope.articles.writedate }</td>
+					</p>
+				</tr>
 
-			<tr>
-				<td height="400">내용:</td>
-				<td colspan="5"> ${requestScope.articles.content }</td>
-			</tr>
-			<tr height="100">
-				<div id="btn">
-				 	<td>
-				 		<button id="btn" type="button" onclick="location.href='viewWriteArticleForm.do';">글쓰기</button>
-				 	</td>
-				 	<td>
-				 		<c:url var="backUrl" value="/viewListArticleContent.do?boardNo=${param.boardNo }"/>
-				 		<button id="backBtn" type="button" onclick="location.href='${backUrl}';">목록</button>
-				 	</td>
-				 	<!-- 추천 기능 -->
-				 	<td>
-				 		<div class="w3-border w3-center w3-padding">
-							<button class="w3-button w3-black w3-round" id="rec_update">
-								<i class="fa fa-heart" style="font-size:30px;color:red"></i>
-								&nbsp;<span class="rec_count"></span>
-							</button>				 		
-				 		</div>
-				 	</td>
-				 	<td>
-					 	<c:url var="modifyUrl" value="/viewModifyArticleForm.do">
-					 		<c:param name="articleNo" value="${param.articleNo }"/>
-					 		<c:param name="boardNo" value="${param.boardNo }"/>
-					 	</c:url>
-				 		<button id="modifyBtn" type="button" onclick="location.href='${modifyUrl}';">수정</button>
-				 	</td>
-				 	<td>
-				 		<form>
-					 		<c:url var="removeUrl" value="removeArticle.do">
-					 			<c:param name="articleNo" value="${param.articleNo }"/>
-					 			<c:param name="boardNo" value="${param.boardNo }"/>
-					 		</c:url>
-					 		<button id="reomveBtn" type="button" onclick="location.href='${removeUrl}';">삭제</button>
-				 		</form>
-				 	</td>
-			 	</div>
-			 </tr>
-		</tbody>
-	</table>
-	</div>
-	&nbsp;
-	<%-- 첨부파일 출력. --%>
-	<div class="file">
-		<c:if test="${empty requestScope.articles.fileList }">등록된 파일이 없습니다.
-		</c:if>
-
-		<c:if test="${not empty requestScope.articles.fileList }">
-			<th>파일명</th><th>파일크기</th>
-			<c:forEach var="file" items="${requestScope.articles.fileList }">
-				<c:url var="downloadUrl" value="/fileDownload">
-					<c:param name="originalFileName" value="${file.originalFileName}"/>
-					<c:param name="systemFileName" value="${file.systemFileName}"/>
-				</c:url>
-				<td><a href="${downloadUrl}">${file.originalFileName }</a></td>
-			</c:forEach>
-			<c:forEach var="file" items="${requestScope.articles.fileList }">
-				<td>${file.originalFileName }</td>
-				<td>${file.fileSize } bytes</td>
-			</c:forEach>
-		</c:if>				
-	</div>
-	&nbsp;
-	 <%-- 댓글 --%>
-	 <div class="ListReply">
-		<c:forEach var="reply" items="${requestScope.replyList }">
-			<table id="${reply.replyNo }" width="800" height="500">
-				<tbody>
-					<tr>
-						<td>${reply.nickname }</td>
-						<td>${reply.writedate }</td>
-					</tr>
-					<tr>
-						<td colspan="2" class="replyContent">${reply.content }</td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							<button class="modifyFormBtn" type="button">수정</button>
-							<button class="removeBtn" type="button">삭제</button>
+				<tr>
+					<td height="400">내용:</td>
+					<td colspan="5">${requestScope.articles.content }</td>
+				</tr>
+				<tr height="100">
+					<div id="btn">
+						<td>
+							<button id="btn" type="button"
+								onclick="location.href='viewWriteArticleForm.do';">글쓰기</button>
 						</td>
-					</tr>
-				</tbody>			
-			</table>
-		</c:forEach>
+						<td><c:url var="backUrl"
+								value="/viewListArticleContent.do?boardNo=${param.boardNo }" />
+							<button id="backBtn" type="button"
+								onclick="location.href='${backUrl}';">목록</button></td>
+						<!-- 추천 기능 -->
+						<td>
+							<div class="w3-border w3-center w3-padding">
+								<button class="w3-button w3-black w3-round" id="rec_update">
+									<i class="fa fa-heart" style="font-size: 30px; color: red"></i>
+									&nbsp;<span class="rec_count"></span>
+								</button>
+							</div>
+						</td>
+						<td><c:url var="modifyUrl" value="/viewModifyArticleForm.do">
+								<c:param name="articleNo" value="${param.articleNo }" />
+								<c:param name="boardNo" value="${param.boardNo }" />
+							</c:url>
+							<button id="modifyBtn" type="button"
+								onclick="location.href='${modifyUrl}';">수정</button></td>
+						<td>
+							<form>
+								<c:url var="removeUrl" value="removeArticle.do">
+									<c:param name="articleNo" value="${param.articleNo }" />
+									<c:param name="boardNo" value="${param.boardNo }" />
+								</c:url>
+								<button id="reomveBtn" type="button"
+									onclick="location.href='${removeUrl}';">삭제</button>
+							</form>
+						</td>
+					</div>
+				</tr>
+			</tbody>
+		</table>
+		&nbsp;
+		<%-- 첨부파일 출력. --%>
+		<div class="file">
+			<c:if test="${empty requestScope.articles.fileList }">등록된 파일이 없습니다.
+		</c:if>
+			
+			<c:if test="${not empty requestScope.articles.fileList }">
+				<th>파일명</th>
+				<th>파일크기</th>
+				<c:forEach var="file" items="${requestScope.articles.fileList }">
+					<c:url var="downloadUrl" value="/fileDownload">
+						<c:param name="originalFileName" value="${file.originalFileName}" />
+						<c:param name="systemFileName" value="${file.systemFileName}" />
+					</c:url>
+					<td><a href="${downloadUrl}">${file.originalFileName }</a></td>
+				</c:forEach>
+				<c:forEach var="file" items="${requestScope.articles.fileList }">
+					<td>${file.originalFileName }</td>
+					<td>${file.fileSize }bytes</td>
+				</c:forEach>
+			</c:if>
+		</div>
+		&nbsp;
+		<%-- 댓글 --%>
+		<%-- 댓글 달기 --%>
+		<div id="addReply">
+			<div>
+				<textarea id="addContent" rows="5" cols="50"
+					placeholder="댓글을 입력해주세오 ."></textarea>
+			</div>
+			<div>
+				<button id="addReplyBtn">댓글 달기</button>
+			</div>
+		</div>
+		<div class="ListReply">
+			<c:forEach var="reply" items="${requestScope.replyList }">
+				<%--<table id="${reply.replyNo }" width="800" height="200">--%>
+				<table id="${reply.replyNo }" height="200">
+					<tbody>
+						<tr>
+							<td>${reply.nickname }</td>
+							<td>${reply.writedate }</td>
+						</tr>
+						<tr>
+							<td colspan="2" class="replyContent">${reply.content }</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<button class="modifyFormBtn" type="button">수정</button>
+								<button class="removeBtn" type="button">삭제</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</c:forEach>
+		</div>
+		
+		<%-- 댓글 수정--%>
+		<div id="modifyReply" style="display: none;">
+			<div>
+				<input type="hidden" id="no" />
+				<textarea id="modifyReplyContent" rows="5" cols="50"
+					placeholder="댓글을 입력해주세오 ."></textarea>
+			</div>
+			<div>
+				<button id="cancel">취소</button>
+				<button class="modifyBtn">수정하기</button>
+			</div>
+		</div>
 	</div>
-	<%-- 댓글 달기 --%>
-	<div id="addReply">
-		<div>
-			<textarea id="addContent" rows="5" cols="50" placeholder="댓글을 입력해주세오 ."></textarea>
-		</div>
-		<div>
-			<button id="addReplyBtn">댓글 달기</button>
-		</div>
-	</div>
-	
-	<%-- 댓글 수정--%>
-	<div id="modifyReply" style="display:none;">
-		<div>
-			<input type="hidden" id="no"/>
-			<textarea id="modifyReplyContent" rows="5" cols="50" placeholder="댓글을 입력해주세오 ."></textarea>
-		</div>
-		<div>
-			<button id="cancel">취소</button>
-			<button class="modifyBtn">수정하기</button>
-		</div>
-	</div>	
 </body>
 </html>
