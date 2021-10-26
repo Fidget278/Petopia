@@ -196,9 +196,38 @@ public class MemberDao {
 			DBConn.close(conn, pstmt, null);
 		}
 	}
+	
+	public boolean selectNickname(String nickname) throws Exception {
 
-	
-	
-	
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = DBConn.getConnection();
+
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT nickname ");
+			sql.append("FROM member ");
+			sql.append("where nickname = ? ");
+
+			pstmt = conn.prepareStatement(sql.toString());
+
+			pstmt.setString(1, nickname);
+
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				return true;
+			}
+
+			return false;
+
+		} finally {
+			DBConn.close(conn, pstmt, rs);
+		}
+	}
+
+
 	
 }

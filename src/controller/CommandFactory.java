@@ -16,8 +16,9 @@ public class CommandFactory {
 		map.put("/login.do", "controller.member.LoginCommand");
 		map.put("/join.do", "controller.member.JoinCommand");
 		map.put("/resetpassword.do", "controller.member.ResetPasswordCommand");
-		map.put("/idCheck.do", "controller.member.IdCheckCommand");
+		map.put("/checkid.do", "controller.member.CheckIdCommand");
 		map.put("/out.do", "controller.member.OutCommand");
+		map.put("/NicknameCheck.do", "controller.member.NicknameCheckCommand");
 	}
 
 	public static CommandFactory getInstance() {

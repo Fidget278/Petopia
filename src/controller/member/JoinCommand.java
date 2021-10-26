@@ -10,7 +10,6 @@ import model.member.MemberVo;
 
 public class JoinCommand implements Command{
 
-	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		String email = request.getParameter("email");

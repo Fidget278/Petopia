@@ -11,7 +11,6 @@ import model.member.MemberVo;
 
 public class ResetPasswordCommand implements Command{
 
-	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		String newpassword = request.getParameter("newpassword");

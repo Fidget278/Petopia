@@ -35,6 +35,10 @@ public class MemberService {
 	public void modifyMember(int memberNo, String password) throws Exception {
 		MemberDao.getInstance().updateMember(memberNo, password);	
 	}
-
+	
+	public boolean retrieveNickname(String nickname) throws Exception {
+		return MemberDao.getInstance().selectNickname(nickname);	
+	
 	}
+}
 

@@ -5,11 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
-<style>
-span {
-	display: none;
-}
-</style>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
 	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 	crossorigin="anonymous"></script>
@@ -42,7 +38,33 @@ span {
       		
 		};
 		
-      	//[시작] jquery 실행하는 코드
+		//닉네임 function
+		var duplicatenickname = false;
+      	const getAjax1 = function(url, nickname) {
+			
+      		return new Promise( (resolve, reject) => {
+          		$.ajax({
+      				url: url,
+      				method: 'POST',
+      				dataType: 'json',
+      				data: {
+      					nickname: nickname
+      				},
+      				async: true,
+      				success: function(data) {						
+						resolve(data);
+					},
+					error: function(e) {						
+						reject(e);
+					}
+   			
+      			});
+          		
+      		}); 
+      		
+		};
+		
+		//[시작] 아이디 중복검사 (db확인)
       	async function sendProcess(url, email) {
       		try {
       			var result = await getAjax(url, email);
@@ -60,15 +82,15 @@ span {
       		catch(e) {
       			console.log(e);
       		}      		
-		} //[끝] jquery 실행하는 코드
+		} //[끝] 아이디 중복검사 (db확인)
 		      	
 		//아이디 중복확인 버튼 눌렀을 시 실행되는 코딩 [시작]
       	$('#idcheckbtn').on("click", function(event) {
       		const email = $('#email').val();
-      		console.log('id : ', email);
+      		console.log('email : ', email);
       
       		if(CheckEmail(email)){
-      			sendProcess('${pageContext.request.contextPath}/idCheck.do', email);
+      			sendProcess('${pageContext.request.contextPath}/checkid.do', email);
       		} else {
       			alert("올바른 이메일 주소를 입력해주세요.");
       		}
@@ -85,7 +107,41 @@ span {
 				return true;         
 			}                            
 		} //이메일 형식으로 유효성 검사 [끝]
+		
+	
+		
+		//[시작] 닉네임 중복검사 (db확인)
+      	async function sendProcess1(url, nickname) {
+      		try {
+      			var result = await getAjax1(url, nickname);
+      			
+      			if (result.isNickname == 'true') {  //닉네임이 존재하는 경우
+      				$('#errmsgnn').html("존재하는 닉네임입니다.");
+      				$('#errmsgnn').css("color", "red");
+      				duplicatenickname = true;
+      				
+      			} else if (result.isNickname == 'false') {  //닉네임이 존재하지 않는 경우
+      				$('#errmsgnn').html("사용 가능한 닉네임입니다.");
+      				$('#errmsgnn').css("color", "green");
+      				duplicatenickname = false;
+      			}
+      		}
+      		catch(e) {
+      			console.log(e);
+      		}//[끝]닉네임 중복검사 (db확인)  		
+		} 
+      //닉네임 중복확인 버튼 눌렀을 시 실행되는 코딩 [시작]
+      	$('#nncheckbtn').on("click", function(event) {
+      		const nickname = $('#nickname').val();
+      		console.log('nickname : ', nickname);
+      
 
+      		sendProcess1('${pageContext.request.contextPath}/NicknameCheck.do', nickname);
+      		
+      		
+      	}); //닉네임 중복확인 버튼 눌렀을 시 실행되는 코딩 [끝]
+      	 
+		 
        //[시작] input 박스 커서 선택 시 "~입력해주세요." 에러메세지 없애기
       	//이메일 인풋박스 선택시 "이메일을 입력해주세요." 경고 문구 "    "로 공백 만들기
       	$( "#email" ).focus(function() {
@@ -135,7 +191,14 @@ span {
      				$('#errmsgid').css("color", "red");//errmsgid는 빨간색 글씨로 css 처리하겠다.
         			return false;
         			 
-              }	 //[끝] 회원가입 버튼 눌렀을 시 발생하는 코드 
+              }	 
+             
+             if(duplicatenickname == true){ //중복된 닉네임 입력시에
+     			$('#errmsgnn').html("닉네임 중복확인을 해주세요."); //errmsgnn 공간(div)에 "닉네임 중복확인을 해주세요."
+  				$('#errmsgnn').css("color", "red");//errmsgnn는 빨간색 글씨로 css 처리하겠다.
+     			return false;
+     			 
+           }	 //[끝] 회원가입 버튼 눌렀을 시 발생하는 코드 
               
             alert("회원가입이 완료되었습니다.")
             return true; //모든게 끝나고 return
@@ -163,6 +226,7 @@ span {
 		<div id='errmsgpw'></div>
 		
 		닉네임 <input type="text" name="nickname" id="nickname">
+		<button type="button" id="nncheckbtn">중복 확인</button>
 		<!-- 닉네임 에러메시지 문구 공간 -->
 		<div id='errmsgnn'></div>
 		<input type="submit" value="회원가입 하기">

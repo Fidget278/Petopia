@@ -8,7 +8,6 @@ import controller.Command;
 
 public class IntroCommand implements Command {
 
-	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		return new ActionForward("/homeIndex.jsp", false);

@@ -8,9 +8,9 @@ import controller.Command;
 import model.member.MemberService;
 
 
-public class OutCommand implements Command{
+public class OutCommand implements Command {
 
-	@Override
+
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
