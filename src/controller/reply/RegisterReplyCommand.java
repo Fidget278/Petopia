@@ -16,12 +16,12 @@ public class RegisterReplyCommand implements Command{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) 
 			throws Exception {
 		
-		HttpSession session = request.getSession();
-		
-		BufferedReader br = request.getReader();
-		String reqData = br.readLine();
-		Gson gson = new GSon();
-		ReplyVo reply = gson.fromJson(reqData, ReplyVo.class);
+//		HttpSession session = request.getSession();
+//		
+//		BufferedReader br = request.getReader();
+//		String reqData = br.readLine();
+//		//Gson gson = new GSon();
+//		ReplyVo reply = gson.fromJson(reqData, ReplyVo.class);
 		
 		return null;
 	}

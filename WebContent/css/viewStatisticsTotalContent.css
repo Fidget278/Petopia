@@ -39,7 +39,7 @@
 
 .content-text>table th {
 	border: 2px solid #666;
-	width: 33%;
+	width: 25%;
 	flex-basis: auto;
 	padding: 10px;
 	text-align: center;
@@ -48,7 +48,7 @@
 
 .content-text>table td {
 	border: 2px solid #666;
-	width: 33%;
+	width: 25%;
 	flex-basis: auto;
 	padding: 10px;
 	text-align: center;

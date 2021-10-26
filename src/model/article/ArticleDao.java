@@ -37,37 +37,40 @@ public class ArticleDao {
 			conn = DBConn.getConnection();
 
 //            System.out.println("쿼리문 시작");
-			// 쿼리문이 담길 StringBuffer 객체 생성.
-			StringBuffer sql = new StringBuffer();
-			// Article DB에 접근하여 (게시글 번호, 제목, 별명, 작성일, 조회수, 추천(좋아요)수)를 받아오는 쿼리문
-			sql.append("SELECT article_no, subject, nickname,                                 ");
-			sql.append("DATE_FORMAT(writedate, '%Y/%m/%d') as writedate, viewcount, likecount ");
-			sql.append("FROM article                                                          ");
-			sql.append("WHERE board_no=?                                                      ");
-			sql.append("ORDER BY article_no DESC                                               ");
-			// LIMIT: 몇 개를 출력할지, OFFSET: 어디서 부터 시작할지
-			sql.append("LIMIT ? OFFSET ?");
 
-			pstmt = conn.prepareStatement(sql.toString());
-
-			pstmt.setInt(1, boardNo);
-			pstmt.setInt(2, postSize);
-			pstmt.setInt(3, startRow);
-
-			rs = pstmt.executeQuery();
-
+            // 쿼리문이 담길 StringBuffer 객체 생성.
+            StringBuffer sql = new StringBuffer();
+            // Article DB에 접근하여 (게시글 번호, 제목, 별명, 작성일, 조회수, 추천(좋아요)수)를 받아오는 쿼리문
+            sql.append("SELECT article_no, subject, nickname,                                 ");
+            sql.append("DATE_FORMAT(writedate, '%Y/%m/%d') as writedate, viewcount, likecount, member_no ");
+            sql.append("FROM article                                                          ");
+            sql.append("WHERE board_no=?                                                      ");
+            sql.append("ORDER BY article_no DESC                                               ");
+            // LIMIT: 몇 개를 출력할지, OFFSET: 어디서 부터 시작할지
+            sql.append("LIMIT ? OFFSET ?");
+            
+            pstmt = conn.prepareStatement(sql.toString());
+            
+            pstmt.setInt(1, boardNo);
+            pstmt.setInt(2, postSize);
+            pstmt.setInt(3, startRow);
+            
+            rs = pstmt.executeQuery();
+            
 //            System.out.println("쿼리문 끝");
 
-			// rs에 받아놓은 데이터를 ArrayList 객체에 담아준다.
-			while (rs.next()) {
-				int articleNo = rs.getInt(1);
-				String subject = rs.getString(2);
-				String nickname = rs.getString(3);
-				String writedate = rs.getString(4);
-				int viewcount = rs.getInt(5);
-				int likecount = rs.getInt(6);
-				articles.add(new ArticleVo(articleNo, subject, nickname, writedate, viewcount, likecount));
-			}
+            // rs에 받아놓은 데이터를 ArrayList 객체에 담아준다.
+            while (rs.next()) {
+            	int articleNo = rs.getInt(1);
+            	String subject = rs.getString(2);
+            	String nickname = rs.getString(3);
+            	String writedate = rs.getString(4);
+            	int viewcount = rs.getInt(5);
+            	int likecount = rs.getInt(6);
+            	int memberNo = rs.getInt(7);
+            	articles.add(new ArticleVo(articleNo, subject, nickname, writedate, viewcount, likecount, memberNo));
+            }
+
 //            System.out.println("while종료");
 
 		} catch (Exception e) {
