@@ -38,7 +38,7 @@
 					</div>
 				</div>
 				<div class="lastSection-inner">
-					<a href="#"> <span>비밀번호 변경</span>
+					<a href="${pageContext.request.contextPath}/resetPassword.jsp"> <span>비밀번호 변경</span>
 					</a> <a href="${pageContext.request.contextPath}/logout.do"> <span>로그아웃</span>
 					</a>
 				</div>

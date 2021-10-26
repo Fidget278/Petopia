@@ -88,7 +88,8 @@ a:hover {
 	<%-- <p>스타트 페이지 : ${ pageScope.startPage }</p>
 	<p>엔드 페이지 : ${ pageScope.endPage }</p> --%>
 	<c:if test = "${startPage > pageBlock }">
-		<c:url var = "prevUrl" value = "/listboard.do">
+		<c:url var = "prevUrl" value = "/noteList.do">
+			<c:param name="isRecieve" value = "${ param.isRecieve }" />
 			<c:param name="currentPage" value = "${startPage - pageBlock}"></c:param>
 		</c:url>
 		<a href="${ prevUrl}">[PREV]</a>
@@ -99,14 +100,16 @@ a:hover {
 			${ i }
 		</c:if>
 		<c:if test = "${ i != currentPage }">
-			<c:url var = "url" value = "/listboard.do">
+			<c:url var = "url" value = "/noteList.do">
+				<c:param name="isRecieve" value = "${ param.isRecieve }" />
 				<c:param name="currentPage" value = "${i}"></c:param>
 			</c:url>
 			<a href = "${url}">${ i }</a>
 		</c:if>
 	</c:forEach>
 	<c:if test = "${endPage < totalPage }">
-		<c:url var = "nextUrl" value = "/listboard.do">
+		<c:url var = "nextUrl" value = "/noteList.do">
+			<c:param name="isRecieve" value = "${ param.isRecieve }" />
 			<c:param name="currentPage" value = "${endPage + 1}"></c:param>
 		</c:url>
 		<a href="${nextUrl }">[NEXT]</a>

@@ -22,7 +22,12 @@ public class CommandFactory {
 		map.put("/logout.do", "controller.member.LogOutCommand");
 		map.put("/side.do", "controller.SideCommand");
     
-     
+		map.put("/join.do", "controller.member.JoinCommand");
+		map.put("/resetpassword.do", "controller.member.ResetPasswordCommand");
+		map.put("/checkid.do", "controller.member.CheckIdCommand");
+		map.put("/out.do", "controller.member.OutCommand");
+		map.put("/NicknameCheck.do", "controller.member.NicknameCheckCommand");
+		
     // 회원 목록
 		map.put("/viewMemberList.do", "controller.manager.MemberListCommand");
 		
