@@ -169,11 +169,13 @@ public class ArticleService {
 
 	public ArrayList<ArticleVo> retrieveSearchArticle(int board_no, int startRow, int articlePerPage, String keyfield,
 			String keyword) throws Exception {
-		return ArticleDao.getInsatnce().selectSearchArticle(board_no, startRow, articlePerPage, keyfield, keyword);
+		//System.out.println("Service: "+ArticleDao.getInsatnce().selectSearchArticle(board_no, startRow, articlePerPage, keyfield, keyword));
+		ArrayList<ArticleVo> articles = ArticleDao.getInsatnce().selectSearchArticle(board_no, startRow, articlePerPage, keyfield, keyword);
+		return articles;
 	}
 	
-	public int retrieveTotalSearchMember(String keyfield, String keyword) throws Exception {
-		return ArticleDao.getInsatnce().selectSearchTotalPostCount(keyfield, keyword);
+	public int retrieveTotalSearchArticle(int board_no, String keyfield, String keyword) throws Exception {
+		return ArticleDao.getInsatnce().selectSearchTotalPostCount(board_no,keyfield, keyword);
 	}
 
 }

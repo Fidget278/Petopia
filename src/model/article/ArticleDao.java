@@ -289,21 +289,27 @@ public class ArticleDao {
 			conn = DBConn.getConnection();
 			StringBuffer sql = new StringBuffer();
 
-			if (keyfield == "subject") {
+			if (keyfield.equals("subject") ) {
 				sql.append("SELECT article_no, subject, nickname,                                 ");
 				sql.append("DATE_FORMAT(writedate, '%Y/%m/%d') as writedate, viewcount, likecount ");
 				sql.append("FROM article                                                          ");
 				sql.append("WHERE board_no=? and subject = ?                                      ");
+
 				sql.append("ORDER BY article_no DESC                                               ");
-				// LIMIT: 몇 개를 출력할지, OFFSET: 어디서 부터 시작할지
+
 				sql.append("LIMIT ? OFFSET ?");
+
+				// LIMIT: 몇 개를
+				// 출력할지, OFFSET:
+				// 어디서 부터 시작할지
+
 			}
 
 			else {
 				sql.append("SELECT article_no, subject, nickname,                                 ");
 				sql.append("DATE_FORMAT(writedate, '%Y/%m/%d') as writedate, viewcount, likecount ");
 				sql.append("FROM article                                                          ");
-				sql.append("WHERE board_no=? and nickname = ?                                      ");
+				sql.append("WHERE board_no=? and nickname = '?'                                      ");
 				sql.append("ORDER BY article_no DESC                                               ");
 				// LIMIT: 몇 개를 출력할지, OFFSET: 어디서 부터 시작할지
 				sql.append("LIMIT ? OFFSET ?");
@@ -311,6 +317,7 @@ public class ArticleDao {
 			pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setInt(1, board_no);
 			pstmt.setString(2, keyword);
+
 			pstmt.setInt(3, articlePerPage);
 			pstmt.setInt(4, startRow);
 
@@ -324,7 +331,10 @@ public class ArticleDao {
 				int viewcount = rs.getInt(5);
 				int likecount = rs.getInt(6);
 				articles.add(new ArticleVo(articleNo, subject, nickname, writedate, viewcount, likecount));
+				System.out.println("articles : " + articles.size());
 			}
+			
+
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -336,7 +346,8 @@ public class ArticleDao {
 		}
 		return articles;
 	}
-	public int selectSearchTotalPostCount(String keyfield, String keyword) throws Exception {
+
+	public int selectSearchTotalPostCount(int board_no, String keyfield, String keyword) throws Exception {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -344,24 +355,25 @@ public class ArticleDao {
 
 		try {
 			conn = DBConn.getConnection();
-			
+
 			StringBuffer sql = new StringBuffer();
-			if(keyfield == "subject") {
+			if (keyfield == "subject") {
 				sql.append("SELECT COUNT(*)     ");
 				sql.append("FROM article    ");
 				sql.append("WHERE board_no = ? and subject =?");
-				
-			}else {
+
+			} else {
 				sql.append("SELECT COUNT(*)     ");
 				sql.append("FROM article    ");
 				sql.append("WHERE board_no = ? and nickname =?");
 			}
 
 			pstmt = conn.prepareStatement(sql.toString());
-			pstmt.setString(1, keyword);
+			pstmt.setInt(1, board_no);
+			pstmt.setString(2, keyword);
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				result = rs.getInt(1);
 			}
 

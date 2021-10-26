@@ -37,7 +37,7 @@ public class CommandFactory {
 		map.put("/viewModifyArticleForm.do", "controller.article.ModifyArticleFormCommand");
 		
 		//게시글 검색
-		map.put("/searchAjax", "controller.article.SearchAjaxCommand");
+		map.put("/searchAjax.do", "controller.article.SearchAjaxCommand");
 		
 		/* ----------------------댓글------------------------------------- */
 		map.put("/writeReply.do", "controller.reply.RegisterReplyCommand");
