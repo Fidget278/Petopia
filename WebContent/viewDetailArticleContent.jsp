@@ -187,6 +187,7 @@
             	const content = $('#modifyReplyContent').val();
             	requestProcess('${pageContext.request.contextPath}/modifyReply.do', no, content); 
             	$('#modifyReply').insertAfter('#addReply');
+            	$('#modifyReply').hide();
             	$('#modifyReply').html();            	
             });
 				
