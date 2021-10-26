@@ -5,9 +5,6 @@
 <%@ page import="java.util.*, model.article.ArticleVo" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>    
-<% int articleNo = Integer.parseInt(request.getParameter("articleNo"));
-	request.setAttribute("articleNo", articleNo);
-%>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -19,7 +16,6 @@
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script>
     	$(document).ready(function() {
-    		
     		// 추천 버튼 클릭시
     		$('#rec_update').click(function(){
     			$.ajax({
@@ -28,10 +24,10 @@
     				data:{
     					// 게시글을 추천 했는지 안했는지 확인.
     					articleNo: '${param.articleNo}',
-    					memberNo: '${requestScope.articles.nickname }'
+    					memberNo: '${sessionScope.user.no }'
     				},
     				success: function(count){
-    					$(".rec_count").html(count);
+    					$(".rec_count").html(JSON.parse(count).totalCount);
     					//recCount();
     				},
     			})
@@ -47,9 +43,8 @@
     					articleNo: '${param.articleNo}'
     				},
     				success: function(count){
-    					console.log()
     					// rec_count 내용을 비우고 count로 갱신
-    					$(".rec_count").html(count);
+    					$(".rec_count").html(JSON.parse(count).totalCount);
     				},
     			})
     		};

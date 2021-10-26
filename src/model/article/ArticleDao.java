@@ -300,9 +300,10 @@ public class ArticleDao {
 			pstmt.setInt(1, memberNo);
 			pstmt.setInt(2, articleNo);
 
-			pstmt.executeQuery();
+			pstmt.executeUpdate();
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw e;
 		} finally {
 			try {
@@ -338,7 +339,9 @@ public class ArticleDao {
 			rs = pstmt.executeQuery();
 			
 			// 추천 테이블의 no
-			likeNo = rs.getInt(1);
+			while(rs.next()) {
+				likeNo = rs.getInt(3);
+			}
 			
 		} catch(Exception e) {
 			throw e;
