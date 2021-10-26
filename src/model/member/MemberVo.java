@@ -9,11 +9,13 @@ public class MemberVo {
 	private String regDate;
 	private String lastDate;
 	private String grade;
+	private int gradeNo;
 	private int docs;
 	private int comms;
 	private int visits;
 	private String ban;
 	private boolean isMember;
+	
 	
 	public MemberVo() {
 		super();
@@ -21,6 +23,28 @@ public class MemberVo {
 
 	
 	
+	public int getGradeNo() {
+		return gradeNo;
+	}
+
+
+
+	public void setGradeNo(int gradeNo) {
+		this.gradeNo = gradeNo;
+	}
+
+
+
+	public MemberVo(int gradeNo, String email, String password, String nickname) {
+		super();
+		this.gradeNo = gradeNo;
+		this.email = email;
+		this.password = password;
+		this.nickname = nickname;
+	}
+	
+
+
 	public MemberVo(String email, String grade, String nickname, String regDate, String lastDate, int docs, int comms,
 			int visits, String ban) {
 		super();

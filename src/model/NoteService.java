@@ -3,6 +3,7 @@ package model;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import model.member.MemberVo;
 import utill.DBConn;
 
 public class NoteService {
@@ -19,7 +20,7 @@ public class NoteService {
 		return service;
 	}
 	
-	public void registerNote(NoteVo note, int memberNo) throws Exception {
+	public void registerNote(NoteVo note, MemberVo user) throws Exception {
 		Connection conn = null;
 		boolean isSuccess = false;
 		
@@ -30,7 +31,7 @@ public class NoteService {
 			
 			NoteDao notedao = NoteDao.getInstance();
 			notedao.insertNoteContent(note, conn);
-			notedao.insertNote(note, memberNo, conn);
+			notedao.insertNote(note, user, conn);
 			
 			isSuccess = true;
 			

@@ -26,6 +26,7 @@ public class CommandFactory {
 		map.put("/noteDetailBoard.do", "controller.NoteDetailFormCommand");
 		map.put("/writeNote.do", "controller.WriteNoteCommand");
 		map.put("/deleteNote.do", "controller.NoteDeleteCommand");
+		map.put("/sendMail.do", "controller.MailCommand");
 		
 		// 게시글 목록 조회
 		map.put("/viewListArticleContent.do", "controller.article.ListArticleCommand");

@@ -42,7 +42,7 @@ public class ArticleDao {
             StringBuffer sql = new StringBuffer();
             // Article DB에 접근하여 (게시글 번호, 제목, 별명, 작성일, 조회수, 추천(좋아요)수)를 받아오는 쿼리문
             sql.append("SELECT article_no, subject, nickname,                                 ");
-            sql.append("DATE_FORMAT(writedate, '%Y/%m/%d') as writedate, viewcount, likecount ");
+            sql.append("DATE_FORMAT(writedate, '%Y/%m/%d') as writedate, viewcount, likecount, member_no ");
             sql.append("FROM article                                                          ");
             sql.append("WHERE board_no=?                                                      ");
             sql.append("ORDER BY article_no DESC                                               ");
@@ -67,7 +67,8 @@ public class ArticleDao {
             	String writedate = rs.getString(4);
             	int viewcount = rs.getInt(5);
             	int likecount = rs.getInt(6);
-            	articles.add(new ArticleVo(articleNo, subject, nickname, writedate, viewcount, likecount));
+            	int memberNo = rs.getInt(7);
+            	articles.add(new ArticleVo(articleNo, subject, nickname, writedate, viewcount, likecount, memberNo));
             }
 //            System.out.println("while종료");
 

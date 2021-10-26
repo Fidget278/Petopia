@@ -86,6 +86,37 @@ public class MemberDao {
 
 		return member;
 	}
+	
+	public MemberVo selectMember(String email) throws Exception {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		MemberVo member = null;
+
+		try {
+			conn = DBConn.getConnection();
+
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT member_no FROM member where email = ?");
+
+			pstmt = conn.prepareStatement(sql.toString());
+
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				member = new MemberVo();
+				member.setNo(rs.getInt(1));
+
+			}
+		} finally {
+			DBConn.close(conn, pstmt, rs);
+		}
+
+		return member;
+	}
 
 	public MemberVo selectMemberProfile(int member_no) throws Exception {
 
@@ -129,5 +160,32 @@ public class MemberDao {
 		}
 
 		return member;
+	}
+	
+	public void updatePassword(int memNo, String newPassword) throws Exception {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = DBConn.getConnection();
+
+			StringBuffer sql = new StringBuffer();
+			 
+
+			sql.append("UPDATE member ");
+			sql.append("SET password = ? ");
+			sql.append("WHERE member_no = ? ");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+
+			pstmt.setString(1, newPassword);
+			pstmt.setInt(2, memNo);
+			System.out.println("memNo : " + memNo);
+			pstmt.executeUpdate();
+			
+		} finally {
+			DBConn.close(conn, pstmt, null);
+		}
 	}
 }

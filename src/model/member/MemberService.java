@@ -24,4 +24,12 @@ public class MemberService {
 		System.out.println("retreiveMemberProfile");
 		return MemberDao.getInstance().selectMemberProfile(member_no);
 	}
+	
+	public boolean isAlreadyMember(String email) throws Exception {
+		
+		if( MemberDao.getInstance().selectMember(email) == null )
+			return false;
+		
+		return true;
+	}
 }
