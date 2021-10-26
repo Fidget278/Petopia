@@ -1,6 +1,9 @@
 package model.member;
 
+import java.sql.Connection;
 import java.util.ArrayList;
+
+import utill.DBConn;
 
 public class MemberService {
 	private static MemberService memberService;
@@ -46,5 +49,24 @@ public class MemberService {
 	// 검색된 회원 수 카운트
 	public int retrieveTotalSearchMember(String keyfield, String keyword) throws Exception {
 		return MemberDao.getInstance().selectTotalSearchMember(keyfield, keyword);
+	}
+	
+	// 회원 정지 기간 적용
+	public void modifyBan(String banSelect) throws Exception {
+		Connection conn = null;
+		
+		try {
+			conn = DBConn.getConnection();
+			
+			MemberDao.getInstance().updateBan(banSelect, conn);
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			try {
+				if(conn != null) conn.close();
+			} catch (Exception e2) {
+				throw e2;
+			}
+		}
 	}
 }

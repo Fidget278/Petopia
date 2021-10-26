@@ -19,26 +19,27 @@
 	crossorigin="anonymous"></script>
 	
 	<script>
-		$(document).ready(function() {		
+	
+	
+	
+	$(document).ready(function() {		
+	
 		
+		$('#searchBtn').on('click', function() {
+			alert("call");
+			const keyfield = $('#keyfield option:selected').val();
+			const keyword = $('#keyword').val();
 			
-			$('#searchBtn').on('click', function() {
-				alert("call");
-				const keyfield = $('#keyfield option:selected').val();
-				const keyword = $('#keyword').val();
-				
-				if(keyword.trim() == "") {
-					alert("검색어를 정확히 입력해주세요");
-					return;
-				}
-				
-				const url = "${pageContext.request.contextPath}/searchMember.do";
-				sendProcess(url, keyfield, keyword);
-				
-			});
+			if(keyword.trim() == "") {
+				alert("검색어를 정확히 입력해주세요");
+				return;
+			}
+			
+			const url = "${pageContext.request.contextPath}/searchMember.do";
+			sendProcess(url, keyfield, keyword);
+			
 		});
-			
-			
+		
 		// function 부분
 		const getAjax = function(url, keyfield, keyword) {
 			return new Promise((resolve, reject) => { /* resolve : 비동기 작업 완료 시, reject : 비동기 작업 거절 시  */
@@ -64,38 +65,37 @@
 				});
 			});
 		}
+
 		
-		// 비동기 작업 처리 함수
-		async function sendProcess(url, keyfield, keyword) {				
-			try {
-				const result = await getAjax(url, keyfield, keyword);
-				console.log(result);
-				var htmlStr ='';
-				for (let i = 0; i < result.length; i++) {
-					htmlStr += '<tr>';
-					htmlStr += '<td>'+ result[i].no +'</td>';
-					htmlStr += '<td>'+ result[i].email +'</a></td>';
-					htmlStr += '<td>'+ result[i].grade +'</td>';
-					htmlStr += '<td>'+ result[i].regDate +'</td>';
-					htmlStr += '<td>'+ result[i].visits +'</td>';
-					htmlStr += '<td>'+ result[i].ban +'</td>';
-				}
-				
-				$('body > table > tbody').html(htmlStr);
-			}  catch(e) {
-				console.log("error : ", e);
+	// 비동기 작업 처리 함수
+	async function sendProcess(url, keyfield, keyword) {				
+		try {
+			console.log(keyfield, keyword);
+			const result = await getAjax(url, keyfield, keyword);
+			console.log(result);
+			$('.content   table  tbody').html('');
+			var htmlStr = [];
+			for (let i = 0; i < result.length; i++) {
+				htmlStr.push('<tr>');
+				htmlStr.push('<td>'+ result[i].no +'</td>');
+				htmlStr.push('<td>'+ result[i].email +'</td>');
+				htmlStr.push('<td>'+ result[i].grade +'</td>');
+				htmlStr.push('<td>'+ result[i].regDate +'</td>');
+				htmlStr.push('<td>'+ result[i].visits +'</td>');
+				htmlStr.push('<td>'+ result[i].ban +'</td>');
+				htmlStr.push('</tr>');
 			}
+			$('.content   table  tbody').html(htmlStr.join(""));
 			
+		}  catch(e) {
+			console.trace();
+			console.log("error : ", e);
 		}
 		
-		$('table > tbody').on('click', 'tr', function() {		
-			   $(this).siblings().removeClass('highlight');
-			   $(this).toggleClass("highlight");	
-			   
-			   location.href = '/petopiaWebApp/viewDetailMember.do?no=' + this.no;
-			   
-		   });
+	}
 		
+
+	});
 	</script>
 </head>
 
@@ -174,7 +174,6 @@
 	<!-- 검색창 -->
 	<div id="search">
 		<select id="keyfield">
-			<option value="all">전체</option>
 			<option value="email">ID</option>
 			<option value="grade_no">등급</option>
 		</select>

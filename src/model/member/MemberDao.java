@@ -48,6 +48,7 @@ public class MemberDao {
 		}
 	}
 	
+	
 	public MemberVo selectMember(String email, String password) throws Exception {
 
 		Connection conn = null;
@@ -222,13 +223,12 @@ public class MemberDao {
 			conn = DBConn.getConnection();
 			StringBuffer sql = new StringBuffer();
 			
-			if(keyfield == "email") {
+			if(keyfield.equals("email")) {
 				sql.append("SELECT member_no, email, name, regdate, visits, ban    ");
 				sql.append("FROM member M RIGHT JOIN grade G    ");
 				sql.append("ON M.grade_no = G.grade_no     ");
 				sql.append("WHERE email LIKE CONCAT('%', ?, '%')     ");
 				sql.append("ORDER BY member_no ASC    ");
-				sql.append("LIMIT ? OFFSET ?");
 			}
 			
 			else {
@@ -236,16 +236,17 @@ public class MemberDao {
 				sql.append("FROM member M RIGHT JOIN grade G    ");
 				sql.append("ON M.grade_no = G.grade_no     ");
 				sql.append("WHERE M.grade_no = ");
-				sql.append("( SELECT grade_no    ");
+				sql.append("ANY( SELECT grade_no    ");
 				sql.append("FROM grade G    ");
 				sql.append("WHERE name LIKE CONCAT('%', ?, '%'))      ");
 				sql.append("ORDER BY member_no ASC    ");
-				sql.append("LIMIT ? OFFSET ?");
 			}
+			
 			pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setString(1, keyword);
-			pstmt.setInt(2, memberPerPage);
-			pstmt.setInt(3, startRow);
+			/*
+			 * pstmt.setInt(2, memberPerPage); pstmt.setInt(3, startRow);
+			 */
 			
 			rs = pstmt.executeQuery();
 			
@@ -315,5 +316,16 @@ public class MemberDao {
 		return result;
 	}
 	
-	// 회원 관리 정지 기간 적용
+	// 회원 관리 정지 기간 DB 적용
+	public void updateBan(String banSelect, Connection conn) throws Exception {
+		PreparedStatement pstmt = null;
+		
+		try {
+			StringBuffer sql = new StringBuffer();
+			
+			sql.append("UPDATE ");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 }

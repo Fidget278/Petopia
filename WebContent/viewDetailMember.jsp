@@ -23,7 +23,7 @@
 	<a href="${listUrl}">Back</a>
 	
 	<!-- 표 -->
-	<form action="modifyBan.do">
+	<form action="modifyBan.do" method="POST">
 	<table border = "1">
 		<tr>
 			<td>ID</td>
@@ -59,7 +59,7 @@
 			<td>활동 중지</td>
 			<td>
 				${member.ban}
-				<select id="banSelect">
+				<select name="banSelect">
 					<option value="7d">7일</option>
 					<option value="1d">1일</option>
 					<option value="1m">1분</option>

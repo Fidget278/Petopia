@@ -22,6 +22,9 @@ public class SearchMemberCommand implements Command{
 		String keyfield = request.getParameter("keyfield");
 		String keyword = request.getParameter("keyword");
 		
+		System.out.println(keyfield);
+		System.out.println(keyword);
+		
 		int currentPage = 0;
 		
 		try {
@@ -58,8 +61,7 @@ public class SearchMemberCommand implements Command{
 			request.setAttribute("totalPostCount", searchTotalMember);
 			request.setAttribute("postPerPage", MEMBER_PER_PAGE);
 			
-			request.setAttribute("viewheader", "viewManagerHeader");
-			request.setAttribute("content", "viewSearchMemberList");
+			
 			return new ActionForward("/viewSearchMemberList.jsp", false);
 		} catch (Exception e) {
 			request.setAttribute("exception", e);

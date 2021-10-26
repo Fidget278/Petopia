@@ -3,6 +3,7 @@ package model.grade;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import utill.DBConn;
 
@@ -60,5 +61,29 @@ public class GradeService {
 	// 등급 게시판 열람
 	public HashMap<String, ArrayList<String>> retrieveGradeBoardList(int gradeNo) throws Exception {
 		return GradeDao.getInstance().selectGradeBoardList(gradeNo);
+	}
+	
+	// 등급 삭제 시
+	public void  removeGrade(int no) throws Exception {
+		Connection conn = null;
+		
+		try {
+			conn = DBConn.getConnection();
+			GradeDao.getInstance().deleteGrade(no, conn);
+			
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			try {
+				if(conn != null) conn.close();
+			} catch (Exception e2) {
+				throw e2;
+			}
+		}
+	}
+	
+	// 등급 번호 조회
+	public ArrayList<Integer> retrieveGradeNumber() throws Exception {
+		return GradeDao.getInstance().selectGradeNumber();
 	}
 }

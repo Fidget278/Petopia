@@ -2,6 +2,8 @@ package controller.grade;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +20,9 @@ public class ModifyGradeListCommand implements Command{
 		
 		ArrayList<GradeVo> grades= null;
 		GradeService service = GradeService.getInstance();
+		ArrayList<Integer> list = service.retrieveGradeNumber();
 		
+				
 		String[] temp1 = request.getParameterValues("gradeNo");
 		String[] name = request.getParameterValues("name");
 		String[] temp2 = request.getParameterValues("docs");
@@ -35,6 +39,15 @@ public class ModifyGradeListCommand implements Command{
 			grade.setDocs(docs[i]);
 			grade.setComms(comms[i]);
 			service.modifyGrade(grade);
+		}
+		
+		ArrayList<Integer> overlap = (ArrayList<Integer>)Arrays.stream(gradeNo).boxed().collect(Collectors.toList());
+		
+		list.removeAll(overlap);
+		
+		for(int i=0; i < list.size(); i++) {
+			int j = list.get(i).intValue();
+			service.removeGrade(j);
 		}
 		
 		grades = service.retrieveGradeList();

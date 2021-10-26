@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import utill.DBConn;
 
@@ -163,5 +164,62 @@ public class GradeDao {
 			}
 		}
 		return map;
+	}
+	
+	// 등급 삭제시
+	public void deleteGrade(int no, Connection conn) throws Exception {
+		PreparedStatement pstmt = null;
+		
+		try {
+			StringBuffer sql = new StringBuffer();
+			
+			sql.append("DELETE FROM grade      ");
+			sql.append("WHERE grade_no = ?");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setInt(1,  no);
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			try {
+				if(pstmt != null) pstmt.close();
+			} catch (Exception e2) {
+				throw e2;
+			}
+		}
+	}
+	
+	// 등급 번호 DB 조회
+	public ArrayList<Integer> selectGradeNumber() throws Exception {
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		
+		try {
+			conn = DBConn.getConnection();
+			StringBuffer sql = new StringBuffer();
+			stmt = conn.createStatement();
+			
+			sql.append("SELECT grade_no    ");
+			sql.append("FROM grade");
+			
+			rs = stmt.executeQuery(sql.toString());
+			
+			while(rs.next()) {
+				list.add(rs.getInt(1));
+			}
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			try {
+				DBConn.close(conn, stmt, rs);
+			} catch (Exception e2) {
+				throw e2;
+			}
+		}
+		return list;
 	}
 }

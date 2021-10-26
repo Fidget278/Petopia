@@ -25,6 +25,9 @@ public class CommandFactory {
 		// 회원 상세 정보
 		map.put("/viewDetailMember.do", "controller.manager.DetailMemberCommand");
 		
+		// 회원 정지 기간 적용
+		map.put("/modifyBan.do", "controller.manager.ModifyBanCommand");
+		
 		
 		//등급 조회 시
 		map.put("/viewGradeList.do", "controller.grade.GradeListCommand");
