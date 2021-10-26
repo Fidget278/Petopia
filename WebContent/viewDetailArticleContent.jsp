@@ -23,14 +23,16 @@
     		// 추천 버튼 클릭시
     		$('#rec_update').click(function(){
     			$.ajax({
-    				url: "/RecUpdate.do",
+    				url: "${pageContext.request.contextPath}/RecUpdate.do",
     				type: "POST",
     				data:{
-    					no: '${param.articleNo}',
-    					id: '${requestScope.articles.nickname }'
+    					// 게시글을 추천 했는지 안했는지 확인.
+    					articleNo: '${param.articleNo}',
+    					memberNo: '${requestScope.articles.nickname }'
     				},
-    				success: function(){
-    					recCount();
+    				success: function(count){
+    					$(".rec_count").html(count);
+    					//recCount();
     				},
     			})
     		})
@@ -38,21 +40,21 @@
     		// 게시글 추천수
     		function recCount(){
     			$.ajax({
-    				url: "/RecCount.do",
+    				url: "${pageContext.request.contextPath}/RecCount.do",
     				type: "POST",
     				data: {
-    					no: '${param.articleNo}'
+    					// 게시글의 총 추천수만 구하면 되니 게시글 번호만 넘겨준다.
+    					articleNo: '${param.articleNo}'
     				},
     				success: function(count){
+    					console.log()
     					// rec_count 내용을 비우고 count로 갱신
     					$(".rec_count").html(count);
     				},
     			})
     		};
-    		
-    		
-    		
-    		
+    		// 맨처음 시작시 호출
+    		recCount();
     		
     		
     		

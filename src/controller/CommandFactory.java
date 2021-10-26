@@ -46,7 +46,13 @@ public class CommandFactory {
 		// 댓글 삭제
 		map.put("/removeReply.do", "controller.reply.RemoveReplyCommand");
 	
+		
+		// 추천 업데이트
+		map.put("/RecUpdate.do", "controller.article.RecUpdateCommand");
 	
+		// 추천 수 조회
+		map.put("/RecCount.do", "controller.article.RecCountCommand");
+		
 	}
 	
 	public static CommandFactory getInstance() {

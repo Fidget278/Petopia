@@ -293,7 +293,7 @@ public class ArticleDao {
 			conn = DBConn.getConnection();
 
 			StringBuffer sql = new StringBuffer();
-			sql.append("INSERT INTO recomand (member_no, article_no)   ");
+			sql.append("INSERT INTO recommend (member_no, article_no)   ");
 			sql.append("VALUES(?, ?)");
 
 			pstmt = conn.prepareStatement(sql.toString());
@@ -316,18 +316,19 @@ public class ArticleDao {
 		}
 	}
 	
-	public LikeVo selectList(int articleNo, int memberNo) throws Exception{
+	public int selectLikeList(int articleNo, int memberNo) throws Exception{
 		
 		ArrayList<LikeVo> likeList = new ArrayList<LikeVo>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		int likeNo = 0;
 		try {
 			conn = DBConn.getConnection();
 
 			StringBuffer sql = new StringBuffer();
 			sql.append("SELECT *        ");
-			sql.append("FROM recomand   ");
+			sql.append("FROM recommend   ");
 			sql.append("WHERE article_no = ? and member_no = ?");
 
 			pstmt = conn.prepareStatement(sql.toString());
@@ -336,13 +337,8 @@ public class ArticleDao {
 
 			rs = pstmt.executeQuery();
 			
-			while(rs.next()) {
-				LikeVo like = new LikeVo();
-				int artNo = rs.getInt(1);
-				int memNo = rs.getInt(2);
-				likeList.add(new LikeVo(artNo, memNo));
-			}
-			
+			// 추천 테이블의 no
+			likeNo = rs.getInt(1);
 			
 		} catch(Exception e) {
 			throw e;
@@ -356,8 +352,80 @@ public class ArticleDao {
 				throw e2;
 			}
 		}
-		return likeList;
+		return likeNo;
 		
 	}
+	
+	public void deleteLike(int likeNo) throws Exception{
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DBConn.getConnection();
+			
+			StringBuffer sql = new StringBuffer();
+			sql.append("DELETE FROM recommend        ");
+			sql.append("WHERE like_no=?");
+
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setInt(1, likeNo);
+			
+			pstmt.executeUpdate();
+			
+		} catch(Exception e) {
+			throw e;
+		} finally {
+			try {
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close();
+			} catch(Exception e2) {
+				throw e2;
+			}
+		}
+	} // end
+	
+	
+	public int totalLikeCount(int articleNo) throws Exception{
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int totalCount = 0;
+		try {
+			conn = DBConn.getConnection();
+			
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT COUNT(*) ");
+			sql.append("FROM recommend WHERE article_no = ?");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setInt(1, articleNo);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				System.out.println("토탈 카운트 시작");
+				System.out.println(rs);
+				totalCount = rs.getInt(1);
+			}
+			
+			
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			DBConn.close(conn, pstmt, rs);
+		}
+		return totalCount;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
