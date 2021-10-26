@@ -38,16 +38,17 @@ public class ArticleVo {
 
 
 	// ArticleDao.selectArticleList() 생성자 (게시판 목록 조회)
-	public ArticleVo(int articleNo, String subject, String nickname, String writedate, int viewcount, int likecount, int memberNo) {
-		super();
-		this.articleNo = articleNo;
-		this.subject = subject;
-		this.nickname = nickname;
-		this.writedate = writedate;
-		this.viewcount = viewcount;
-		this.likecount = likecount;
-		this.memberNo = memberNo;
-	}
+		public ArticleVo(int articleNo, String subject, String nickname, String writedate, int viewcount, int likecount, int memberNo) {
+			super();
+			this.articleNo = articleNo;
+			this.subject = subject;
+			this.nickname = nickname;
+			this.writedate = writedate;
+			this.viewcount = viewcount;
+			this.likecount = likecount;
+			this.memberNo = memberNo;
+		}
+
 
 	public ArticleVo(int articleNo, int memberNo, int boardNo, String nickname, String subject, String content,
 			String writedate, int viewcount, int likecount) {

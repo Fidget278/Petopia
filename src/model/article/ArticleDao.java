@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import utill.DBConn;
 
 public class ArticleDao {
-
 	private static ArticleDao articleDao;
 
 	private ArticleDao() {
@@ -17,7 +16,7 @@ public class ArticleDao {
 	}
 
 	// 싱글톤 패턴으로 관리.
-	public static ArticleDao getInsatnce() {
+	public static ArticleDao getInstance() {
 		if (articleDao == null) {
 			articleDao = new ArticleDao();
 		}
@@ -37,40 +36,39 @@ public class ArticleDao {
 			conn = DBConn.getConnection();
 
 //            System.out.println("쿼리문 시작");
+			// 쿼리문이 담길 StringBuffer 객체 생성.
+			StringBuffer sql = new StringBuffer();
 
-            // 쿼리문이 담길 StringBuffer 객체 생성.
-            StringBuffer sql = new StringBuffer();
-            // Article DB에 접근하여 (게시글 번호, 제목, 별명, 작성일, 조회수, 추천(좋아요)수)를 받아오는 쿼리문
-            sql.append("SELECT article_no, subject, nickname,                                 ");
-            sql.append("DATE_FORMAT(writedate, '%Y/%m/%d') as writedate, viewcount, likecount, member_no ");
-            sql.append("FROM article                                                          ");
-            sql.append("WHERE board_no=?                                                      ");
-            sql.append("ORDER BY article_no DESC                                               ");
-            // LIMIT: 몇 개를 출력할지, OFFSET: 어디서 부터 시작할지
-            sql.append("LIMIT ? OFFSET ?");
-            
-            pstmt = conn.prepareStatement(sql.toString());
-            
-            pstmt.setInt(1, boardNo);
-            pstmt.setInt(2, postSize);
-            pstmt.setInt(3, startRow);
-            
-            rs = pstmt.executeQuery();
-            
+			// Article DB에 접근하여 (게시글 번호, 제목, 별명, 작성일, 조회수, 추천(좋아요)수)를 받아오는 쿼리문
+			sql.append("SELECT article_no, subject, nickname,                                 ");
+			sql.append("DATE_FORMAT(writedate, '%Y/%m/%d') as writedate, viewcount, likecount, member_no  ");
+			sql.append("FROM article                                                          ");
+			sql.append("WHERE board_no=?                                                      ");
+			sql.append("ORDER BY article_no DESC                                               ");
+			// LIMIT: 몇 개를 출력할지, OFFSET: 어디서 부터 시작할지
+			sql.append("LIMIT ? OFFSET ?");
+
+			pstmt = conn.prepareStatement(sql.toString());
+
+			pstmt.setInt(1, boardNo);
+			pstmt.setInt(2, postSize);
+			pstmt.setInt(3, startRow);
+
+			rs = pstmt.executeQuery();
+
 //            System.out.println("쿼리문 끝");
 
-            // rs에 받아놓은 데이터를 ArrayList 객체에 담아준다.
-            while (rs.next()) {
-            	int articleNo = rs.getInt(1);
-            	String subject = rs.getString(2);
-            	String nickname = rs.getString(3);
-            	String writedate = rs.getString(4);
-            	int viewcount = rs.getInt(5);
-            	int likecount = rs.getInt(6);
-            	int memberNo = rs.getInt(7);
-            	articles.add(new ArticleVo(articleNo, subject, nickname, writedate, viewcount, likecount, memberNo));
-            }
-
+			// rs에 받아놓은 데이터를 ArrayList 객체에 담아준다.
+			while (rs.next()) {
+				int articleNo = rs.getInt(1);
+				String subject = rs.getString(2);
+				String nickname = rs.getString(3);
+				String writedate = rs.getString(4);
+				int viewcount = rs.getInt(5);
+				int likecount = rs.getInt(6);
+				int memberNo = rs.getInt(7);
+				articles.add(new ArticleVo(articleNo, subject, nickname, writedate, viewcount, likecount, memberNo));
+			}
 //            System.out.println("while종료");
 
 		} catch (Exception e) {
@@ -89,21 +87,25 @@ public class ArticleDao {
 	}
 
 	// 게시글 목록 조회 시 총 게시글 수를 구한다.
-	public int selectTotalPostCount() throws Exception {
+	public int selectTotalPostCount(int boardNo) throws Exception {
 		int count = 0;
 		Connection conn = null;
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
 		try {
 			conn = DBConn.getConnection();
-			stmt = conn.createStatement();
 
 			StringBuffer sql = new StringBuffer();
 			sql.append("SELECT COUNT(*)    ");
-			sql.append("FROM article");
+			sql.append("FROM article       ");
+			sql.append("WHERE board_no=?");
 
-			rs = stmt.executeQuery(sql.toString());
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setInt(1, boardNo);
+
+			rs = pstmt.executeQuery();
+
 			if (rs.next()) {
 				count = rs.getInt(1);
 			}
@@ -111,7 +113,7 @@ public class ArticleDao {
 		} catch (Exception e) {
 			throw e;
 		} finally {
-			DBConn.close(conn, stmt, rs);
+			DBConn.close(conn, pstmt, rs);
 		}
 		return count;
 	}
@@ -200,7 +202,6 @@ public class ArticleDao {
 			System.out.println(pstmt.toString());
 
 			pstmt.executeUpdate();
-//    		pstmt.executeQuery();
 			pstmt.close();
 
 			// 파일 업로드를 하기 위해 게시글 번호를 반환
@@ -281,6 +282,209 @@ public class ArticleDao {
 
 	}
 
+	// 게시글 추천 수 업데이트
+	public void updateArticleLike(int articleNo, int likecount) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = DBConn.getConnection();
+
+			StringBuffer sql = new StringBuffer();
+			sql.append("UPDATE article           ");
+			sql.append("SET likecount =?         ");
+			sql.append("WHERE article_no = ?");
+
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setInt(1, likecount);
+			pstmt.setInt(2, articleNo);
+
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (pstmt != null)
+				pstmt.close();
+			if (conn != null)
+				conn.close();
+		}
+
+	}
+
+	/* ------------------------------추천 ---------------------------------- */
+
+	// 추천 하면 DB에 정보등록
+	public void createLike(int memberNo, int articleNo) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = DBConn.getConnection();
+
+			StringBuffer sql = new StringBuffer();
+			sql.append("INSERT INTO recommend (member_no, article_no)   ");
+			sql.append("VALUES(?, ?)");
+
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setInt(1, memberNo);
+			pstmt.setInt(2, articleNo);
+
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e2) {
+				throw e2;
+			}
+		}
+	}
+
+	public int selectLikeList(int articleNo, int memberNo) throws Exception {
+
+		ArrayList<LikeVo> likeList = new ArrayList<LikeVo>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int likeNo = 0;
+		try {
+			conn = DBConn.getConnection();
+
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT *        ");
+			sql.append("FROM recommend   ");
+			sql.append("WHERE article_no = ? and member_no = ?");
+
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setInt(1, articleNo);
+			pstmt.setInt(2, memberNo);
+
+			rs = pstmt.executeQuery();
+
+			// 추천 테이블의 no
+			while (rs.next()) {
+				likeNo = rs.getInt(3);
+			}
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e2) {
+				throw e2;
+			}
+		}
+		return likeNo;
+
+	}
+
+	public void deleteLike(int likeNo) throws Exception {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DBConn.getConnection();
+
+			StringBuffer sql = new StringBuffer();
+			sql.append("DELETE FROM recommend        ");
+			sql.append("WHERE like_no=?");
+
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setInt(1, likeNo);
+
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e2) {
+				throw e2;
+			}
+		}
+	} // end
+
+	public int totalLikeCount(int articleNo) throws Exception {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int totalCount = 0;
+		try {
+			conn = DBConn.getConnection();
+
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT COUNT(*)                   ");
+			sql.append("FROM recommend WHERE article_no = ?");
+
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setInt(1, articleNo);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				System.out.println("토탈 카운트 시작");
+				System.out.println(rs);
+				totalCount = rs.getInt(1);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			DBConn.close(conn, pstmt, rs);
+		}
+		return totalCount;
+	}
+
+	/*
+	 * 조회수 update
+	 */
+	public void upViewcount(int articleNo) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DBConn.getConnection();
+
+			StringBuffer sql = new StringBuffer();
+			sql.append("UPDATE article                 ");
+			sql.append("SET viewcount = viewcount + 1    ");
+			sql.append("WHERE article_no = ?");
+			pstmt = conn.prepareStatement(sql.toString());
+
+			// 수정할 게시글의 번호
+			pstmt.setInt(1, articleNo);
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e2) {
+				throw e2;
+			}
+		}
+	}
+	
 	public ArrayList<ArticleVo> selectSearchArticle(int board_no, int startRow, int articlePerPage, String keyfield,
 			String keyword) throws Exception {
 		Connection conn = null;
@@ -388,4 +592,5 @@ public class ArticleDao {
 		}
 		return result;
 	}
+
 }

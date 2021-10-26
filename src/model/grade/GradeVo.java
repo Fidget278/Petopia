@@ -6,10 +6,18 @@ public class GradeVo {
 	private int docs;
 	private int comms;
 	private int person;
-	
-	
+
 	public GradeVo() {
 		super();
+	}
+
+	// 등급 정보 불러오기용 생성자
+	public GradeVo(int gradeNo, String name, int docs, int comms) {
+		super();
+		this.gradeNo = gradeNo;
+		this.name = name;
+		this.docs = docs;
+		this.comms = comms;
 	}
 
 	public GradeVo(int gradeNo, String name, int docs, int comms, int person) {
@@ -60,6 +68,5 @@ public class GradeVo {
 	public void setPerson(int person) {
 		this.person = person;
 	}
-	
-	
+
 }

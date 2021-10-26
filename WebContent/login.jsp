@@ -84,6 +84,7 @@
 	    		$('#bottomText').text("비밀번호를 입력해주세요.");
 	    		doRequest = false;
 	    	}
+	    	
 	    	if(doRequest == true){
 	    		requestProcess('/petopiaWebApp/login.do', email, password);	
 	    	}

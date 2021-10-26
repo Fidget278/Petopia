@@ -222,4 +222,35 @@ public class GradeDao {
 		}
 		return list;
 	}
+	
+	// 등급이름 조회
+		public ArrayList<GradeVo> selectGradeName() throws Exception{
+			Connection conn = null;
+			Statement stmt = null;
+			ResultSet rs = null;
+			ArrayList<GradeVo> grades = new ArrayList<GradeVo>();
+			
+			
+			try {
+				conn = DBConn.getConnection();
+				stmt = conn.createStatement();
+				
+				StringBuffer sql = new StringBuffer();
+				sql.append("SELECT * FROM grade");
+				
+				rs = stmt.executeQuery(sql.toString());
+				
+				while(rs.next()) {
+					int gradeNo = rs.getInt(1);
+					String name = rs.getString(2);
+					int docs = rs.getInt(3);
+					int comms = rs.getInt(4);
+					grades.add(new GradeVo(gradeNo, name, docs, comms));
+				}
+				return grades;
+				
+			} catch(Exception e) {
+				throw e;
+			}
+		}
 }
