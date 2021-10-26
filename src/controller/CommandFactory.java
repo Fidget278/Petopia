@@ -15,6 +15,7 @@ public class CommandFactory {
 		map.put("/managerStatisticsDaily.do", "controller.statistics.statisticsDailyFormCommand");
 		map.put("/managerStatisticsTotal.do", "controller.statistics.statisticsTotalFormCommand");
 		
+
 		
 		map.put("/petopia.do", "controller.member.IntroCommand");
 		map.put("/login.do", "controller.member.LoginCommand");
@@ -30,6 +31,29 @@ public class CommandFactory {
 		map.put("/writeArticleForm.do", "controller.article.WriteArticleFormCommand");
 		
 		map.put("/writeArticle.do", "controller.article.WriteArticleCommand");
+		
+		
+		//2021. 10. 25 이후 수정내용
+		//카테고리+게시판 목록 조회 (관리자페이지용)
+		map.put("/listCategory.do", "controller.category.ListCategoryCommand");
+		//관리자페이지로 
+		map.put("/listCategoryManager.do", "controller.category.ListCategoryManagerCommand");
+		//카테고리 추가 
+		map.put("/writeCategory.do", "controller.category.WriteCategoryCommand");
+		//카테고리 수정
+		map.put("/modifyCategory.do", "controller.category.ModifyCategoryCommand");
+		//카테고리 삭제
+		map.put("/removeCategory.do", "controller.category.RemoveCategoryCommand");
+		
+		//게시판 추가
+		map.put("/writeBoard.do", "controller.board.WriteBoardCommand");
+		//게시판 수정
+		map.put("/modifyBoard.do", "controller.board.ModifyBordCommand");
+		//게시판 삭제 - 미완
+		map.put("/removeBoard.do", "controller.board.RemoveBoardCommand");
+		
+
+				
 	}
 	
 	public static CommandFactory getInstance() {
@@ -49,12 +73,14 @@ public class CommandFactory {
 		
 		System.out.println(commandClass);
 		try {
+			System.out.println("여기는 오니?");
 			Class<?> cls = Class.forName(commandClass);
 			Constructor<?> constructor = cls.getConstructor();
 			Command command = (Command)constructor.newInstance();
 			
 			return command;
 		} catch(Exception e) {
+			e.printStackTrace();
 			throw e;
 		}
 

@@ -1,10 +1,6 @@
 package model.category;
 
-import java.sql.Connection;
 import java.util.ArrayList;
-
-import utill.DBConn;
-
 
 public class CategoryService {
 
@@ -24,61 +20,44 @@ public class CategoryService {
 	
 	//카테고리 정보 등록
 	public void registerCategory(CategoryVo category) throws Exception {
-		Connection conn = null;
-		try {
-			conn = DBConn.getConnection(); //connection pool에서 connection 구하기
 			CategoryDao categoryDao = CategoryDao.getInstance();
 			categoryDao.insertCategory(category);
-			
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			try {
-				if (conn != null) conn.close(); //connection pool에 connection 반환
-			} catch (Exception ex) {
-				throw ex;
-			}
-
-		}
 	}
 	
-	//카테고리 및 게시판 목록 조회
+	//카테고리 및 게시판 목록 조회 
 	public ArrayList<CategoryVo> retrieveCategoryList() throws Exception {
 		CategoryDao categoryDao = CategoryDao.getInstance();
 		return categoryDao.selectCategoryList();		
 	}
 	
-	
-	
-	
-	//카테고리 정보 조회 - 미완
-		public CategoryVo retrieveCategory(int no) throws Exception {
+	//카테고리 정보 조회
+		public CategoryVo retrieveCategory(int categoryNo) throws Exception {
 			CategoryDao categoryDao = CategoryDao.getInstance();
-			return categoryDao.selectCategory(no);
+			return categoryDao.selectCategory(categoryNo);
 		}
 		
-	//카테고리정보 변경 - 미완
-		public void modifyBoard(CategoryVo category) throws Exception {
-
-			Connection conn = null;
-			try {
-				conn = DBConn.getConnection();
-
+	//카테고리 정보 변경
+		public void modifyCategory(CategoryVo category) throws Exception {
 				CategoryDao categoryDao = CategoryDao.getInstance();
-				categoryDao.updateCategory(category, conn);
-
-			} catch (Exception e) {
-				throw e;
-			} finally {
-				try {
-					if (conn != null) conn.close();
-				} catch (Exception e2) {
-					throw e2;
-				}
-			}
+				categoryDao.updateCategory(category);
 		}
 		
-	
+		
+	//카테고리에 속한 게시판 조회
+		public int retrieveConnectBoard(int categoryNo) throws Exception {
+			
+			CategoryDao categoryDao = CategoryDao.getInstance();
+			int count = categoryDao.selectConnectBoard(categoryNo);
 
-
+			return count;
+		}
+	//카테고리 삭제
+	public void removeCategory(int categoryNo) throws Exception {
+		
+		CategoryDao categoryDao = CategoryDao.getInstance();
+		categoryDao.deleteCategory(categoryNo);
+		
+		
+	}
+		
 }

@@ -1,7 +1,5 @@
 package model.board;
 
-import java.util.ArrayList;
-
 public class BoardVo {
 	private int boardNo;
 	private String boardName;
@@ -18,10 +16,20 @@ public class BoardVo {
 	public BoardVo(int boardNo, String boardName) {
 		this.boardNo = boardNo;
 		this.boardName = boardName;
-		
+	}
+	
+	public BoardVo(String boardName, int categoryNo) {
+		super();
+		this.boardName = boardName;
+		this.categoryNo = categoryNo;
 	}
 
-	
+	public BoardVo(int boardNo, String boardName, int categoryNo) {
+		super();
+		this.boardNo = boardNo;
+		this.boardName = boardName;
+		this.categoryNo = categoryNo;
+	}
 
 	public BoardVo(int boardNo, String boardName, int categoryNo, String categoryName) {
 		super();

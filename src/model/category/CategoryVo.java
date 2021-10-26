@@ -20,6 +20,12 @@ public class CategoryVo {
 		this.categoryName = categoryName;
 	}
 	
+	public CategoryVo(int categoryNo, String categoryName) {
+		super();
+		this.categoryNo = categoryNo;
+		this.categoryName = categoryName;
+	}
+
 	public CategoryVo(String categoryName, String boardName) {
 		this.categoryName = categoryName;
 		this.boardName = boardName;
@@ -61,9 +67,6 @@ public class CategoryVo {
 		this.categoryList = categoryList;
 	}
 	
-	
-	
-
 	public ArrayList<BoardVo> getBoardList() {
 		return boardList;
 	}

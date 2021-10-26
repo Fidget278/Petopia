@@ -27,7 +27,7 @@ public class CategoryDao {
 		return categoryDao;
 	}
 	
-	//카테고리 등록
+	//카테고리 등록 
 	public int insertCategory(CategoryVo category) throws Exception {
 		int no = 0;
 		Connection conn = null;
@@ -117,12 +117,9 @@ public class CategoryDao {
 		}
 		
 		
-		
-		
-		
 	
-	//카테고리 번호에 해당하는 카테고리 정보 조회 - 미완
-	public CategoryVo selectCategory(int no) throws Exception {
+	//카테고리 번호에 해당하는 카테고리 정보 조회
+	public CategoryVo selectCategory(int categoryNo) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -131,18 +128,19 @@ public class CategoryDao {
 			conn = DBConn.getConnection();
 
 			StringBuffer sql = new StringBuffer();
-			sql.append("SELECT categoryname ");
+			sql.append("SELECT category_no, categoryname ");
 			sql.append("FROM category ");
-			sql.append("WHERE category_no = ?");
+			sql.append("WHERE category_no = ? ");
 			pstmt = conn.prepareStatement(sql.toString());
 
-			pstmt.setInt(1, no);
+			pstmt.setInt(1, categoryNo);
 
 			rs = pstmt.executeQuery();
-
 			
 			while (rs.next()) {
-				category.setCategoryName(rs.getString(1));
+				category.setCategoryNo(rs.getInt(1));
+				category.setCategoryName(rs.getString(2));
+				
 			}
 
 		} catch (Exception e) {
@@ -162,19 +160,21 @@ public class CategoryDao {
 		return category;
 	}
 	
-	//카테고리 정보 변경 - 미완
-	public void updateCategory(CategoryVo category, Connection conn) throws Exception {
+	//카테고리 정보 변경
+	public void updateCategory(CategoryVo category) throws Exception {
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = DBConn.getConnection();
 			StringBuffer sql = new StringBuffer();
-			sql.append("UPDATE category       ");
-			sql.append("SET cateogoryname = \"?\"  ");
-			sql.append("WHERE no = ?");
+			sql.append("UPDATE category         ");
+			sql.append("SET categoryname = ?  ");
+			sql.append("WHERE category_no = ?   ");
 			pstmt = conn.prepareStatement(sql.toString());
-
+			
 			pstmt.setString(1, category.getCategoryName());
 			pstmt.setInt(2, category.getCategoryNo());
-
+			
 			pstmt.executeUpdate();
 
 		} catch (Exception e) {
@@ -183,12 +183,84 @@ public class CategoryDao {
 			try {
 				if (pstmt != null)
 					pstmt.close();
+				if (conn != null)
+					conn.close();
 			} catch (Exception e2) {
 				throw e2;
 			}
 		}
 	}
 
+	//카테고리 삭제1 - 연결된 게시판 조회
+	public int selectConnectBoard(int categoryNo) throws Exception {
+		int count = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBConn.getConnection();
+
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT count(board_no) ");
+			sql.append("FROM board ");
+			sql.append("WHERE category_no = ? ");
+			pstmt = conn.prepareStatement(sql.toString());
+
+			pstmt.setInt(1, categoryNo);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				count = rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e2) {
+				throw e2;
+			}
+		}
+		return count;
+	}
+	
+	
+	
+	//카테고리 삭제2 - 카테고리 삭제
+	public void deleteCategory(int categoryNo) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DBConn.getConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("DELETE FROM category  ");
+			sql.append("WHERE category_no = ? ");
+			pstmt = conn.prepareStatement(sql.toString());
+			
+			pstmt.setInt(1, categoryNo);
+			
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e2) {
+				throw e2;
+			}
+		}
+	}
 	
 	
 }

@@ -21,7 +21,7 @@
 					<div class="firstSection-inner-profileInfo">
 						<div>
 						
-							<a href="#">${sessionScope.user.nickname }</a> <a href="${pageContext.request.contextPath}/managerIndex.do">${sessionScope.user.grade }</a>
+							<a href="#">${sessionScope.user.nickname }</a> <a href="${pageContext.request.contextPath}/listCategoryManager.do">${sessionScope.user.grade }</a>
 						</div>
 						<div class="span-right">
 							<div class="div-span-flex">

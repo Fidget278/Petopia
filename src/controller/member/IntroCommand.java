@@ -31,7 +31,7 @@ public class IntroCommand implements Command {
 		CategoryService categoryService = CategoryService.getInstance();
 		ArrayList<CategoryVo> categoryList = categoryService.retrieveCategoryList();
 		
-		//리스트 출력페이지로 
+		//사이드바 리스트 출력(사이드바에 출력할 jsp, command 필요x)
 		request.setAttribute("categoryList", categoryList);
 
 		return new ActionForward("/homeIndex.jsp", false);
