@@ -32,7 +32,7 @@ public class LoginCommand implements Command {
 			request.setAttribute("isSuccess", 2);
 		}
 		//탈퇴 여부
-		else if(member.isMember()) {
+		else if(member.getIsMember() == 1) {
 			request.setAttribute("failText", "탈퇴한 회원입니다.");
 			request.setAttribute("isSuccess", 3);
 		}

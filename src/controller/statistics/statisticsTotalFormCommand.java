@@ -22,10 +22,10 @@ public class statisticsTotalFormCommand implements Command {
 		StatisticsVo statisticsTotalList = statisticsService.retriveTotalData();
 
 		request.setAttribute("totalList", statisticsTotalList);
-		request.setAttribute("viewheader", "viewManagerHeader");
+
 		request.setAttribute("content", "viewStatisticsTotalContent");
 
-		return new ActionForward("managerIndex.jsp", false);
+		return new ActionForward("/managerIndex.do", false);
 	}
 
 }

@@ -77,12 +77,12 @@ public class MemberService {
 		return MemberDao.getInstance().selectMemberProfile(member_no);
 	}
 	
-	public int isAlreadyMember(String email) throws Exception {
+	public boolean isAlreadyMember(String email) throws Exception {
 		
 		if( MemberDao.getInstance().selectMember(email) == null )
-			return 0;
+			return false;
 		
-		return 1;
+		return true;
 
 	}
 }

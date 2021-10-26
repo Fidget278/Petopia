@@ -20,9 +20,9 @@ public class GradeBoardListCommand implements Command{
 		HashMap<String, ArrayList<String>>boards = GradeService.getInstance().retrieveGradeBoardList(gradeNo);
 		request.setAttribute("boards", boards);
 		
-		request.setAttribute("viewheader", "viewManagerHeader");
+
 		request.setAttribute("content", "viewGradeBoardList");
-		return new ActionForward("managerIndex.jsp", false);
+		return new ActionForward("/managerIndex.jsp", false);
 	}
 
 }

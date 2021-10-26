@@ -51,9 +51,9 @@ public class MemberListCommand implements Command{
 		request.setAttribute("totalPostCount", totalMember);
 		request.setAttribute("postPerPage", MEMBER_PER_PAGE);
 		
-		request.setAttribute("viewheader", "viewManagerHeader");
-		request.setAttribute("content", "viewMemberList");
-		return new ActionForward("managerIndex.jsp", false);
+
+		request.setAttribute("content", "viewMemberList.jsp");
+		return new ActionForward("/managerIndex.do", false);
 	}
 	
 }

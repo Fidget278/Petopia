@@ -20,9 +20,9 @@ public class GradeListCommand implements Command{
 		request.setAttribute("grades", grades);
 		
 		
-		request.setAttribute("viewheader", "viewManagerHeader");
-		request.setAttribute("content", "viewGradeList");
-		return new ActionForward("managerIndex.jsp", false);
+
+		request.setAttribute("content", "viewGradeList.jsp");
+		return new ActionForward("/managerIndex.jsp", false);
 	}
 	
 }

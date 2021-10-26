@@ -11,9 +11,9 @@ public class ManagerCommand implements Command{
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		request.setAttribute("viewheader", "viewManagerHeader");
-		request.setAttribute("content", "viewManagerContent");
-		return new ActionForward("managerIndex.jsp", false);
+		//content는 자신이 사용할 커맨드에서 request.setAttribute("content","내용") 하고 ActionForward에 managerindex.do로 이 커맨드에 보내기
+		request.setAttribute("viewheader", "viewManagerHeader.jsp");
+		return new ActionForward("/viewManagerTemplate.jsp", false);
 	}
 	
 }
