@@ -19,6 +19,41 @@
 	crossorigin="anonymous"></script>
 	
 	<script>
+	const getAjax = function(url, num) {
+		return new Promise((resolve, reject) => {
+			
+			$.ajax({
+				url : url,
+				method : "POST",
+				dataType : "json",
+				data : {
+					gradeNo : num
+				},
+				async : true,
+				success : function(data) {
+					resolve(data);
+				},
+				error : function(e) {
+					reject(e);
+				}
+			});
+		});
+	}
+	
+	async function sendProcess(url, num) {
+		try{
+			const result = await getAjax(url, num);
+			
+			if(result == null) {
+				alert("해당 데이터가 없습니다.");
+			}
+			else {
+				
+			}
+		} catch (e) {
+			console.log(e);
+		}	
+	}
 		function addRow() {
 			var Row = Grade.insertRow();
 			Row.onmouseover = function() {
@@ -56,37 +91,12 @@
 		}
 		
 		function check(obj) {
-			console.log(obj.parentNode.first)
-			const num = obj.parentNode.val();
+			var tr = obj.parentNode.parentNode;
+			var num = $('tr [name="gradeNo"]').val()
 			const url = "viewGradeBoardList.do";
 			sendProcess(url, num);
 		}
 		
-		const getAjax = function(url, num) {
-			return new Promise((resolve, reject) => {
-				
-				$.ajax({
-					url : url,
-					method : "POST",
-					dataType : "json",
-					data : {
-						gradeNo : num
-					},
-					async : true,
-					success : function(data) {
-						resolve(data);
-					},
-					error : function(e) {
-						reject(e);
-					}
-				});
-			});
-		}
-		
-		async function sendProcess(url, num) {
-			var result = await getAjax(url, num);
-			console.log(result);
-		}
 	</script>
 </head>
 

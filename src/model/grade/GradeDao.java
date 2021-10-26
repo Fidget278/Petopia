@@ -115,39 +115,39 @@ public class GradeDao {
 			conn = DBConn.getConnection();
 			StringBuffer sql = new StringBuffer();
 			
-			sql.append("SELECT boardName     ");
+			sql.append("SELECT boardName      ");
 			sql.append("FROM board       ");
-			sql.append("WHERE board_no =      ");
-			sql.append("ANY(SELECT board_no    ");
-			sql.append("FROM board_grade BG LEFT JOIN grade G     ");
-			sql.append("ON BG.grade_no = G.grade_no    ");
-			sql.append("WHERE (readwrite = 0) and (G.grade < ?))      ");
+			sql.append("WHERE board_no =       "); 
+			sql.append("ANY(SELECT board_no     ");
+			sql.append("FROM board_grade BG LEFT JOIN grade G      ");
+			sql.append("ON BG.grade_no = G.grade_no      ");
+			sql.append("WHERE(readwrite = 0) AND (G.grade_no < ?))");
 			
 			pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setInt(1, gradeNo);
 			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				readers.add(rs.getString(1));
+			}
 			
 			pstmt.close(); rs.close();
 			pstmt = null; rs = null;
 			
-			while(rs.next()) {
-				readers.add(rs.getString(1));
-			}
-			
 			sql.delete(0, sql.length());
-			sql.append("SELECT boardName     ");
+			sql.append("SELECT boardName      ");
 			sql.append("FROM board       ");
-			sql.append("WHERE board_no =      ");
-			sql.append("ANY(SELECT board_no    ");
-			sql.append("FROM board_grade BG LEFT JOIN grade G     ");
-			sql.append("ON BG.grade_no = G.grade_no    ");
-			sql.append("WHERE (readwrite = 1) and (G.grade < ?))      ");
+			sql.append("WHERE board_no =       "); 
+			sql.append("ANY(SELECT board_no     ");
+			sql.append("FROM board_grade BG LEFT JOIN grade G      ");
+			sql.append("ON BG.grade_no = G.grade_no      ");
+			sql.append("WHERE(readwrite = 1) AND (G.grade_no < ?))");
 			
 			pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setInt(1, gradeNo);
 			rs = pstmt.executeQuery();
 			
-			while(rs.next()) {
+			if(rs.next()) {
 				writers.add(rs.getString(1));
 			}
 			

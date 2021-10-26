@@ -226,7 +226,7 @@ public class MemberDao {
 				sql.append("SELECT member_no, email, name, regdate, visits, ban    ");
 				sql.append("FROM member M RIGHT JOIN grade G    ");
 				sql.append("ON M.grade_no = G.grade_no     ");
-				sql.append("WHERE email = ?     ");
+				sql.append("WHERE email LIKE CONCAT('%', ?, '%')     ");
 				sql.append("ORDER BY member_no ASC    ");
 				sql.append("LIMIT ? OFFSET ?");
 			}
@@ -238,7 +238,7 @@ public class MemberDao {
 				sql.append("WHERE M.grade_no = ");
 				sql.append("( SELECT grade_no    ");
 				sql.append("FROM grade G    ");
-				sql.append("WHERE name = ? )      ");
+				sql.append("WHERE name LIKE CONCAT('%', ?, '%'))      ");
 				sql.append("ORDER BY member_no ASC    ");
 				sql.append("LIMIT ? OFFSET ?");
 			}

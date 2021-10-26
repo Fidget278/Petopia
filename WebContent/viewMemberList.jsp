@@ -19,19 +19,26 @@
 	crossorigin="anonymous"></script>
 	
 	<script>
-		$(document).ready(function() {
+		$(document).ready(function() {		
+		
+			
 			$('#searchBtn').on('click', function() {
+				alert("call");
 				const keyfield = $('#keyfield option:selected').val();
 				const keyword = $('#keyword').val();
+				
 				if(keyword.trim() == "") {
 					alert("검색어를 정확히 입력해주세요");
 					return;
 				}
-				const url = "searchMember.do";
+				
+				const url = "${pageContext.request.contextPath}/searchMember.do";
 				sendProcess(url, keyfield, keyword);
+				
 			});
 		});
-		
+			
+			
 		// function 부분
 		const getAjax = function(url, keyfield, keyword) {
 			return new Promise((resolve, reject) => { /* resolve : 비동기 작업 완료 시, reject : 비동기 작업 거절 시  */
@@ -41,7 +48,7 @@
 				
 				$.ajax({
 					url : url,
-					method : "GET",
+					method : "POST",
 					dataType : "json",
 					data : {
 						keyfield : keyfield,
@@ -49,10 +56,9 @@
 					},
 					async : true,
 					success : function(data) {
-						resolve(data);
+						resolve(data);						
 					},
-					error : function(e) {
-						console.log("error : ", e);
+					error : function(e)  {
 						reject(e);
 					}
 				});
@@ -60,10 +66,36 @@
 		}
 		
 		// 비동기 작업 처리 함수
-		async function sendProcess(url, keyfield, keyword) {
-			var result = await getAjax(url, keyfield, keyword);
-			console.log(result);
+		async function sendProcess(url, keyfield, keyword) {				
+			try {
+				const result = await getAjax(url, keyfield, keyword);
+				console.log(result);
+				var htmlStr ='';
+				for (let i = 0; i < result.length; i++) {
+					htmlStr += '<tr>';
+					htmlStr += '<td>'+ result[i].no +'</td>';
+					htmlStr += '<td>'+ result[i].email +'</a></td>';
+					htmlStr += '<td>'+ result[i].grade +'</td>';
+					htmlStr += '<td>'+ result[i].regDate +'</td>';
+					htmlStr += '<td>'+ result[i].visits +'</td>';
+					htmlStr += '<td>'+ result[i].ban +'</td>';
+				}
+				
+				$('body > table > tbody').html(htmlStr);
+			}  catch(e) {
+				console.log("error : ", e);
+			}
+			
 		}
+		
+		$('table > tbody').on('click', 'tr', function() {		
+			   $(this).siblings().removeClass('highlight');
+			   $(this).toggleClass("highlight");	
+			   
+			   location.href = '/petopiaWebApp/viewDetailMember.do?no=' + this.no;
+			   
+		   });
+		
 	</script>
 </head>
 
