@@ -17,6 +17,8 @@
  		<input type="text" name="password" id="password">
 		<p id = "bottomText"></p>
  		<button type="button" id="loginBtn">로그인</button>
+ 		<a href = "${pageContext.request.contextPath}/join.jsp">회원가입</a>
+ 		<a href = "${pageContext.request.contextPath}/findPassword.jsp">비밀번호 찾기</a>
  	</div>
 	<!--  비동기 메시시 처리 방식 -->
 	<script>      

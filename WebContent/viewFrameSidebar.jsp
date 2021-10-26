@@ -46,11 +46,11 @@
 		</article>
 		<article class="sidebar-btn">
 			<section>
-				<span>쪽지함</span>
 				<span onclick="location.href='${pageContext.request.contextPath}/managerStatisticsDaily.do'">통계</span>
+				<span onclick="location.href='${pageContext.request.contextPath}/noteList.do?isRecieve=1'">쪽지함</span>
 			</section>
 			<section>
-				<span>카페 글쓰기</span> <span>전체 글 보기</span>
+				<span onclick="location.href='${pageContext.request.contextPath}/viewWriteArticleForm.do'">카페 글쓰기</span> <span>전체 글 보기</span>
 			</section>
 		</article>
 		<article class="sidebar-list">
@@ -70,14 +70,19 @@
 					<td>${pageScope.category.categoryName}</td>	
 				</tr>
 				
+				<c:if test="${not empty pageScope.category.boardList}">
 				<c:forEach var="board" items="${pageScope.category.boardList }">
-					<c:url var="url" value="/.do">				 <%-- 게시판별 게시글 목록 조회.do --%>
-					<c:param name="boardNo" value="${pageScope.board.boardNo}" />
+					<c:url var="url" value="/viewListArticleContent.do"> <%-- 게시판별 게시글 목록 조회.do --%>
+						<c:param name="boardNo" value="${pageScope.board.boardNo}" />
+						<c:param name="boardName" value="${pageScope.board.boardName }"/>
 					</c:url>
+					
 					<tr id=board>
-						<td><a href="${pageScope.url}">${pageScope.board.boardName}</a></td>
+						<td>ㄴ<a href="${pageScope.url}">${pageScope.board.boardName}</a></td>
 					</tr>
+					
 				</c:forEach>
+				</c:if>
 			</c:forEach>
 		</c:if>	
 	</tbody>

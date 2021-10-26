@@ -1,3 +1,4 @@
+
 package controller.member;
 
 import java.util.ArrayList;
@@ -10,7 +11,6 @@ import controller.ActionForward;
 import controller.Command;
 import model.category.CategoryService;
 import model.category.CategoryVo;
-import model.member.MemberDao;
 import model.member.MemberService;
 import model.member.MemberVo;
 
@@ -26,15 +26,23 @@ public class IntroCommand implements Command {
 
 		session.setAttribute("user", memberProfile);
 		
-		request.setAttribute("content", "/viewHomeContent");
-		
+
 		CategoryService categoryService = CategoryService.getInstance();
 		ArrayList<CategoryVo> categoryList = categoryService.retrieveCategoryList();
 		
-		//사이드바 리스트 출력(사이드바에 출력할 jsp, command 필요x)
+		//리스트 출력페이지로 
 		request.setAttribute("categoryList", categoryList);
 
-		return new ActionForward("/homeIndex.jsp", false);
+		
+		request.setAttribute("side", "/viewFrameSidebar.jsp");
+		request.setAttribute("content", "/viewHomeContent.jsp");
+
+		return new ActionForward("/viewHomeTemplate.jsp", false);
 	}
 
 }
+
+
+
+
+
