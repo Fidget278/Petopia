@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import controller.ActionForward;
 import controller.Command;
+import model.article.ArticleDao;
 import model.article.ArticleService;
 import model.article.ArticleVo;
 import model.article.ReplyDao;
@@ -17,8 +18,11 @@ public class DetailArticleCommand implements Command{
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) 
 			throws Exception {
-		
+		try {
 		int articleNo = Integer.parseInt(request.getParameter("articleNo"));
+		ArticleDao articleDao = ArticleDao.getInstance();
+		// 게시글 조회수 증가.
+		articleDao.upViewcount(articleNo);
 		
 		ArticleService service = ArticleService.getInstance();
 		
@@ -37,7 +41,9 @@ public class DetailArticleCommand implements Command{
 		// 템플릿에 추가하기 위해 바인딩
 		request.setAttribute("content", "/viewDetailArticleContent.jsp");
 		
-		
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		return new ActionForward("/side.do", false);
 	}
 

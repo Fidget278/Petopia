@@ -36,6 +36,7 @@ public class RecUpdateCommand implements Command{
 		
 		// 작업이 끝난 뒤 값을 받아온다.
 		int totalCount = articleDao.totalLikeCount(articleNo);
+		articleDao.updateArticleLike(articleNo, totalCount);
 		
 		request.setAttribute("totalCount", totalCount);
 		

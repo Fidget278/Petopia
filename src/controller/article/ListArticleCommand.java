@@ -103,6 +103,7 @@ import javax.servlet.http.HttpSession;
 
 import controller.ActionForward;
 import controller.Command;
+import model.article.ArticleDao;
 import model.article.ArticleService;
 import model.article.ArticleVo;
 import model.category.CategoryService;
@@ -145,7 +146,7 @@ public class ListArticleCommand implements Command{
 		
 		// *3. DB에 접근하여 게시글 정보를 불러온다.
 		ArrayList<ArticleVo> articles = ArticleService.getInstance().retrieveArticleList(boardNo,startRow, POST_PER_PAGE);
-		
+		ArticleDao articleDao = ArticleDao.getInstance();
 		
 		// *4. request영역에 바인딩
 		request.setAttribute("articles", articles);

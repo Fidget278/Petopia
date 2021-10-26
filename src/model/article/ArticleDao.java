@@ -202,7 +202,6 @@ public class ArticleDao {
 			System.out.println(pstmt.toString());
 
 			pstmt.executeUpdate();
-//    		pstmt.executeQuery();
 			pstmt.close();
 
 			// 파일 업로드를 하기 위해 게시글 번호를 반환
@@ -283,6 +282,37 @@ public class ArticleDao {
 
 	}
 	
+	// 게시글 추천 수 업데이트
+	public void updateArticleLike(int articleNo, int likecount) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = DBConn.getConnection();
+			
+			StringBuffer sql = new StringBuffer();
+			sql.append("UPDATE article           ");
+			sql.append("SET likecount =?         ");
+			sql.append("WHERE article_no = ?");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setInt(1, likecount);
+			pstmt.setInt(2, articleNo);
+			
+			pstmt.executeUpdate();
+			
+		} catch(Exception e) {
+			throw e;
+		} finally {
+			if (pstmt != null) pstmt.close();
+			if (conn != null) conn.close();
+		}
+		
+	}
+	
+	
+	
+/* ------------------------------추천 ----------------------------------*/	
 	
 	// 추천 하면 DB에 정보등록
 	public void createLike(int memberNo, int articleNo) throws Exception {
@@ -398,7 +428,7 @@ public class ArticleDao {
 			conn = DBConn.getConnection();
 			
 			StringBuffer sql = new StringBuffer();
-			sql.append("SELECT COUNT(*) ");
+			sql.append("SELECT COUNT(*)                   ");
 			sql.append("FROM recommend WHERE article_no = ?");
 			
 			pstmt = conn.prepareStatement(sql.toString());
@@ -424,8 +454,36 @@ public class ArticleDao {
 	}
 	
 	
-	
-	
+/*
+ * 조회수 update	
+ */
+	public void upViewcount(int articleNo) throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DBConn.getConnection();
+			
+			StringBuffer sql = new StringBuffer();
+			sql.append("UPDATE article                 ");
+			sql.append("SET viewcount = viewcount + 1    ");
+			sql.append("WHERE article_no = ?");
+			pstmt = conn.prepareStatement(sql.toString());
+			
+			// 수정할 게시글의 번호
+			pstmt.setInt(1, articleNo);
+			pstmt.executeUpdate();
+			
+		}catch (Exception e) {
+			throw e;
+		} finally {
+			try {
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close();
+			} catch (Exception e2) {
+				throw e2;
+			}
+		}
+	}
 	
 	
 	
