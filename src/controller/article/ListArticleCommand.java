@@ -4,11 +4,14 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import controller.ActionForward;
 import controller.Command;
 import model.article.ArticleService;
 import model.article.ArticleVo;
+import model.category.CategoryService;
+import model.category.CategoryVo;
 
 public class ListArticleCommand implements Command{
 	// 1page에 몇 개의 게시글을 보여줄지
@@ -17,7 +20,7 @@ public class ListArticleCommand implements Command{
 	// 만약 값이 3이라면
 	// 1,2,3 next
 	// prev 4,5,6 next
-	private static final int PAGE_BLOCK=3;
+	private static final int PAGE_BLOCK=2;
 	
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) 
@@ -27,6 +30,8 @@ public class ListArticleCommand implements Command{
 		// 현재 페이지 정보를 저장해 놓을 변수
 		System.out.println("커맨드 호출");
 		int currentPage = 0;
+		HttpSession session = request.getSession();
+		
 		try {
 			// 현재 페이지에 대한 정보를 받아온다.
 			// 만약, 이 때 페이지에 대한 정보가 없다면 catch문으로 이동
@@ -40,9 +45,12 @@ public class ListArticleCommand implements Command{
 		// currentPage에 -1을 해주는 이유는 mysqlDB는 index가 0부터 시작이기 떄문이다.
 		int startRow = (currentPage - 1) * POST_PER_PAGE;
 		
-		// *3. DB에 접근하여 게시글 정보를 불러온다.
-		ArrayList<ArticleVo> articles = ArticleService.getInstance().retrieveArticleList(startRow, POST_PER_PAGE);
+		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+
+		System.out.println("목록조회 커맨드 boardNo: " + boardNo);
 		
+		// *3. DB에 접근하여 게시글 정보를 불러온다.
+		ArrayList<ArticleVo> articles = ArticleService.getInstance().retrieveArticleList(boardNo,startRow, POST_PER_PAGE);
 		
 		// *4. request영역에 바인딩
 		request.setAttribute("articles", articles);
@@ -75,7 +83,11 @@ public class ListArticleCommand implements Command{
 		request.setAttribute("totalPostCount", totalPostCount);
 		request.setAttribute("postSize", POST_PER_PAGE);
 		
-		return new ActionForward("/listArticle.jsp?currentPage=" + currentPage, false);
+
+
+		request.setAttribute("content", "/viewListArticleContent.jsp?currentPage=" + currentPage);
+		return new ActionForward("/side.do", false);
+
 	}
 	
 }

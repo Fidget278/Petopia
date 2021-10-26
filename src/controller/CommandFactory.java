@@ -11,25 +11,40 @@ public class CommandFactory {
 	private Map<String, String> map = new HashMap<String, String>();
 	
 	private CommandFactory() {
+		// 관리자 화면
 		map.put("/managerIndex.do", "controller.manager.ManagerCommand");
 		map.put("/managerStatisticsDaily.do", "controller.statistics.statisticsDailyFormCommand");
 		map.put("/managerStatisticsTotal.do", "controller.statistics.statisticsTotalFormCommand");
 		
-		
 		map.put("/petopia.do", "controller.member.IntroCommand");
 		map.put("/login.do", "controller.member.LoginCommand");
 		map.put("/logout.do", "controller.member.LogOutCommand");
+		map.put("/side.do", "controller.SideCommand");
+		
+		// 쪽지
+		map.put("/noteList.do", "controller.NoteListFormCommand");
+		map.put("/noteDetailBoard.do", "controller.NoteDetailFormCommand");
+		map.put("/writeNote.do", "controller.WriteNoteCommand");
+		map.put("/deleteNote.do", "controller.NoteDeleteCommand");
+		map.put("/sendMail.do", "controller.MailCommand");
 		
 		// 게시글 목록 조회
-		map.put("/listArticle.do", "controller.article.ListArticleCommand");
+		map.put("/viewListArticleContent.do", "controller.article.ListArticleCommand");
 				
 		// 게시글 상세 조회
-		map.put("/detailArticle.do", "controller.article.DetailArticleCommand");
+		map.put("/viewDetailArticleContent.do", "controller.article.DetailArticleCommand");
 		
 		// 게시글 작성 페이지로 이동
-		map.put("/writeArticleForm.do", "controller.article.WriteArticleFormCommand");
+		map.put("/viewWriteArticleForm.do", "controller.article.WriteArticleFormCommand");
+
+		// 게시글 삭제
+		map.put("/removeArticle.do", "controller.article.RemoveArticleCommand");
+
+		// 게시글 수정폼이동
+		map.put("/viewModifyArticleForm.do", "controller.article.ModifyArticleFormCommand");
 		
-		map.put("/writeArticle.do", "controller.article.WriteArticleCommand");
+		/* ----------------------댓글------------------------------------- */
+		map.put("/writeReply.do", "controller.reply.RegisterReplyCommand");
 	}
 	
 	public static CommandFactory getInstance() {
