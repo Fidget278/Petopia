@@ -27,7 +27,14 @@ public class MemberService {
 	public void modifyPassword(int memNo, String newPassword) throws Exception {
 		MemberDao.getInstance().updatePassword(memNo, newPassword);	
 	}
-
+	
+	public boolean retrieveEmail(String email) throws Exception {
+		return MemberDao.getInstance().selectEmail(email);	
+	}
+	
+	public void modifyMember(int memberNo, String password) throws Exception {
+		MemberDao.getInstance().updateMember(memberNo, password);	
+	}
 
 	}
 

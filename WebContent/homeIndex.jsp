@@ -3,6 +3,6 @@
 	
 <jsp:forward page="viewHomeTemplate.jsp">
 	<jsp:param name="side" value="viewFrameSidebar" />
-	<jsp:param name="content" value="viewHomeContent" />
+	<jsp:param name="content" value="out" />
 </jsp:forward>
 
