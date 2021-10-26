@@ -45,9 +45,10 @@ public class MemberVo {
 	
 
 
-	public MemberVo(String email, String grade, String nickname, String regDate, String lastDate, int docs, int comms,
+	public MemberVo(int no, String email, String grade, String nickname, String regDate, String lastDate, int docs, int comms,
 			int visits, String ban, int isMember) {
 		super();
+		this.no = no;
 		this.email = email;
 		this.grade = grade;
 		this.nickname = nickname;

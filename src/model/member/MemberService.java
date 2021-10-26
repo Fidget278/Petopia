@@ -53,13 +53,13 @@ public class MemberService {
 	}
 	
 	// 회원 정지 기간 적용
-	public void modifyBan(String banSelect) throws Exception {
+	public void modifyBan(String banSelect, int no) throws Exception {
 		Connection conn = null;
 		
 		try {
 			conn = DBConn.getConnection();
 			
-			MemberDao.getInstance().updateBan(banSelect, conn);
+			MemberDao.getInstance().updateBan(banSelect, no, conn);
 		} catch (Exception e) {
 			throw e;
 		} finally {

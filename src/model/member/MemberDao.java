@@ -254,7 +254,7 @@ public class MemberDao {
 			conn = DBConn.getConnection();
 			StringBuffer sql = new StringBuffer();
 			
-			sql.append("SELECT email, name, nickname, regdate, lastdate, M.docs, M.comms, visits, ban, M.out    ");
+			sql.append("SELECT member_no, email, name, nickname, regdate, lastdate, M.docs, M.comms, visits, ban, M.out    ");
 			sql.append("FROM member M RIGHT JOIN grade G     ");
 			sql.append("ON M.grade_no = G.grade_no     ");
 			sql.append("WHERE member_no = ?");
@@ -264,16 +264,17 @@ public class MemberDao {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				member.setEmail(rs.getString(1));
-				member.setGrade(rs.getString(2));
-				member.setNickname(rs.getString(3));
-				member.setRegDate(rs.getString(4));
-				member.setLastDate(rs.getString(5));
-				member.setDocs(rs.getInt(6));
-				member.setComms(rs.getInt(7));
-				member.setVisits(rs.getInt(8));
-				member.setBan(rs.getString(9));
-				member.setIsMember(rs.getInt(10));
+				member.setNo(rs.getInt(1));
+				member.setEmail(rs.getString(2));
+				member.setGrade(rs.getString(3));
+				member.setNickname(rs.getString(4));
+				member.setRegDate(rs.getString(5));
+				member.setLastDate(rs.getString(6));
+				member.setDocs(rs.getInt(7));
+				member.setComms(rs.getInt(8));
+				member.setVisits(rs.getInt(9));
+				member.setBan(rs.getString(10));
+				member.setIsMember(rs.getInt(11));
 			}
 		} catch (Exception e) {
 			throw e;
@@ -391,15 +392,43 @@ public class MemberDao {
 		return result;
 	}
   
-  public void updateBan(String banSelect, Connection conn) throws Exception {
-		PreparedStatement pstmt = null;
+  public void updateBan(String banSelect, int no, Connection conn) throws Exception {
+	  PreparedStatement pstmt = null;
 		
 		try {
 			StringBuffer sql = new StringBuffer();
 			
-			sql.append("UPDATE ");
+			if(banSelect.equals("7d")) {
+				sql.append("UPDATE member     ");
+				sql.append("SET ban = DATE_ADD(NOW(), INTERVAL 7 DAY)       ");
+				sql.append("WHERE member_no = ?");
+			}
+			
+			else if(banSelect.equals("1d")) {
+				sql.append("UPDATE member     ");
+				sql.append("SET ban = DATE_ADD(NOW(), INTERVAL 1 DAY)       ");
+				sql.append("WHERE member_no = ?");
+			}
+			
+			else if(banSelect.equals("1m")) {
+				sql.append("UPDATE member     ");
+				sql.append("SET ban = DATE_ADD(NOW(), INTERVAL 1 MINUTE)       ");
+				sql.append("WHERE member_no = ?");
+			}
+			
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setInt(1, no);
+			pstmt.executeUpdate();
+			
 		} catch (Exception e) {
-			// TODO: handle exception
+			throw e;
+		} finally {
+			try {
+				if(pstmt != null) pstmt.close();
+			} catch (Exception e2) {
+				throw e2;
+			}
 		}
 	}
 	

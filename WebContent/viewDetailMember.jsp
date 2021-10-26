@@ -67,7 +67,7 @@
 			</td>
 		</tr>
 	</table>
-	
+	<input type="hidden" name="no" value="${member.no}">
 	<button type="submit" id="saveBtn">저장</button>
 	<button type="button" id="outBtn">회원 탈퇴</button>
 	</form>
