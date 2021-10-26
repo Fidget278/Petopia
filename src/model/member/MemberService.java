@@ -85,4 +85,22 @@ public class MemberService {
 		return true;
 
 	}
+	
+	// 회원 강제 탈퇴
+	public void modifyMemberByForce(int no) throws Exception {
+		Connection conn = null;
+		MemberDao member = MemberDao.getInstance();
+		try {
+			conn = DBConn.getConnection();
+			member.updateMemberByForce(no, conn);
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			try {
+				if(conn != null) conn.close();
+			} catch (Exception e2) {
+				throw e2;
+			}
+		}
+	}
 }

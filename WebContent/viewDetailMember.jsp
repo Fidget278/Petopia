@@ -14,7 +14,10 @@
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
 <link href="css/viewMainContent.css" rel="stylesheet" type="text/css">
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+	crossorigin="anonymous"></script>
+	
 </head>
 <body>
 <div class="content">
@@ -69,7 +72,10 @@
 	</table>
 	<input type="hidden" name="no" value="${member.no}">
 	<button type="submit" id="saveBtn">저장</button>
-	<button type="button" id="outBtn">회원 탈퇴</button>
+	</form>
+	<form action="outMemberByForce.do" method="POST"  onsubmit="return confirm('정말로 탈퇴하시겠습니까?');">
+		<input type="hidden" name="no" value="${member.no}">
+		<button type="submit" id="outBtn">회원 탈퇴</button>
 	</form>
 </div>
 </body>

@@ -459,4 +459,29 @@ public class MemberDao {
 		}
 	}
 
+  // 회원 강제 탈퇴 DB 적용
+  public void updateMemberByForce(int no, Connection conn) throws Exception {
+	  PreparedStatement pstmt = null;
+	  
+	  try {
+		StringBuffer sql = new StringBuffer();
+		
+		sql.append("UPDATE member M    ");
+		sql.append("SET M.out = 1    ");
+		sql.append("WHERE member_no = ?");
+		
+		pstmt = conn.prepareStatement(sql.toString());
+		pstmt.setInt(1, no);
+		pstmt.executeUpdate();
+		
+	} catch (Exception e) {
+		throw e;
+	} finally {
+		try {
+			if(pstmt != null) pstmt.close();
+		} catch (Exception e2) {
+			throw e2;
+		}
+	}
+  }
 }
