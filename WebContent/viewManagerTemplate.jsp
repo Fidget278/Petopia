@@ -2,8 +2,8 @@
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<c:set var="viewheader" value="${param.viewheader}.jsp" />
-<c:set var="content" value="${param.content}.jsp" />
+<c:set var="viewheader" value="${requestScope.viewheader}" />
+<c:set var="content" value="${requestScope.content}" />
 
 <!DOCTYPE html>
 <html lang="ko">

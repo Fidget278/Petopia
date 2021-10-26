@@ -18,7 +18,8 @@
 				<tr>
 					<td>회원 관리</td>
 					<td>등급 관리</td>
-					<td>게시글 관리</td>
+					<td onclick="location.href='${pageContext.request.contextPath}/listCategory.do'">
+					게시글 관리</td>
 					<td>꾸미기</td>
 					<td>통계</td>
 				</tr>
