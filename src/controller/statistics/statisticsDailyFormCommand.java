@@ -40,10 +40,10 @@ public class statisticsDailyFormCommand implements Command {
 
 		request.setAttribute("dailyList", statisticsDailyList);
 
-		request.setAttribute("viewheader", "viewManagerHeader");
+
 		request.setAttribute("content", "viewStatisticsDailyContent");
 
-		return new ActionForward("managerIndex.jsp", false);
+		return new ActionForward("/managerIndex.do", false);
 	}
 
 }
