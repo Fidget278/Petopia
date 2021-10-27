@@ -20,9 +20,6 @@ public class ModifyBanCommand implements Command{
 		String ban = request.getParameter("banSelect");
 		int no = Integer.parseInt(request.getParameter("no"));
 		
-		System.out.println(ban);
-		System.out.println(no);
-		
 		MemberService service = MemberService.getInstance();
 		service.modifyBan(ban, no);
 		

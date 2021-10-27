@@ -55,16 +55,26 @@ public class MemberService {
 	// 회원 정지 기간 적용
 	public void modifyBan(String banSelect, int no) throws Exception {
 		Connection conn = null;
-		
+		boolean isSuccess = false;
 		try {
 			conn = DBConn.getConnection();
 			
 			MemberDao.getInstance().updateBan(banSelect, no, conn);
+			
+			isSuccess = true;
 		} catch (Exception e) {
 			throw e;
 		} finally {
 			try {
-				if(conn != null) conn.close();
+				if (conn != null) {
+					if(isSuccess) {
+						conn.commit();
+					}
+					else {
+						conn.rollback();
+					}
+					conn.close();
+				}
 			} catch (Exception e2) {
 				throw e2;
 			}
@@ -89,15 +99,25 @@ public class MemberService {
 	// 회원 강제 탈퇴
 	public void modifyMemberByForce(int no) throws Exception {
 		Connection conn = null;
+		boolean isSuccess = false;
 		MemberDao member = MemberDao.getInstance();
 		try {
 			conn = DBConn.getConnection();
 			member.updateMemberByForce(no, conn);
+			isSuccess = true;
 		} catch (Exception e) {
 			throw e;
 		} finally {
 			try {
-				if(conn != null) conn.close();
+				if (conn != null) {
+					if(isSuccess) {
+						conn.commit();
+					}
+					else {
+						conn.rollback();
+					}
+					conn.close();
+				}
 			} catch (Exception e2) {
 				throw e2;
 			}
