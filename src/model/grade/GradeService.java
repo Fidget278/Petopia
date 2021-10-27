@@ -66,16 +66,25 @@ public class GradeService {
 	// 등급 삭제 시
 	public void  removeGrade(int no) throws Exception {
 		Connection conn = null;
-		
+		boolean isSuccess = false;
 		try {
 			conn = DBConn.getConnection();
+			conn.setAutoCommit(false);
 			GradeDao.getInstance().deleteGrade(no, conn);
-			
+			isSuccess = true;
 		} catch (Exception e) {
 			throw e;
 		} finally {
 			try {
-				if(conn != null) conn.close();
+				if (conn != null) {
+					if(isSuccess) {
+						conn.commit();
+					}
+					else {
+						conn.rollback();
+					}
+					conn.close();
+				}
 			} catch (Exception e2) {
 				throw e2;
 			}

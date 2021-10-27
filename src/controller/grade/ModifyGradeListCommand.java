@@ -54,7 +54,7 @@ public class ModifyGradeListCommand implements Command{
 		request.setAttribute("grades", grades);
 		
 		request.setAttribute("content", "viewGradeList.jsp");
-		return new ActionForward("/managerIndex.jsp", false);
+		return new ActionForward("/managerIndex.do", false);
 	}
 
 }
