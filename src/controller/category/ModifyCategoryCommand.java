@@ -8,11 +8,13 @@ import controller.Command;
 import model.category.CategoryService;
 import model.category.CategoryVo;
 
+
 public class ModifyCategoryCommand implements Command {
 
 	@Override
 	public ActionForward execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		//1. 카테고리 번호를 구한다.
+		req.setCharacterEncoding("utf-8");
 		
 		int categoryNo = Integer.parseInt(req.getParameter("categoryNo"));
 		String categoryName = req.getParameter("categoryName");

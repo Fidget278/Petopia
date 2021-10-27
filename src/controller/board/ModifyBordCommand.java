@@ -16,6 +16,8 @@ public class ModifyBordCommand implements Command {
 	@Override
 	public ActionForward execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
+		req.setCharacterEncoding("utf-8");
+		
 		int categoryNo = Integer.parseInt(req.getParameter("categoryNameForBoard"));
 		int boardNo = Integer.parseInt(req.getParameter("boardNo"));
 		String boardName = req.getParameter("boardName");
