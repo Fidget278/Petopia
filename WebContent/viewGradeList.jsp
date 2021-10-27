@@ -19,21 +19,47 @@
 	crossorigin="anonymous"></script>
 	
 	<style>
-			table {
-				width: 900px;
-			    border-collapse: collapse;
-			    margin: 20px auto;   
-			    font-size: 20px;     	
-			}
-			
-			table, tr, th, td{
-				border : 1px solid red;
-				text-align : center;
-			}
-			
-			th, td {
-			height : 35px
-			}
+	
+		.btn {
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+		#Grade-Content{
+			position: relative;
+		}
+		#Form{
+			display: flex;
+			position: relative;
+			justify-content: center;
+		}	
+		#grade {
+			width: 1250px;
+		    border-collapse: collapse;   
+		    margin: 20px auto;
+		    font-size: 26px;     
+		    float : center;
+		}
+		
+		#grade tr, th, td{
+			border : 1px solid black;
+			text-align : center;
+			vertical-align : middle;
+		}
+		
+		#grade th, td {
+		height : 30px;
+		}
+		
+		#SubmitBtn{
+			position: absolute;
+			right: 0;
+			bottom: 0;
+		}
+		.head {
+			background-color : #cccccc;
+			height : 35px;
+		}
 	</style>
 	
 	<script>
@@ -117,7 +143,6 @@
 			if(com) {
 			var tr = obj.parentNode.parentNode;
 			tr.parentNode.removeChild(tr);
-			return obj.val();
 			}
 		}
 		
@@ -160,11 +185,11 @@
 
 
 <body>
-	<div class="content">
-	<form action="modifyGradeList.do" method="GET" name="fr" onSubmit="return check()">
-		<button type="button" value="삭제" onclick="addRow()">등급 추가</button>
+	<div class="content" id="Grade-Content">
+	<button type="button" value="삭제" onclick="addRow()" class="btn">등급 추가</button>
+	<form action="modifyGradeList.do" method="GET" name="fr" onSubmit="return check()" id="Form">
 		<table id="Grade">
-			<thead>
+			<thead class="head">
 				<tr>
 					<th>번호</th>
 					<th>등급 이름</th>
@@ -190,7 +215,8 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<input type="submit" value="저장">
+		<br>
+		<input type="submit" value="저장"  id="SubmitBtn">
 	</form>
 	</div>
 </body>

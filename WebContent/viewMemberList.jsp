@@ -18,20 +18,38 @@
 	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 	crossorigin="anonymous"></script>
 	<style>
-			table {
-				width: 900px;
+			
+			.head {
+				background-color : #cccccc;
+			}
+			
+			.lpage {
+				font-size : 22px;
+			}
+			
+			#member {
+				width: 1250px;
 			    border-collapse: collapse;
 			    margin: 20px auto;   
-			    font-size: 20px;     	
+			    font-size: 26px;     	
 			}
 			
-			table, tr, th, td{
-				border : 1px solid red;
+			#member, tr, th, td{
+				border : 1px solid black;
 				text-align : center;
+				vertical-align: middle;
 			}
 			
-			th, td {
-			height : 35px
+			#member th, td {
+				height : 50px
+			}
+			
+			a:hover {
+				color : red;
+			}
+			
+			a:active {
+				color : green;
 			}
 			
 			#paging {
@@ -40,7 +58,8 @@
 			}
 			
 			#search {
-			 text-align : center;
+				height : 20px;
+			 	text-align : center;
 			}
 	</style>
 	
@@ -135,7 +154,7 @@
 <div class="content">
 <!-- 표 -->
 	<table id="member">
-		<thead>
+		<thead class="head">
 			<tr>
 				<th>No</th>
 				<th>ID</th>
@@ -146,14 +165,14 @@
 			</tr>
 		</thead>
 		
-		<tbody>
+		<tbody class="body">
 			<c:forEach var="member" items="${members}" varStatus="loop">
 				<c:url var="URL" value="/viewDetailMember.do">
 					<c:param name="no" value="${member.no}"/>
 				</c:url>
 				<tr id="${member.no}">
 					<td>${member.no}</td>
-					<td><a href="${URL}">${member.email}</a></td>
+					<td><a href="${URL}" class="detail">${member.email}</a></td>
 					<td>${member.grade}</td>
 					<td>${member.regDate}</td>
 					<td>${member.visits}</td>
@@ -176,7 +195,7 @@
 			<c:url var="prevUrl" value="/viewMemberList.do">
 				<c:param name="currentPage" value="${startPage - pageBlock}"/>
 			</c:url>
-			<a href="${prevUrl}">이전</a>
+			<a href="${prevUrl}" class="lpage">이전</a>
 		</c:if>
 		
 		<!-- 현재 페이지 블록 -->
@@ -189,7 +208,7 @@
 				<c:url var="url" value="/viewMemberList.do">
 					<c:param name="currentPage" value="${i}"/>
 				</c:url>
-				<a href="${url}">&nbsp;${i}&nbsp;</a>
+				<a href="${url}" class="lpage">&nbsp;${i}&nbsp;</a>
 			</c:if>
 		</c:forEach>
 		
@@ -198,7 +217,7 @@
 			<c:url var="nextUrl" value="/viewMemberList.do">
 				<c:param name="currentPage" value="${endPage + 1}"/>
 			</c:url>
-			<a href="${nextUrl}">[Next]</a>
+			<a href="${nextUrl}" class="lpage">[Next]</a>
 		</c:if>
 	</div>
 	

@@ -19,72 +19,108 @@
 	crossorigin="anonymous"></script>
 	
 	<style>
-			table {
-				width: 900px;
+			#member {
+				width: 1250px;
 			    border-collapse: collapse;
 			    margin: 20px auto;   
-			    font-size: 20px;     	
+			    font-size: 26px;     	
 			}
 			
-			table, tr, th, td{
-				border : 1px solid red;
+			#member, tr, th, td{
+				border : 1px solid black;
 				text-align : center;
+				vertical-align: middle;
 			}
 			
-			th, td {
-				height : 35px
+			#member th, td {
+				height : 50px;
 			}
 			
-			#outBtn {
+			#drop {
+				height : 30px;
+				width :  70px;
+				vertical-align : middle;
+			}
+			
+			.btn {
 				font-size : 14px;
-				padding-right : 80px;
+				float : right;
+			}
+			
+			.title {
+				background-color : #cccccc;
+				width : 450px;
+			}
+			
+			.val {
+				width : 750px;
+			}
+			
+			.content-header {
+			   width: 100%;
+			   display: flex;
+			   justify-content: space-between;
+			}
+			
+			.content-header>h2 {
+				margin-bottom: 30px;
+			   border: 2px solid #666;
+			   width: 10%;
+			   flex-basis: auto;
+			   padding: 10px;
+			   text-align: center;
+			   
+			}
+			.content-header>button {
+				height: 30px;
 			}
 	</style>
 </head>
 <body>
 <div class="content">
-	<div><h3>회원 정보 수정</h3></div>
 	<c:url var="listUrl" value="/viewMemberList.do"/>
-	<a href="${listUrl}">Back</a>
+	<div class="content-header"><h2>회원 정보 수정</h2><button onclick="history.back()" class="btn" id="back">Back</button></div>
+	<br/>
+	<br/>
 	
 	<!-- 표 -->
 	<form action="modifyBan.do" method="POST">
-	<table border = "1">
+	<table border = "1" id="member">
 		<tr>
-			<td>ID</td>
-			<td>${member.email}</td>
-			<td>등급</td>
-			<td>${member.grade}</td>
+			<td class="title">ID</td>
+			<td class="val">${member.email}</td>
+			<td class="title">등급</td>
+			<td class="val">${member.grade}</td>
 		</tr>
 		
 		<tr>
-			<td>닉네임</td>
-			<td>${member.nickname}</td>
-			<td>게시글 수</td>
-			<td>${member.docs}</td>
+			<td class="title">닉네임</td>
+			<td class="val">${member.nickname}</td>
+			<td class="title">게시글 수</td>
+			<td class="val">${member.docs}</td>
 		</tr>
 		
 		<tr>
-			<td>가입 날짜</td>
-			<td>${member.regDate}</td>
-			<td>댓글 수</td>
-			<td>${member.comms}</td>
+			<td class="title">가입 날짜</td>
+			<td class="val">${member.regDate}</td>
+			<td class="title">댓글 수</td>
+			<td class="val">${member.comms}</td>
 		</tr>
 		
 		<tr>
-			<td>최근 방문 날짜</td>
-			<td>${member.lastDate}</td>
-			<td>방문 횟수</td>
-			<td>${member.visits}</td>
+			<td class="title">최근 방문 날짜</td>
+			<td class="val">${member.lastDate}</td>
+			<td class="title">방문 횟수</td>
+			<td class="val">${member.visits}</td>
 		</tr>
 		
 		<tr>
-			<td>탈퇴 여부</td>
-			<td>${member.isMember}</td>
-			<td>활동 중지</td>
-			<td>
+			<td class="title">탈퇴 여부</td>
+			<td class="val">${member.isMember}</td>
+			<td class="title">활동 중지</td>
+			<td class="val">
 				${member.ban}
-				<select name="banSelect">
+				<select name="banSelect" id="drop">
 					<option value="7d">7일</option>
 					<option value="1d">1일</option>
 					<option value="1m">1분</option>
@@ -92,12 +128,15 @@
 			</td>
 		</tr>
 	</table>
+	<br/>
 	<input type="hidden" name="no" value="${member.no}">
-	<button type="submit" id="saveBtn">저장</button>
+	<button type="submit" class="btn" id="saveBtn">저장</button>
 	</form>
+	<br/>
+	<br/>
 	<form action="outMemberByForce.do" method="POST"  onsubmit="return confirm('정말로 탈퇴하시겠습니까?');">
 		<input type="hidden" name="no" value="${member.no}">
-		<button type="submit" id="outBtn">회원 탈퇴</button>
+		<button type="submit" class="btn" id="outBtn">회원 탈퇴</button>	
 	</form>
 </div>
 </body>
