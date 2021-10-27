@@ -14,6 +14,7 @@ public class WriteBoardCommand implements Command {
 
 		public ActionForward execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
+			req.setCharacterEncoding("utf-8");
 
 			// 1. 사용자가 입력한 게시판 정보를 구한다.
 			int categoryNo = Integer.parseInt(req.getParameter("categoryNameForBoard"));

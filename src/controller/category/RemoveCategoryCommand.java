@@ -11,6 +11,8 @@ public class RemoveCategoryCommand implements Command {
 	@Override
 	public ActionForward execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 	
+	req.setCharacterEncoding("utf-8");	
+		
 	//1. 삭제할 카테고리 번호 구하기
 	int categoryNo = Integer.parseInt(req.getParameter("categoryNo"));
 	
