@@ -1,7 +1,10 @@
 @charset "utf-8";
 
-@import url("viewStatisticsHeader.css");
 
+
+header {
+
+}
 header .header-tab {
 	padding-top: 30px;
 }
@@ -33,7 +36,7 @@ header .header-table table td {
 }
 
 header .header-table table td:hover {
-	background-color: #666;
+	background-color: #afafaf;
 	font-size: 20px;
 	cursor: pointer;
 }

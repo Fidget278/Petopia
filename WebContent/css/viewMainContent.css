@@ -1,6 +1,8 @@
 @charset "utf-8";
 
-.content{
+@import url('viewMainBoardContent.css');
+
+.content {
 	height: auto;
 }
 
@@ -14,9 +16,10 @@
 }
 
 .content .content-img img {
-	width: 450px;
+	width: 400px;
 	height: 400px;
 	margin: 10px;
+	border: 2px solid #666;
 }
 
 .content .content-board {
@@ -26,3 +29,4 @@
 	box-sizing: border-box;
 	margin: 20px 0;
 }
+
