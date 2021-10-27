@@ -3,7 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+
 <meta charset="UTF-8">
+
 <title>회원가입</title>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -211,27 +214,125 @@
 </script>
 
 </head>
+<style>
+@import
+	url('https://fonts.googleapis.com/css2?family=Gaegu:wght@700&display=swap')
+	;
+
+@import
+	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap')
+	;
+
+.logo {
+	font-family: 'Gaegu', cursive;
+	font-size: 120px;
+}
+
+* {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* ===============================================예나==========================  */
+.--center {
+	margin: 0 auto;
+}
+
+.--inputBox {
+	border-radius: 6px 6px 6px 6px;
+	box-shadow: none;
+	border: 1px solid #dadada;
+	padding: 17px 18px 17px 19px;
+	width: 361px;
+}
+/* ===============================================예나==========================  */
+/* .loginBox {
+	width: 400px;
+	height: 500px;
+} */
+
+.joinBox {
+	width: 1000px;
+	height: 1000px;
+	display: flex;
+	justify-content: center;
+}
+
+.joinButton {
+	width: 400px;
+	height: 40px;
+	border: 1px solid black;
+	border-radius: 3px 3px 3px 3px;
+}
+
+.joinBottom {
+	width: 100%;
+	text-align: center;
+}
+
+.forcenter {
+	display: inline-block;
+	text-align: center;
+	width: 50%;
+	height: 20px;
+}
+
+.loginView__a {
+	font-size: 16px;
+	line-height: 18px;
+	text-decoration: none;
+	color: #888;
+}
+
+.wrap {
+	width: 500px;
+	height: 500px;
+}
+</style>
 <body>
-	<h1>회원가입</h1>
-	<form action="${pageContext.request.contextPath}/join.do"
-		method="post" id="joinForm">
-
-		아이디(이메일) <input type="email" name="email" id="email">
-		<button type="button" id="idcheckbtn">중복 확인</button>
-		<!-- 아이디 에러메시지 문구 공간 -->
-		<div id='errmsgid'></div> 
-
-		비밀번호 <input type="password" name="password" id="password">
-		<!-- 비밀번호 에러메시지 문구 공간 -->
-		<div id='errmsgpw'></div>
-		
-		닉네임 <input type="text" name="nickname" id="nickname">
-		<button type="button" id="nncheckbtn">중복 확인</button>
-		<!-- 닉네임 에러메시지 문구 공간 -->
-		<div id='errmsgnn'></div>
-		<input type="submit" value="회원가입 하기">
-	</form>
 
 
+	<div class="joinBox">
+		<div class="wrap">
+			<div class="logo --center">PETOPIA</div>
+			<h3>회원가입 정보를 입력해주세요 :)</h3>
+			<div>
+				<span class="material-icons-outlined"></span>
+				<form action="${pageContext.request.contextPath}/join.do"
+					method="post" id="joinForm">
+
+					<!-- 아이디(이메일) <br><input class="--inputBox" type="email" name="email" id="email"> -->
+					<label for="email"></label> <input class="--inputBox" type="email"
+						name="email" id="email" placeholder="E-MAIL">
+
+					<button type="button" id="idcheckbtn">중복 확인</button>
+					<!-- 아이디 에러메시지 문구 공간 -->
+					<div id='errmsgid'></div>
+
+					<!-- 비밀번호 <br><input class = "--inputBox" type="password" name="password" id="password"> -->
+					<label for="password"></label> <input class="--inputBox"
+						type="password" name="password" id="password"
+						placeholder="PASSWORD">
+					<!-- 비밀번호 에러메시지 문구 공간 -->
+					<div id='errmsgpw'></div>
+
+					<!-- 닉네임 <br> <input class="--inputBox" type="text" name="nickname"
+					id="nickname"> -->
+					<label for="nickname"></label> <input class="--inputBox"
+						type="text" name="nickname" id="nickname" placeholder="닉네임">
+
+					<button type="button" id="nncheckbtn">중복 확인</button>
+
+					<!-- 닉네임 에러메시지 문구 공간 -->
+					<div id='errmsgnn'></div>
+
+					<input class="joinButton" type="submit" value="회원가입 하기">
+					<div class="joinBottom">
+						<div class="forcenter"></div>
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
 </body>
 </html>

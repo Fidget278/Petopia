@@ -9,19 +9,45 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	.btns, .float, .list {
-		float : left;
-		width : 300px;
-		height : 500px;
-		border: solid 1px;
+	
+	.float {
+	width : 300px
+	
+	
 	}
 	
-	.category {
-		background-color:green;
+	.btns, .list {
+		float : left;
+		width : 350px;
+		padding-left: 50px;
 	}
-	.board {
-		background-color:yellow;
+	
+	.addBtn {
+		width: 100px;
+		margin-left: 270px;
 	}
+	
+	.categoryInManager {
+		width : 300px;
+		background-color:silver;
+		padding-left: 20px;
+	}
+	.boardInCategory {
+		width : 300px;
+		background-color:white;
+		padding-left: 30px;
+	}
+	
+	.modifyBtn {
+		float: right;
+		margin-right: 50px;
+	}
+	
+	.writeBtn {
+		float: right;
+		margin-right: 50px;
+	}
+
 
 
 </style>
@@ -79,6 +105,7 @@
         	//카테고리 수정 공백 검사
         	$('#modifyCategoryBtn').on("click", function() {
             	const categoryName = $('#categoryName').val();
+            	console.log("categoryName " + categoryName);
                 if (categoryName == "") {
                     alert("이름이 비어 있습니다.");
                     return false;
@@ -254,12 +281,12 @@
 <%-- 카테고리 추가, 게시판 추가, 베스트 글 관리 버튼 --%>
 <div class = "btns">
 	<div>
-		<button type="button" calss="addBtn" id="addCategoryBtn">카테고리 추가</button>
+		<button type="button" class="addBtn" id="addCategoryBtn">카테고리 추가</button>
 	</div>
 	
 	
 	<div>
-		<button type="button" calss="addBtn" id="addBoardBtn">게시판 추가</button>
+		<button type="button" class="addBtn" id="addBoardBtn">게시판 추가</button>
 	</div>
 </div>
 
@@ -267,7 +294,7 @@
 <%-- 카테고리+게시판 목록 조회 ------------------------------------------------------------------------------- --%>
 <div class = "list" id = "list">
 <table>
-	<tbody>
+	<tbody id="ManagetCategoryAndBoardList">
 		<c:if test="${empty requestScope.categoryList}">
 			<tr><td>등록된 게시판이 없습니다.</td></tr>
 		</c:if>
@@ -279,7 +306,7 @@
 				</c:url>
 				 
 				<tr class="category">
-					<td><a href="${pageScope.category.categoryName}" id="${pageScope.category.categoryNo}">${pageScope.category.categoryName}</a></td>	
+					<td class="categoryInManager"><a href="${pageScope.category.categoryName}" id="${pageScope.category.categoryNo}">${pageScope.category.categoryName}</a></td>	
 				</tr>
 				
 				<c:forEach var="board" items="${pageScope.category.boardList }"> <%-- items의 category == 첫번째forEach의 var와 같은 것.  --%>
@@ -290,7 +317,7 @@
 					</c:url>
 					
 					<tr class="board">
-					<td><a href="${pageScope.board.boardName}" id="${pageScope.board.boardNo}">${pageScope.board.boardName}</a></td>
+					<td class="boardInCategory"><a href="${pageScope.board.boardName}" id="${pageScope.board.boardNo}">${pageScope.board.boardName}</a></td>
 					</tr>
 				</c:forEach>
 			</c:forEach>
@@ -312,7 +339,7 @@
 			<input type="text" name = "categoryName" id="categoryName" placeholder="이름을 작성하세요.">
 		</div>
 		
-		<div id="writeBtn">
+		<div class="writeBtn">
 			<button type="reset">취소</button>
 			<button type="button" id="writeCategoryBtn">저장</button>
 		</div>
@@ -327,7 +354,7 @@
 			<input type="text" name = "categoryName" id="categoryName" value="${sessionScope.category.categoryName }">
 			<input type="hidden" name = "categoryNo" id="categoryNo" value="${sessionScope.category.categoryNo }">
 		</div>		
-		<div id="modifyBtn">	
+		<div class="modifyBtn">	
 			<button type="button" id="removeCategoryBtn" name="" >삭제</button>			
 			<button type="reset">취소</button>
 			<button type="button" id="modifyCategoryBtn">저장</button>
@@ -380,7 +407,7 @@
 		</c:if>
 		</div>
 		
-		<div id="writeBtn">
+		<div class="writeBtn">
 			<button type="reset">취소</button>
 			<button type="button" id="writeBoardBtn">저장</button>
 		</div>
@@ -390,6 +417,7 @@
 	<%-- 4. 게시판 수정 폼  ------------------------------------------------------------------------- --%>
 	<div class="float"  id="rightModifyBoard" style="display:none;">
 	<form action="${pageContext.request.contextPath}/modifyBoard.do" method="POST" id="modifyBoard">
+	
 	
 	<div>
 		<c:if test="${not empty requestScope.categoryList}" >
@@ -403,7 +431,11 @@
 			</c:forEach>			
 			</select>
 		</c:if>
-		</div>
+	</div>
+		
+		
+		
+		
 		
 		<div>
 			<label for="boardName">게시판명</label>
@@ -437,7 +469,7 @@
 		</c:if>
 		</div>
 		
-		<div id="modifyBtn">
+		<div class="modifyBtn">
 			<button type="button" id="removeBoardBtn" name="">삭제</button>			
 			<button type="reset">취소</button>
 			<button type="button" id="modifyBoardBtn">저장</button>

@@ -16,17 +16,25 @@
 	href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
 <link href="./css/viewMainContent.css" rel="stylesheet" type="text/css">
 <style>
-	div.content{
+p.pageName{
+	background-color: #D8D8D8;
+	background-size: weidth=30;
+	
+}
+div.content {
 	background-size: 80% 100%;
 	background-image: url(./img/writeForm.jpg);
-	background-repeat:no-repeat;
-	}
-	table.writeForm{
-	position: relative;
+	background-repeat: no-repeat;
+	background-color: #FAF0E6;
+}
+div.selectBoard{
+	size=60px;
+}
+table.writeForm {
 	left: 115px;
-	top: 200px;
-	}
-	
+	top: 70px;
+}
+
 </style>
 </head>
 <body>
@@ -47,12 +55,16 @@
 								<div class="selectBoard">
 									<select id="boardSelect" name="boardSelect">
 										<option value="0">게시판선택</option>
-										<c:forEach var = "board" items = "${requestScope.boardList}">
-										<option value="${board.boardNo}">${board.boardName }</option>
+										<c:forEach var="board" items="${requestScope.boardList}">
+											<option value="${board.boardNo}">${board.boardName }</option>
 										</c:forEach>
 									</select>
 								</div>
 							</td>
+							<td>
+							<button type="submit" class="btn btn-sm btn-primary"
+								id="wrtieBtn">등록</button>
+							</td>						
 						</tr>
 						<br>
 						<tr colspan="3">

@@ -103,4 +103,6 @@ public class MemberService {
 		return MemberDao.getInstance().selectNickname(nickname);	
 	
 	}
+	
+	
 }
