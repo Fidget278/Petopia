@@ -67,6 +67,7 @@
 		
 		$('#checkBtn').on('click', function() {
 			const no = $(this).val();
+			console.log(no);
 			const url = "viewGradeBoardList.do";
 			sendProcess(url, no);
 		});
@@ -206,7 +207,7 @@
 					<tr>
 						<td><input type="text" placeholder="${grade.gradeNo}" name="gradeNo" value="${grade.gradeNo}"></td>
 						<td><input type="text" placeholder="${grade.name}" name="name" value="${grade.name}"></td>
-						<td><button type="button" id="checkBtn" id="${grade.gradeNo}">확인</button></td>
+						<td><button type="button" id="checkBtn" value="${grade.gradeNo}">확인</button></td>
 						<td><input type="text" placeholder="${grade.docs}" name="docs" value="${grade.docs}"></td>
 						<td><input type="text" placeholder="${grade.comms}" name="comms" value="${grade.comms}"></td>
 						<td>${grade.person}명</td>
