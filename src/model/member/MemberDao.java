@@ -61,7 +61,7 @@ public class MemberDao {
 
 			StringBuffer sql = new StringBuffer();
 			sql.append(
-					"SELECT member_no, email, password, ban, member.out FROM member where email = ? AND password = ?");
+					"SELECT member_no, email, password, ban, member.out FROM cafedb.member where email = ? AND password = ?");
 
 			pstmt = conn.prepareStatement(sql.toString());
 
