@@ -24,8 +24,8 @@
 
 	<div class="content">
 		<!-- Content 내용 여기에 추가 -->
-		<div class="boardName cartegory-header-style">
-			<h1>${param.boardName }</h1>
+		<div class="boardName">
+			<h1>${requestScope.boardName }</h1>
 		</div>
 		<table class="boardList cartegory-boards-style">
 			<colgroup>

@@ -17,6 +17,14 @@ public class BoardGradeVo {
 		this.readGrade = readGrade;
 		this.WriteGrade = writeGrade;
 	}
+	
+	// 게시글 작성 선택
+	public BoardGradeVo(int boardNo, int writeGrade, int readwrite) {
+		super();
+		this.boardNo = boardNo;
+		WriteGrade = writeGrade;
+		this.readwrite = readwrite;
+	}
 
 	public BoardGradeVo(int boardNo, int readGrade, int writeGrade, int readwrite,
 			ArrayList<BoardGradeVo> baordGradeList) {

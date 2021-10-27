@@ -40,6 +40,9 @@ public class CommandFactory {
 		// 회원 정지 기간 적용
 		map.put("/modifyBan.do", "controller.manager.ModifyBanCommand");
 		
+		// 회원 강제 탈퇴
+		map.put("/outMemberByForce.do", "controller.manager.OutMemberByForceCommand");
+		
 		
 		//등급 조회 시
 		map.put("/viewGradeList.do", "controller.grade.GradeListCommand");
@@ -137,6 +140,11 @@ public class CommandFactory {
 		map.put("/RecCount.do", "controller.article.RecCountCommand");
 		
 		/* 게시글(강종훈)*/
+		map.put("/RemoveFile.do", "controller.article.DeleteFileCommand");
+		// 세부조회 거부
+		map.put("/ReadAccess.do", "controller.article.ReadAccessCommand");
+		// 전체글 조회
+		map.put("/allArticle.do","controller.article.ListAllArticleCommand");
 	}
 	
 	public static CommandFactory getInstance() {

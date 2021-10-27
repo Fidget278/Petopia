@@ -3,6 +3,7 @@ package controller.grade;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,12 +18,17 @@ public class GradeBoardListCommand implements Command{
 		
 		int gradeNo = Integer.parseInt(request.getParameter("gradeNo"));
 		
-		HashMap<String, ArrayList<String>>boards = GradeService.getInstance().retrieveGradeBoardList(gradeNo);
-		request.setAttribute("boards", boards);
-		
-
-		request.setAttribute("content", "viewGradeBoardList");
-		return new ActionForward("/managerIndex.jsp", false);
+		try {
+			HashMap<String, ArrayList<String>>boards = GradeService.getInstance().retrieveGradeBoardList(gradeNo);
+			request.setAttribute("boards", boards);
+			
+			return new ActionForward("/ajaxGradeBoardList.jsp", false);
+		} catch (Exception e) {
+			request.setAttribute("exception", e);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+			dispatcher.forward(request,response);
+			return null;
+		}
 	}
 
 }

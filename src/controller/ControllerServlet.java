@@ -40,11 +40,11 @@ public class ControllerServlet extends HttpServlet {
 		String contextPath = request.getContextPath(); // contextPath (/mvcfileWebApp)
 		String commandURI = requestURI.substring(contextPath.length()); // contextPath�� �߶� (/writeBoardForm.do)
 		
-		/*
-		 * System.out.printf("requestURI : %s%n", requestURI);
-		 * System.out.printf("requestPath : %s%n", contextPath);
-		 * System.out.printf("commandURI : %s%n", commandURI);
-		 */
+	
+		 System.out.printf("requestURI : %s%n", requestURI);
+		 System.out.printf("requestPath : %s%n", contextPath);
+		  System.out.printf("commandURI : %s%n", commandURI);
+		
 		
 		try {
 			CommandFactory factory = CommandFactory.getInstance();

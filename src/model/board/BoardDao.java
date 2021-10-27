@@ -82,7 +82,7 @@ public class BoardDao {
 			conn = DBConn.getConnection();
 
 			StringBuffer sql = new StringBuffer();
-			sql.append("SELECT board_no, board_name ");
+			sql.append("SELECT board_no, boardName ");
 			sql.append("FROM board ");
 			sql.append("WHERE board_no = ? ");
 			pstmt = conn.prepareStatement(sql.toString());

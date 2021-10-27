@@ -17,6 +17,51 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
 	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 	crossorigin="anonymous"></script>
+	<style>
+			
+			.head {
+				background-color : #cccccc;
+			}
+			
+			.lpage {
+				font-size : 22px;
+			}
+			
+			#member {
+				width: 1250px;
+			    border-collapse: collapse;
+			    margin: 20px auto;   
+			    font-size: 26px;     	
+			}
+			
+			#member, tr, th, td{
+				border : 1px solid black;
+				text-align : center;
+				vertical-align: middle;
+			}
+			
+			#member th, td {
+				height : 50px
+			}
+			
+			a:hover {
+				color : red;
+			}
+			
+			a:active {
+				color : green;
+			}
+			
+			#paging {
+				margin : 10px auto;
+				text-align : center;
+			}
+			
+			#search {
+				height : 20px;
+			 	text-align : center;
+			}
+	</style>
 	
 	<script>
 	
@@ -26,7 +71,6 @@
 	
 		
 		$('#searchBtn').on('click', function() {
-			alert("call");
 			const keyfield = $('#keyfield option:selected').val();
 			const keyword = $('#keyword').val();
 			
@@ -76,7 +120,7 @@
 			$('.content   table  tbody').html('');
 			var htmlStr = [];
 			for (let i = 0; i < result.length; i++) {
-				htmlStr.push('<tr>');
+				htmlStr.push('<tr id="'+ result[i].no +'">');
 				htmlStr.push('<td>'+ result[i].no +'</td>');
 				htmlStr.push('<td>'+ result[i].email +'</td>');
 				htmlStr.push('<td>'+ result[i].grade +'</td>');
@@ -94,6 +138,12 @@
 		
 	}
 		
+	$('#member tbody').on('click', 'tr td:nth-child(2)', function() {
+		//alert('call');
+		const no = $(this).parent('tr').attr("id");
+		console.log('no',  no);
+		location.href = '${pageContext.request.contextPath}/viewDetailMember.do?no=' + no; 
+	});
 
 	});
 	</script>
@@ -103,8 +153,8 @@
 <body>
 <div class="content">
 <!-- 표 -->
-	<table>
-		<thead>
+	<table id="member">
+		<thead class="head">
 			<tr>
 				<th>No</th>
 				<th>ID</th>
@@ -115,14 +165,14 @@
 			</tr>
 		</thead>
 		
-		<tbody>
+		<tbody class="body">
 			<c:forEach var="member" items="${members}" varStatus="loop">
 				<c:url var="URL" value="/viewDetailMember.do">
 					<c:param name="no" value="${member.no}"/>
 				</c:url>
-				<tr>
+				<tr id="${member.no}">
 					<td>${member.no}</td>
-					<td><a href="${URL}">${member.email}</a></td>
+					<td><a href="${URL}" class="detail">${member.email}</a></td>
 					<td>${member.grade}</td>
 					<td>${member.regDate}</td>
 					<td>${member.visits}</td>
@@ -145,7 +195,7 @@
 			<c:url var="prevUrl" value="/viewMemberList.do">
 				<c:param name="currentPage" value="${startPage - pageBlock}"/>
 			</c:url>
-			<a href="${prevUrl}">이전</a>
+			<a href="${prevUrl}" class="lpage">이전</a>
 		</c:if>
 		
 		<!-- 현재 페이지 블록 -->
@@ -158,7 +208,7 @@
 				<c:url var="url" value="/viewMemberList.do">
 					<c:param name="currentPage" value="${i}"/>
 				</c:url>
-				<a href="${url}">&nbsp;${i}&nbsp;</a>
+				<a href="${url}" class="lpage">&nbsp;${i}&nbsp;</a>
 			</c:if>
 		</c:forEach>
 		
@@ -167,7 +217,7 @@
 			<c:url var="nextUrl" value="/viewMemberList.do">
 				<c:param name="currentPage" value="${endPage + 1}"/>
 			</c:url>
-			<a href="${nextUrl}">[Next]</a>
+			<a href="${nextUrl}" class="lpage">[Next]</a>
 		</c:if>
 	</div>
 	

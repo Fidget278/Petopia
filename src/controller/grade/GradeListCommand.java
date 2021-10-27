@@ -22,7 +22,7 @@ public class GradeListCommand implements Command{
 		
 
 		request.setAttribute("content", "viewGradeList.jsp");
-		return new ActionForward("/managerIndex.jsp", false);
+		return new ActionForward("/managerIndex.do", false);
 	}
 	
 }
