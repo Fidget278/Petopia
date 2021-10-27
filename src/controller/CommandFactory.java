@@ -22,7 +22,12 @@ public class CommandFactory {
 		map.put("/logout.do", "controller.member.LogOutCommand");
 		map.put("/side.do", "controller.SideCommand");
     
-     
+		map.put("/join.do", "controller.member.JoinCommand");
+		map.put("/resetpassword.do", "controller.member.ResetPasswordCommand");
+		map.put("/checkid.do", "controller.member.CheckIdCommand");
+		map.put("/out.do", "controller.member.OutCommand");
+		map.put("/NicknameCheck.do", "controller.member.NicknameCheckCommand");
+		
     // 회원 목록
 		map.put("/viewMemberList.do", "controller.manager.MemberListCommand");
 		
@@ -52,26 +57,27 @@ public class CommandFactory {
 		map.put("/deleteNote.do", "controller.NoteDeleteCommand");
 		map.put("/sendMail.do", "controller.MailCommand");
 		
+
 		// 게시글 목록 조회
-		map.put("/viewListArticleContent.do", "controller.article.ListArticleCommand");
-				
-		// 게시글 상세 조회
-		map.put("/viewDetailArticleContent.do", "controller.article.DetailArticleCommand");
-		
-		// 게시글 작성 페이지로 이동
-		map.put("/viewWriteArticleForm.do", "controller.article.WriteArticleFormCommand");
-
-		// 게시글 삭제
-		map.put("/removeArticle.do", "controller.article.RemoveArticleCommand");
-
-		// 게시글 수정폼이동
-		map.put("/viewModifyArticleForm.do", "controller.article.ModifyArticleFormCommand");
-		
-		//게시글 검색
+//		map.put("/viewListArticleContent.do", "controller.article.ListArticleCommand");
+//				
+//		// 게시글 상세 조회
+//		map.put("/viewDetailArticleContent.do", "controller.article.DetailArticleCommand");
+//		
+//		// 게시글 작성 페이지로 이동
+//		map.put("/viewWriteArticleForm.do", "controller.article.WriteArticleFormCommand");
+//
+//		// 게시글 삭제
+//		map.put("/removeArticle.do", "controller.article.RemoveArticleCommand");
+//
+//		// 게시글 수정폼이동
+//		map.put("/viewModifyArticleForm.do", "controller.article.ModifyArticleFormCommand");
+//		
+//		//게시글 검색
 		map.put("/searchAjax.do", "controller.article.SearchAjaxCommand");
 		
 
-		map.put("/writeArticle.do", "controller.article.WriteArticleCommand");
+//		map.put("/writeArticle.do", "controller.article.WriteArticleCommand");
 		
 		
 		//2021. 10. 25 이후 수정내용
@@ -96,9 +102,41 @@ public class CommandFactory {
 
 				
 
-		/* ----------------------댓글------------------------------------- */
-		map.put("/writeReply.do", "controller.reply.RegisterReplyCommand");
+		/* 게시글(강종훈)*/				
 
+		// 게시글 목록 조회
+		map.put("/viewListArticleContent.do", "controller.article.ListArticleCommand");
+				
+		// 게시글 상세 조회
+		map.put("/viewDetailArticleContent.do", "controller.article.DetailArticleCommand");
+		
+		// 게시글 작성 페이지로 이동
+		map.put("/viewWriteArticleForm.do", "controller.article.WriteArticleFormCommand");
+
+		// 게시글 삭제
+		map.put("/removeArticle.do", "controller.article.RemoveArticleCommand");
+
+		// 게시글 수정폼이동
+		map.put("/viewModifyArticleForm.do", "controller.article.ModifyArticleFormCommand");
+		
+		// 댓글 목록 불러오기
+		map.put("/getReply.do", "controller.reply.RetrieveReplyCommand");
+		
+		// 댓글 작성
+		map.put("/addReply.do", "controller.reply.RegisterReplyCommand");
+		// 댓글 수정
+		map.put("/modifyReply.do", "controller.reply.ModifyReplyCommand");
+		// 댓글 삭제
+		map.put("/removeReply.do", "controller.reply.RemoveReplyCommand");
+	
+		
+		// 추천 업데이트
+		map.put("/RecUpdate.do", "controller.article.RecUpdateCommand");
+	
+		// 추천 수 조회
+		map.put("/RecCount.do", "controller.article.RecCountCommand");
+		
+		/* 게시글(강종훈)*/
 	}
 	
 	public static CommandFactory getInstance() {

@@ -25,6 +25,7 @@
 
 <script>      
 		var code;
+		var memNo;
         const getAjax = function(url, email) {
             // resolve, reject는 자바스크립트에서 지원하는 콜백 함수이다.
             return new Promise( (resolve, reject) => {
@@ -58,6 +59,7 @@
                 } else if (result.isSuccess == 1) {
                 	alert("인증 번호를 발신했습니다.");
                 	code = result.code;
+                	memNo = result.memberNo;
                 }
                 
                   
@@ -86,11 +88,11 @@
 	    	const verification = $('#verification').val();
 	    	console.log(code);
 	    	console.log(verification);
-	    	
+	    	console.log(memNo);
 	    	if(code != verification)
 	    		$('#bottomText').text("인증 번호가 틀립니다.");
 	    	else
-	    		location.href = "${pageContext.request.contextPath}/resetPassword.jsp";
+	    		location.href = "${pageContext.request.contextPath}/resetPassword.jsp?userNo="+memNo;
 	    	
 	    });
 	</script>

@@ -9,7 +9,8 @@
 	"isSuccess" : "${requestScope.isSuccess}",
 
 	<c:if test="${requestScope.isSuccess eq 1}">
-		 "code" : "${requestScope.code}"
+		 "code" : "${requestScope.code}",
+		 "memberNo" : ${requestScope.member.no}
 	</c:if>
 	<c:if test="${requestScope.isSuccess ne 1}">
 		"failText" : "${requestScope.failText}"

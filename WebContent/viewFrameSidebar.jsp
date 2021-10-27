@@ -38,7 +38,7 @@
 					</div>
 				</div>
 				<div class="lastSection-inner">
-					<a href="#"> <span>비밀번호 변경</span>
+					<a href="${pageContext.request.contextPath}/resetPassword.jsp"> <span>비밀번호 변경</span>
 					</a> <a href="${pageContext.request.contextPath}/logout.do"> <span>로그아웃</span>
 					</a>
 				</div>
@@ -46,7 +46,7 @@
 		</article>
 		<article class="sidebar-btn">
 			<section>
-				<span onclick="location.href='${pageContext.request.contextPath}/managerStatisticsDaily.do'">통계</span>
+				<span onclick="location.href='${pageContext.request.contextPath}/out.jsp'">회원탈퇴</span>
 				<span onclick="location.href='${pageContext.request.contextPath}/noteList.do?isRecieve=1'">쪽지함</span>
 			</section>
 			<section>

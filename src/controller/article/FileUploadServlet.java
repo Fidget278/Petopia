@@ -35,6 +35,7 @@ public class FileUploadServlet extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		MemberVo member = (MemberVo) session.getAttribute("user");
+		System.out.println("memberNo: " + member.getNo());
 		
 		try {
 			
@@ -67,7 +68,6 @@ public class FileUploadServlet extends HttpServlet {
 						System.out.println("boardselect!!!!");
 						article.setBoardNo(Integer.parseInt(request.getParameter(name)));
 					} else if (name.equals("subject")) {
-						System.out.println("***************************************");
 						System.out.println("subject: " +name);
 						article.setSubject(request.getParameter(name));
 					} else if (name.equals("content")) {

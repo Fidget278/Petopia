@@ -86,7 +86,9 @@ public class ModifyArticleServlet extends HttpServlet {
 			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 			int articleNo = article.getArticleNo();
 			
+			
 			response.sendRedirect(request.getContextPath() + "/viewDetailArticleContent.do?articleNo="+ articleNo + "&boardNo=" + boardNo);
+			
 			
 		} catch (Exception e) {
 			request.setAttribute("excetion", e);

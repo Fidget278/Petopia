@@ -77,12 +77,30 @@ public class MemberService {
 		return MemberDao.getInstance().selectMemberProfile(member_no);
 	}
 	
-	public boolean isAlreadyMember(String email) throws Exception {
-		
-		if( MemberDao.getInstance().selectMember(email) == null )
-			return false;
-		
-		return true;
+	public MemberVo isAlreadyMember(String email) throws Exception {
+	
+		return MemberDao.getInstance().selectMember(email);
 
+	}
+	
+	public void registerMember(MemberVo mVo) throws Exception {
+		MemberDao.getInstance().insertMember(mVo);	
+	}
+	
+	public void modifyPassword(int memNo, String newPassword) throws Exception {
+		MemberDao.getInstance().updatePassword(memNo, newPassword);	
+	}
+	
+	public boolean retrieveEmail(String email) throws Exception {
+		return MemberDao.getInstance().selectEmail(email);	
+	}
+	
+	public void modifyMember(int memberNo, String password) throws Exception {
+		MemberDao.getInstance().updateMember(memberNo, password);	
+	}
+	
+	public boolean retrieveNickname(String nickname) throws Exception {
+		return MemberDao.getInstance().selectNickname(nickname);	
+	
 	}
 }
