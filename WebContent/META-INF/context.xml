@@ -4,8 +4,8 @@
 
 	<Resource name="jdbc/mysqldb" auth="Container"
 		type="javax.sql.DataSource" maxTotal="100" maxIdle="30"
-		maxWaitMillis="10000" username="root" password="mymysql"
+		maxWaitMillis="10000" username="MZC3" password="`123"
 		driverClassName="com.mysql.cj.jdbc.Driver"		
-		url="jdbc:mysql://localhost:3306/cafedb" />
+		url="jdbc:mysql://10.3.14.55:3306/cafedb" />
 
 </Context>
