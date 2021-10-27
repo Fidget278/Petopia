@@ -6,6 +6,13 @@
 <meta charset="UTF-8">
 <title>쪽지 작성창</title>
  <script src="https://code.jquery.com/jquery-3.5.0.js"></script>  
+ <style>
+ 	#writeForm>#content{
+ 	margin: 10px 0;
+ 	width: 360px;
+ 	height:250px;
+ 	}
+ </style>
 </head>
 <body>
 	<%-- <form action = "${pageContext.request.contextPath}/sendNote" method = "POST"> --%>
