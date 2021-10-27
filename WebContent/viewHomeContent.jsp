@@ -13,15 +13,15 @@
 	<div class="content">
 		<!-- Content 내용 여기에 추가 -->
 		<div class="content-img">
-			<img alt="Main-Img" src="./img/main-1.jpg"> <img alt="Main-Img"
-				src="./img/main-2.jpg"> <img alt="Main-Img"
-				src="./img/main-3.jpg"> <img alt="Main-Img"
-				src="./img/main-4.jpg">
+			<a href="http://dogmoa.co.kr/" target='_blank'><img alt="Main-Img"
+				src="./img/main-1.png"> </a>
+				<a href="https://dmanimal.co.kr/" target='_blank'><img alt="Main-Img"
+				src="./img/main-2.png"> </a><a href="https://www.notepet.co.kr/" target='_blank'><img alt="Main-Img"
+				src="./img/main-3.png"></a> <a href="https://www.animal.go.kr/front/index.do" target='_blank'><img alt="Main-Img"
+				src="./img/main-4.png"></a>
 		</div>
-		<div class="content-board">
-			전체글 보기 내용
-		</div>
-		
+		<div class="content-board">전체글 보기 내용</div>
+
 	</div>
 </body>
 </html>

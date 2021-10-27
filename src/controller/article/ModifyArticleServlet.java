@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import controller.ActionForward;
 import model.article.ArticleFileVo;
 import model.article.ArticleService;
 import model.article.ArticleVo;
@@ -86,7 +85,9 @@ public class ModifyArticleServlet extends HttpServlet {
 			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 			int articleNo = article.getArticleNo();
 			
+			
 			response.sendRedirect(request.getContextPath() + "/viewDetailArticleContent.do?articleNo="+ articleNo + "&boardNo=" + boardNo);
+			
 			
 		} catch (Exception e) {
 			request.setAttribute("excetion", e);

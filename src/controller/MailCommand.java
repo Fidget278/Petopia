@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.member.MemberService;
+import model.member.MemberVo;
 
 public class MailCommand implements Command {
 
@@ -21,12 +22,14 @@ public class MailCommand implements Command {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		String email = request.getParameter("email");
-		boolean isEmail = MemberService.getInstance().isAlreadyMember(email);
+		MemberVo member = MemberService.getInstance().isAlreadyMember(email);
 
-		if (!isEmail) {
+		if (member == null) {
 			request.setAttribute("isSuccess", 2);
 			request.setAttribute("failText", "가입되지 않은 이메일 입니다.");
 			return new ActionForward("/mailResult.jsp", false);
+		} else {
+			request.setAttribute("member", member);
 		}
 
 		String host = "smtp.naver.com";

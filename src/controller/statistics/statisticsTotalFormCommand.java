@@ -23,7 +23,7 @@ public class statisticsTotalFormCommand implements Command {
 
 		request.setAttribute("totalList", statisticsTotalList);
 
-		request.setAttribute("content", "viewStatisticsTotalContent");
+		request.setAttribute("content", "viewStatisticsTotalContent.jsp");
 
 		return new ActionForward("/managerIndex.do", false);
 	}

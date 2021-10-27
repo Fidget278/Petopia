@@ -4,23 +4,23 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import controller.ActionForward;
 import controller.Command;
+import model.article.ArticleDao;
 import model.article.ArticleService;
 import model.article.ArticleVo;
-import model.category.CategoryService;
-import model.category.CategoryVo;
+import model.board.BoardDao;
+import model.board.BoardVo;
 
 public class ListArticleCommand implements Command{
 	// 1page에 몇 개의 게시글을 보여줄지
-	private static final int POST_PER_PAGE= 5;
+	private static final int POST_PER_PAGE= 30;
 	// page 1~n개의 그룹을 정할 개수
 	// 만약 값이 3이라면
 	// 1,2,3 next
 	// prev 4,5,6 next
-	private static final int PAGE_BLOCK=2;
+	private static final int PAGE_BLOCK=5;
 	
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) 
@@ -30,7 +30,6 @@ public class ListArticleCommand implements Command{
 		// 현재 페이지 정보를 저장해 놓을 변수
 		System.out.println("커맨드 호출");
 		int currentPage = 0;
-		HttpSession session = request.getSession();
 		
 		try {
 			// 현재 페이지에 대한 정보를 받아온다.
@@ -43,7 +42,7 @@ public class ListArticleCommand implements Command{
 		
 		// *2. 현재 페이지에 보여줄 시작행을 구한다.
 		// currentPage에 -1을 해주는 이유는 mysqlDB는 index가 0부터 시작이기 떄문이다.
-		int startRow = (currentPage - 1) * POST_PER_PAGE;
+		int startRow = (currentPage - 1) * POST_PER_PAGE + 1;
 		
 		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 
@@ -51,9 +50,14 @@ public class ListArticleCommand implements Command{
 		
 		// *3. DB에 접근하여 게시글 정보를 불러온다.
 		ArrayList<ArticleVo> articles = ArticleService.getInstance().retrieveArticleList(boardNo,startRow, POST_PER_PAGE);
+		ArticleDao articleDao = ArticleDao.getInstance();
+		BoardDao boardDao = BoardDao.getInstance();
+		BoardVo board = boardDao.selectBoard(boardNo);
+		String boardName = board.getBoardName();
 		
-		// *4. request영역에 바인딩
 		request.setAttribute("articles", articles);
+		// *4. request영역에 바인딩
+		request.setAttribute("boardName", boardName);
 		
 		// *5. BLOCK 설정
 		int currentBlock = currentPage % PAGE_BLOCK == 0 ? currentPage / PAGE_BLOCK : currentPage / PAGE_BLOCK + 1;
@@ -63,17 +67,21 @@ public class ListArticleCommand implements Command{
 		int endPage = startPage + (PAGE_BLOCK - 1);
 		
 		// *7. 총 게시글 수를 구한다.
-		int totalPostCount = ArticleService.getInstance().retrieveTotalPostCount();
+		int totalPostCount = ArticleService.getInstance().retrieveTotalPostCount(boardNo);
 		
 		// *8. 총 페이지 수를 구한다.
 		int  totalPage = totalPostCount % POST_PER_PAGE == 0 ? totalPostCount / POST_PER_PAGE :
 																totalPostCount / POST_PER_PAGE + 1;
+		System.out.println("count" + totalPostCount);
 	
-	
+		System.out.println("ennd" +endPage);
+		System.out.println("total"+totalPage);
 		// 마지막 페이지가 총 페이지 수의 값보다 큰경우 마지막 페이지 값은 총 페이지 값으로 설정된다.
 		if (endPage > totalPage) {
 			endPage = totalPage;
 		}
+		System.out.println("ennd" +endPage);
+		System.out.println("total"+totalPage);
 		
 		// *9. request영역에 바인딩
 		request.setAttribute("pageBlock", PAGE_BLOCK);

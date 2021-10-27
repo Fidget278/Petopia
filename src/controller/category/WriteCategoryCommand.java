@@ -12,6 +12,7 @@ public class WriteCategoryCommand implements Command {
 
 	public ActionForward execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
+		req.setCharacterEncoding("utf-8");
 
 		// 1. 사용자가 입력한 카테고리 정보를 구한다.
 		String categoryName = req.getParameter("categoryName");

@@ -6,40 +6,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
 public class DBConn {
-	public static Connection getConnection() throws Exception {
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 
-		// 집에서 할 때
-		
-		 String url = "jdbc:mysql://localhost:3306/cafedb";
-		 String user = "root";
-		 String password = "mymysql";
-		 
-		
-		
-//		String url = "jdbc:mysql://10.3.14.55:3306/cafedb";
-//		String user = "MZC3";
-//		String password = "`123";
-
-		return DriverManager.getConnection(url, user, password);
-	}
-
-	public static Connection getConnection(String dbURL, String dbId, String dbPassword) {
-		Connection conn = null;
-
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection(dbURL, dbId, dbPassword);
+		public static Connection getConnection() throws Exception {
+			
+			Context initContext = new InitialContext();
+			Context envContext  = (Context)initContext.lookup("java:/comp/env");
+			DataSource ds = (DataSource)envContext.lookup("jdbc/mysqldb");
+			Connection conn = ds.getConnection();
 			return conn;
-		} catch (Exception e) {
-			throw new RuntimeException("Connection Error");
+			
 		}
-	}
 
 	public static void close(Connection conn, PreparedStatement pstmt, ResultSet rs) {
 		if (rs != null) {

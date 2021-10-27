@@ -61,7 +61,7 @@ public class MemberDao {
 
 			StringBuffer sql = new StringBuffer();
 			sql.append(
-					"SELECT member_no, email, password, ban, member.out FROM member where email = ? AND password = ?");
+					"SELECT member_no, email, password, ban, member.out FROM cafedb.member where email = ? AND password = ?");
 
 			pstmt = conn.prepareStatement(sql.toString());
 
@@ -132,7 +132,7 @@ public class MemberDao {
 			conn = DBConn.getConnection();
 
 			StringBuffer sql = new StringBuffer();
-			sql.append("SELECT member.member_no, member.email, member.password, member.nickname, grade.name, member.docs, member.comms, member.visits ");
+			sql.append("SELECT member.member_no, member.email, member.password, member.nickname, grade.name, member.docs, member.comms, member.visits, member.grade_no ");
 			sql.append("FROM member, grade ");
 			sql.append("where member.grade_no = grade.grade_no and member_no = ?");
 
@@ -153,6 +153,7 @@ public class MemberDao {
 				member.setDocs(rs.getInt(6));
 				member.setComms(rs.getInt(7));
 				member.setVisits(rs.getInt(8));
+				member.setGradeNo(rs.getInt(9));
 				System.out.println("DB에 멤버 정보 있음");
 			}
 			System.out.println("DB에 멤버 정보 없음");
@@ -431,8 +432,8 @@ public class MemberDao {
 			}
 		}
 	}
-	
-  public void updatePassword(int memNo, String newPassword) throws Exception {
+
+	public void insertMember(MemberVo mVo) throws Exception {
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -441,21 +442,135 @@ public class MemberDao {
 			conn = DBConn.getConnection();
 
 			StringBuffer sql = new StringBuffer();
-			 
+			sql.append("INSERT INTO member(grade_no, email, password, nickname, regdate) ");
+			sql.append("VALUES (?, ?, ?, ?, now()) ");
+			pstmt = conn.prepareStatement(sql.toString());
+
+			pstmt.setInt(1, mVo.getGradeNo());
+			pstmt.setString(2, mVo.getEmail());
+			pstmt.setString(3, mVo.getPassword());
+			pstmt.setString(4, mVo.getNickname());
+
+			pstmt.executeUpdate();
+			System.out.println("회원가입 정보 입력");
+
+		} finally {
+			DBConn.close(conn, pstmt, null);
+		}
+	}
+
+	public void updatePassword(int memNo, String newPassword) throws Exception {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = DBConn.getConnection();
+
+			StringBuffer sql = new StringBuffer();
 
 			sql.append("UPDATE member ");
 			sql.append("SET password = ? ");
 			sql.append("WHERE member_no = ? ");
-			
+
 			pstmt = conn.prepareStatement(sql.toString());
 
 			pstmt.setString(1, newPassword);
 			pstmt.setInt(2, memNo);
 			System.out.println("memNo : " + memNo);
 			pstmt.executeUpdate();
-			
+
 		} finally {
 			DBConn.close(conn, pstmt, null);
+		}
+	}
+
+	public boolean selectEmail(String email) throws Exception {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = DBConn.getConnection();
+
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT email ");
+			sql.append("FROM member ");
+			sql.append("where email = ? ");
+
+			pstmt = conn.prepareStatement(sql.toString());
+
+			pstmt.setString(1, email);
+
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				return true;
+			}
+
+			return false;
+
+		} finally {
+			DBConn.close(conn, pstmt, rs);
+		}
+	}
+	
+	
+	public void updateMember(int memberNo, String password) throws Exception {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = DBConn.getConnection();
+
+			StringBuffer sql = new StringBuffer();
+
+			sql.append("UPDATE member ");
+			sql.append("SET member.out = 1 ");
+			sql.append("WHERE member_no = ? ");
+
+			pstmt = conn.prepareStatement(sql.toString());
+			
+			pstmt.setInt(1, memberNo);
+	
+			System.out.println("memberNo : " + memberNo);
+			pstmt.executeUpdate();
+
+		} finally {
+			DBConn.close(conn, pstmt, null);
+		}
+	}
+	
+	public boolean selectNickname(String nickname) throws Exception {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = DBConn.getConnection();
+
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT nickname ");
+			sql.append("FROM member ");
+			sql.append("where nickname = ? ");
+
+			pstmt = conn.prepareStatement(sql.toString());
+
+			pstmt.setString(1, nickname);
+
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				return true;
+			}
+
+			return false;
+
+		} finally {
+			DBConn.close(conn, pstmt, rs);
 		}
 	}
 
