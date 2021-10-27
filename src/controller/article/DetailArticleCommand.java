@@ -12,8 +12,6 @@ import model.article.ArticleService;
 import model.article.ArticleVo;
 import model.article.ReplyDao;
 import model.article.ReplyVo;
-import model.board.BoardGradeDao;
-import model.board.BoardGradeVo;
 
 public class DetailArticleCommand implements Command {
 

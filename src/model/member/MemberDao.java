@@ -132,7 +132,7 @@ public class MemberDao {
 			conn = DBConn.getConnection();
 
 			StringBuffer sql = new StringBuffer();
-			sql.append("SELECT member.member_no, member.email, member.password, member.nickname, grade.name, member.docs, member.comms, member.visits ");
+			sql.append("SELECT member.member_no, member.email, member.password, member.nickname, grade.name, member.docs, member.comms, member.visits, member.grade_no ");
 			sql.append("FROM member, grade ");
 			sql.append("where member.grade_no = grade.grade_no and member_no = ?");
 
@@ -153,6 +153,7 @@ public class MemberDao {
 				member.setDocs(rs.getInt(6));
 				member.setComms(rs.getInt(7));
 				member.setVisits(rs.getInt(8));
+				member.setGradeNo(rs.getInt(9));
 				System.out.println("DB에 멤버 정보 있음");
 			}
 			System.out.println("DB에 멤버 정보 없음");

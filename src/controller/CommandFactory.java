@@ -137,6 +137,11 @@ public class CommandFactory {
 		map.put("/RecCount.do", "controller.article.RecCountCommand");
 		
 		/* 게시글(강종훈)*/
+		map.put("/RemoveFile.do", "controller.article.DeleteFileCommand");
+		// 세부조회 거부
+		map.put("/ReadAccess.do", "controller.article.ReadAccessCommand");
+		// 전체글 조회
+		map.put("/allArticle.do","controller.article.ListAllArticleCommand");
 	}
 	
 	public static CommandFactory getInstance() {
