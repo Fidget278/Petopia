@@ -57,7 +57,7 @@
 		
 		
 	
-		<table>
+		<table class="sidebar-category-table">
 		<tbody>
 			<%-- sideListCategory --%>
 	
