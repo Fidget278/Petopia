@@ -17,7 +17,7 @@
 			<table>
 				<tr>
 					<td onclick="location.href='${pageContext.request.contextPath}/viewMemberList.do'">회원 관리</td>
-					<td>등급 관리</td>
+					<td onclick="location.href='${pageContext.request.contextPath}/viewGradeList.do'">등급 관리</td>
 					<td onclick="location.href='${pageContext.request.contextPath}/listCategory.do'">
 					게시글 관리</td>
 					<td>꾸미기</td>

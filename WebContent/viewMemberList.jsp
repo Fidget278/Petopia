@@ -17,6 +17,32 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
 	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 	crossorigin="anonymous"></script>
+	<style>
+			table {
+				width: 900px;
+			    border-collapse: collapse;
+			    margin: 20px auto;   
+			    font-size: 20px;     	
+			}
+			
+			table, tr, th, td{
+				border : 1px solid red;
+				text-align : center;
+			}
+			
+			th, td {
+			height : 35px
+			}
+			
+			#paging {
+				margin : 10px auto;
+				text-align : center;
+			}
+			
+			#search {
+			 text-align : center;
+			}
+	</style>
 	
 	<script>
 	
@@ -26,7 +52,6 @@
 	
 		
 		$('#searchBtn').on('click', function() {
-			alert("call");
 			const keyfield = $('#keyfield option:selected').val();
 			const keyword = $('#keyword').val();
 			
@@ -76,7 +101,7 @@
 			$('.content   table  tbody').html('');
 			var htmlStr = [];
 			for (let i = 0; i < result.length; i++) {
-				htmlStr.push('<tr>');
+				htmlStr.push('<tr id="'+ result[i].no +'">');
 				htmlStr.push('<td>'+ result[i].no +'</td>');
 				htmlStr.push('<td>'+ result[i].email +'</td>');
 				htmlStr.push('<td>'+ result[i].grade +'</td>');
@@ -94,6 +119,12 @@
 		
 	}
 		
+	$('#member tbody').on('click', 'tr td:nth-child(2)', function() {
+		//alert('call');
+		const no = $(this).parent('tr').attr("id");
+		console.log('no',  no);
+		location.href = '${pageContext.request.contextPath}/viewDetailMember.do?no=' + no; 
+	});
 
 	});
 	</script>
@@ -103,7 +134,7 @@
 <body>
 <div class="content">
 <!-- 표 -->
-	<table>
+	<table id="member">
 		<thead>
 			<tr>
 				<th>No</th>
@@ -120,7 +151,7 @@
 				<c:url var="URL" value="/viewDetailMember.do">
 					<c:param name="no" value="${member.no}"/>
 				</c:url>
-				<tr>
+				<tr id="${member.no}">
 					<td>${member.no}</td>
 					<td><a href="${URL}">${member.email}</a></td>
 					<td>${member.grade}</td>

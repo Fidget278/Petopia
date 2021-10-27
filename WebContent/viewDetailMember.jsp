@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>멤버 상세 조회</title>
+<title>회원 상세 조회</title>
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
 <link href="css/viewMainContent.css" rel="stylesheet" type="text/css">
@@ -18,10 +18,32 @@
 	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 	crossorigin="anonymous"></script>
 	
+	<style>
+			table {
+				width: 900px;
+			    border-collapse: collapse;
+			    margin: 20px auto;   
+			    font-size: 20px;     	
+			}
+			
+			table, tr, th, td{
+				border : 1px solid red;
+				text-align : center;
+			}
+			
+			th, td {
+				height : 35px
+			}
+			
+			#outBtn {
+				font-size : 14px;
+				padding-right : 80px;
+			}
+	</style>
 </head>
 <body>
 <div class="content">
-	<h3>회원 정보 수정</h3>
+	<div><h3>회원 정보 수정</h3></div>
 	<c:url var="listUrl" value="/viewMemberList.do"/>
 	<a href="${listUrl}">Back</a>
 	

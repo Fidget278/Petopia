@@ -18,42 +18,73 @@
 	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 	crossorigin="anonymous"></script>
 	
-	<script>
-	const getAjax = function(url, num) {
-		return new Promise((resolve, reject) => {
+	<style>
+			table {
+				width: 900px;
+			    border-collapse: collapse;
+			    margin: 20px auto;   
+			    font-size: 20px;     	
+			}
 			
-			$.ajax({
-				url : url,
-				method : "POST",
-				dataType : "json",
-				data : {
-					gradeNo : num
-				},
-				async : true,
-				success : function(data) {
-					resolve(data);
-				},
-				error : function(e) {
-					reject(e);
-				}
-			});
-		});
-	}
+			table, tr, th, td{
+				border : 1px solid red;
+				text-align : center;
+			}
+			
+			th, td {
+			height : 35px
+			}
+	</style>
 	
-	async function sendProcess(url, num) {
-		try{
-			const result = await getAjax(url, num);
-			
-			if(result == null) {
-				alert("해당 데이터가 없습니다.");
-			}
-			else {
+	<script>
+	$(document).ready(function() {
+		
+		$('#checkBtn').on('click', function() {
+			const no = $(this).val();
+			const url = "viewGradeBoardList.do";
+			sendProcess(url, no);
+		});
+		
+		const getAjax = function(url, gradeNo) {
+			return new Promise((resolve, reject) => {
 				
-			}
-		} catch (e) {
-			console.log(e);
-		}	
-	}
+				$.ajax({
+					url : url,
+					method : "POST",
+					dataType : "json",
+					data : {
+						gradeNo : gradeNo
+					},
+					async : true,
+					success : function(data) {
+						resolve(data);
+					},
+					error : function(e) {
+						reject(e);
+					}
+				});
+			});
+		}
+		
+		async function sendProcess(url, no) {
+			try{
+				const result = await getAjax(url, no);
+				
+				if(result == null) {
+					alert("해당 데이터가 없습니다.");
+				}
+				else {
+					console.log(result);
+					$('.content   table  tbody').last().html('');
+					var htmlStr = [];
+				}
+			} catch (e) {
+				console.log(e);
+			}	
+		}
+		
+	});
+	
 		function addRow() {
 			var Row = Grade.insertRow();
 			Row.onmouseover = function() {
@@ -90,11 +121,38 @@
 			}
 		}
 		
-		function check(obj) {
-			var tr = obj.parentNode.parentNode;
-			var num = $('tr [name="gradeNo"]').val()
-			const url = "viewGradeBoardList.do";
-			sendProcess(url, num);
+		function check() {
+			var len = $("input[name=gradeNo]").length;
+			var no = new Array(len);
+			var name = new Array(len);
+			var docs = new Array(len);
+			var comms = new Array(len);
+			for(var i = 0; i < len ; i++) {
+				no[i] = $("input[name=gradeNo]").eq(i).val();
+				if(no[i] == ""){
+					alert("번호를 입력해주세요");
+					return false;
+				}
+				
+				name[i] = $("input[name=name]").eq(i).val();
+				if(name[i] == ""){
+					alert("등급 이름을 입력해주세요");
+					return false;
+				}
+				
+				docs[i] = $("input[name=docs]").eq(i).val();
+				if(docs[i] == ""){
+					alert("게시물 갯수를 입력해주세요");
+					return false;
+				}
+				
+				comms[i] = $("input[name=comms]").eq(i).val();
+				if(comms[i] == ""){
+					alert("댓글 갯수를 입력해주세요");
+					return false;
+				}
+			}
+			return true;
 		}
 		
 	</script>
@@ -103,7 +161,7 @@
 
 <body>
 	<div class="content">
-	<form action="modifyGradeList.do" method="GET">
+	<form action="modifyGradeList.do" method="GET" name="fr" onSubmit="return check()">
 		<button type="button" value="삭제" onclick="addRow()">등급 추가</button>
 		<table id="Grade">
 			<thead>
@@ -123,7 +181,7 @@
 					<tr>
 						<td><input type="text" placeholder="${grade.gradeNo}" name="gradeNo" value="${grade.gradeNo}"></td>
 						<td><input type="text" placeholder="${grade.name}" name="name" value="${grade.name}"></td>
-						<td><button type="button" onclick='check(this)'>확인</button></td>
+						<td><button type="button" id="checkBtn" id="${grade.gradeNo}">확인</button></td>
 						<td><input type="text" placeholder="${grade.docs}" name="docs" value="${grade.docs}"></td>
 						<td><input type="text" placeholder="${grade.comms}" name="comms" value="${grade.comms}"></td>
 						<td>${grade.person}명</td>
@@ -132,7 +190,7 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<button type="submit">저장</button>
+		<input type="submit" value="저장">
 	</form>
 	</div>
 </body>
