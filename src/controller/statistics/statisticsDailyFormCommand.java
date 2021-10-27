@@ -41,7 +41,7 @@ public class statisticsDailyFormCommand implements Command {
 		request.setAttribute("dailyList", statisticsDailyList);
 
 
-		request.setAttribute("content", "viewStatisticsDailyContent");
+		request.setAttribute("content", "viewStatisticsDailyContent.jsp");
 
 		return new ActionForward("/managerIndex.do", false);
 	}

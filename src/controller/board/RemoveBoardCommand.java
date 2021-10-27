@@ -12,6 +12,8 @@ public class RemoveBoardCommand implements Command {
 	@Override
 	public ActionForward execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
+		req.setCharacterEncoding("utf-8");
+		
 		//1. 삭제하고자 하는  게시판의 번호를 구한다.
 		int boardNo = Integer.parseInt(req.getParameter("boardNo"));
 
