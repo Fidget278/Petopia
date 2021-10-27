@@ -29,11 +29,21 @@ public class ArticleService {
 		
 	}
 	
+	public ArrayList<ArticleVo> retrieveAllArticleList(int startRow, int postSize) throws Exception{
+		ArticleDao articleDao = ArticleDao.getInstance();
+		return articleDao.selectAllArticleList(startRow, postSize);
+		
+	}
+	
 	// 총 게시글 수를 구한다.
 	public int retrieveTotalPostCount(int boardNo) throws Exception{
 		return ArticleDao.getInstance().selectTotalPostCount(boardNo);
 		
 	}
+	public int retrieveAllTotalPostCount() throws Exception{
+		return ArticleDao.getInstance().selectTotalAllPostCount();
+	}
+	
 	
 	// 게시글 세부 조회.
 	public ArticleVo retrieveArticle(int articleNo) throws Exception{

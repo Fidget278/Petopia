@@ -1,14 +1,11 @@
 package controller.article;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controller.ActionForward;
 import controller.Command;
 import model.article.ArticleDao;
-import model.article.LikeVo;
 
 public class RecUpdateCommand implements Command{
 	@Override

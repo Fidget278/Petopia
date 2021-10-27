@@ -186,7 +186,8 @@ public class ArticleDao {
 
 		try {
 			StringBuffer sql = new StringBuffer();
-			sql.append("INSERT INTO article (member_no, board_no, nickname, subject, content, viewcount, likecount)   ");
+			sql.append(
+					"INSERT INTO article (member_no, board_no, nickname, subject, content, viewcount, likecount)   ");
 			sql.append("VALUES(?, ?, ?, ?, ?, 0, 0)");
 
 			System.out.println("ArticleDao로 넘어온 Vo객체: " + article.toString());
@@ -375,7 +376,6 @@ public class ArticleDao {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw e;
 		} finally {
 			try {
@@ -486,7 +486,7 @@ public class ArticleDao {
 			}
 		}
 	}
-	
+
 	public ArrayList<ArticleVo> selectSearchArticle(int board_no, int startRow, int articlePerPage, String keyfield,
 			String keyword) throws Exception {
 		Connection conn = null;
@@ -498,7 +498,7 @@ public class ArticleDao {
 			conn = DBConn.getConnection();
 			StringBuffer sql = new StringBuffer();
 
-			if (keyfield.equals("subject") ) {
+			if (keyfield.equals("subject")) {
 				sql.append("SELECT article_no, subject, nickname,                                 ");
 				sql.append("DATE_FORMAT(writedate, '%Y/%m/%d') as writedate, viewcount, likecount, member_no ");
 				sql.append("FROM article                                                          ");
@@ -543,7 +543,6 @@ public class ArticleDao {
 				articles.add(new ArticleVo(articleNo, subject, nickname, writedate, viewcount, likecount, memberNo));
 				System.out.println("articles : " + articles.size());
 			}
-			
 
 		} catch (Exception e) {
 			throw e;
@@ -594,5 +593,100 @@ public class ArticleDao {
 		}
 		return result;
 	}
+
+	// 전체 글 조회
+	// 게시글 목록 조회 시 총 게시글 수를 구한다.
+	public ArrayList<ArticleVo> selectAllArticleList(int startRow, int postSize) throws Exception {
+		ArrayList<ArticleVo> articles = new ArrayList<ArticleVo>();
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			// DB접속 정보
+			conn = DBConn.getConnection();
+
+//		            System.out.println("쿼리문 시작");
+			// 쿼리문이 담길 StringBuffer 객체 생성.
+			StringBuffer sql = new StringBuffer();
+
+			// Article DB에 접근하여 (게시글 번호, 제목, 별명, 작성일, 조회수, 추천(좋아요)수)를 받아오는 쿼리문
+			sql.append("SELECT article_no, subject, nickname,                                 ");
+			sql.append("DATE_FORMAT(writedate, '%Y/%m/%d') as writedate, viewcount, likecount, member_no  ");
+			sql.append("FROM article                                                          ");
+			sql.append("ORDER BY article_no DESC                                               ");
+			// LIMIT: 몇 개를 출력할지, OFFSET: 어디서 부터 시작할지
+			sql.append("LIMIT ? OFFSET ?");
+
+			pstmt = conn.prepareStatement(sql.toString());
+
+			pstmt.setInt(1, postSize);
+			pstmt.setInt(2, startRow);
+
+			rs = pstmt.executeQuery();
+
+//		            System.out.println("쿼리문 끝");
+
+			// rs에 받아놓은 데이터를 ArrayList 객체에 담아준다.
+			while (rs.next()) {
+				int articleNo = rs.getInt(1);
+				String subject = rs.getString(2);
+				String nickname = rs.getString(3);
+				String writedate = rs.getString(4);
+				int viewcount = rs.getInt(5);
+				int likecount = rs.getInt(6);
+				int memberNo = rs.getInt(7);
+				articles.add(new ArticleVo(articleNo, subject, nickname, writedate, viewcount, likecount, memberNo));
+			}
+//		            System.out.println("while종료");
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+
+			try {
+				DBConn.close(conn, pstmt, rs);
+			} catch (Exception e2) {
+				throw e2;
+			}
+
+		}
+		// DB에 접근하여 가져온 Data가 저장된 ArrayList<ArticleVo> 리턴.
+		return articles;
+	}
+	
+	
+	// 게시글 목록 조회 시 총 게시글 수를 구한다.
+		public int selectTotalAllPostCount() throws Exception {
+			int count = 0;
+			Connection conn = null;
+			Statement stmt = null;
+			ResultSet rs = null;
+
+			try {
+				conn = DBConn.getConnection();
+				
+				stmt = conn.createStatement();
+				
+				StringBuffer sql = new StringBuffer();
+				sql.append("SELECT COUNT(*)    ");
+				sql.append("FROM article       ");
+
+
+				rs = stmt.executeQuery(sql.toString());
+
+				if (rs.next()) {
+					count = rs.getInt(1);
+				}
+
+			} catch (Exception e) {
+				throw e;
+			} finally {
+				DBConn.close(conn, stmt, rs);
+			}
+			return count;
+		}
+	
+	
 
 }

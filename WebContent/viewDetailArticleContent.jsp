@@ -254,7 +254,9 @@ div .ListReply {
 							onclick="location.href='viewWriteArticleForm.do';">글쓰기</button>
 					</td>
 					<td><c:url var="backUrl"
-							value="/viewListArticleContent.do?boardNo=${param.boardNo }" />
+							value="/viewListArticleContent.do?boardNo=${param.boardNo }" >
+							<c:param name="boardName" value= "${param.boardName }"/>
+							</c:url>
 						<button id="backBtn" type="button"
 							onclick="location.href='${backUrl}';">목록</button></td>
 					<!-- 추천 기능 -->
@@ -266,11 +268,11 @@ div .ListReply {
 							</button>
 						</div>
 					</td>
-					<%--<c:if
-						test="${requestScope.articles.nickname } == ${sessionScope.user.nickname }"> --%>
+						<c:if test='${requestScope.articles.nickname == sessionScope.user.nickname}'>
 						<td><c:url var="modifyUrl" value="/viewModifyArticleForm.do">
 								<c:param name="articleNo" value="${param.articleNo }" />
 								<c:param name="boardNo" value="${param.boardNo }" />
+								<c:param name="boardName" value= "${param.boardName }"/>
 							</c:url>
 							<button id="modifyBtn" type="button"
 								onclick="location.href='${modifyUrl}';">수정</button></td>
@@ -279,12 +281,13 @@ div .ListReply {
 								<c:url var="removeUrl" value="removeArticle.do">
 									<c:param name="articleNo" value="${param.articleNo }" />
 									<c:param name="boardNo" value="${param.boardNo }" />
+									<c:param name="boardName" value= "${param.boardName }"/>
 								</c:url>
 								<button id="reomveBtn" type="button"
 									onclick="location.href='${removeUrl}';">삭제</button>
 							</form>
 						</td>
-					<%--</c:if> --%>
+					</c:if>
 				</tr>
 			</tbody>
 		</table>

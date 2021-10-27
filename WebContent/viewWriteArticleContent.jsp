@@ -47,9 +47,9 @@
 								<div class="selectBoard">
 									<select id="boardSelect" name="boardSelect">
 										<option value="0">게시판선택</option>
-										<option value="1">영장류</option>
-										<option value="2">파충류</option>
-										<option value="3">류</option>
+										<c:forEach var = "board" items = "${requestScope.boardList}">
+										<option value="${board.boardNo}">${board.boardName }</option>
+										</c:forEach>
 									</select>
 								</div>
 							</td>
