@@ -122,4 +122,6 @@ public class MemberService {
 	public boolean retrieveNickname(String nickname) throws Exception {
 		return MemberDao.getInstance().selectNickname(nickname);	
 	}
+	
+	
 }

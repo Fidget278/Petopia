@@ -105,6 +105,7 @@
         	//카테고리 수정 공백 검사
         	$('#modifyCategoryBtn').on("click", function() {
             	const categoryName = $('#categoryName').val();
+            	console.log("categoryName " + categoryName);
                 if (categoryName == "") {
                     alert("이름이 비어 있습니다.");
                     return false;
