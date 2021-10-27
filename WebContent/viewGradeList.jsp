@@ -187,8 +187,8 @@
 
 <body>
 	<div class="content" id="Grade-Content">
-	<button type="button" value="삭제" onclick="addRow()" class="btn">등급 추가</button>
 	<form action="modifyGradeList.do" method="GET" name="fr" onSubmit="return check()" id="Form">
+	<button type="button" value="삭제" onclick="addRow()" class="btn">등급 추가</button>
 		<table id="Grade">
 			<thead class="head">
 				<tr>
