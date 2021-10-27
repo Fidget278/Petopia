@@ -17,11 +17,13 @@ public class ResetPasswordCommand implements Command{
 		
 		HttpSession session = request.getSession();
 		MemberVo user = (MemberVo)session.getAttribute("user");
-		System.out.println("userNo : " + Integer.parseInt(request.getParameter("userNo")));
-		if(user != null)
+		if(user != null) {
 			MemberService.getInstance().modifyPassword(user.getNo(), newpassword);
-		else
+		}
+		else {
 			MemberService.getInstance().modifyPassword(Integer.parseInt(request.getParameter("userNo")), newpassword);
+		}
+			
 			
 		return new ActionForward("/petopia.do", true);
 	

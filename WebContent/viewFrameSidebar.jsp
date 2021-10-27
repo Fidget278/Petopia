@@ -46,7 +46,7 @@
 		</article>
 		<article class="sidebar-btn">
 			<section>
-				<span onclick="location.href='${pageContext.request.contextPath}/managerStatisticsDaily.do'">통계</span>
+				<span onclick="location.href='${pageContext.request.contextPath}/out.jsp'">회원탈퇴</span>
 				<span onclick="location.href='${pageContext.request.contextPath}/noteList.do?isRecieve=1'">쪽지함</span>
 			</section>
 			<section>
