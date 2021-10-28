@@ -84,10 +84,10 @@ public class MailCommand implements Command {
 		// email ����
 		try {
 			MimeMessage msg = new MimeMessage(session);
-			msg.setFrom(new InternetAddress(user, "Java"));
+			msg.setFrom(new InternetAddress(user, "PETOPIA"));
 			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to_email));
 
-			msg.setSubject("반려동물 카페 비밀번호 재설정 인증 메일입니다.");
+			msg.setSubject("반려동물 카페 PETOPIA 비밀번호 재설정 인증 메일입니다.");
 			msg.setText("인증번호 :" + temp + "입니다.");
 
 			Transport.send(msg);

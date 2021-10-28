@@ -18,25 +18,39 @@
 	href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
 <link href="./css/viewMainContent.css" rel="stylesheet" type="text/css">
 <style>
-table {
-	width: 100%;
+p.pageName{
+	background-color: #D8D8D8;
+	background-size: weidth=30;
+	
+}
+div.content {
+	background-size: 80% 100%;
+	background-image: url(./img/writeForm.jpg);
+	background-repeat: no-repeat;
+	background-color: #FAF0E6;
+}
+div.selectBoard{
+	size=60px;
+}
+table.writeForm {
+	left: 115px;
+	top: 70px;
+}
+.bbs>tbody>tr{
+	width: 300px;
+}
+div .content{
+	font-family: "Trebuchet MS", Verdana, sans-serif;
+}
+div.content{
+	border : 1.5px solid #bcbcbc;
+	
+}
+table.bbs{
+	border-collapse: collapse;
+	border : 2px solid #bcbcbc;
 }
 
-div .file {
-	width: 100%;
-}
-
-div .addReply {
-	width: 100%;
-}
-
-div #modifyReply {
-	width: 100%;
-}
-
-div .ListReply {
-	width: 100%;
-}
 </style>
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script>
@@ -223,7 +237,7 @@ div .ListReply {
 <body>
 	<div class="content">
 		<!-- Content 내용 여기에 추가 -->
-		<table class="bbs" border="2" bgcolor="D8D8D8">
+		<table class="bbs" border="2" >
 			<tbody>
 				<tr>
 					<p>
@@ -245,7 +259,7 @@ div .ListReply {
 				</tr>
 
 				<tr>
-					<td height="400">내용:</td>
+					<td>내용:</td>
 					<td colspan="5">${requestScope.articles.content }</td>
 				</tr>
 				<tr height="100">

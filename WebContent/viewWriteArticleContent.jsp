@@ -72,16 +72,6 @@ table.writeForm {
 									name="subject" cols="100" rows="5" placeholder="제목을 입력해 주세요"></textarea></td>
 						</tr>
 						<tr height="60">
-							<td>
-								<button type="button" class="btn_image" id="movieBtn">
-									<img src="./video.png">
-								</button>
-							</td>
-							<td>
-								<button type="button" class="btn_image" id="imgBtn">
-									<img src="./camera.jpg">
-								</button>
-							</td>
 							<td><input type="file" class="form-control" name="fileList"
 								id="file" multiple style="font-size: 13px;">
 							</td>
@@ -94,10 +84,6 @@ table.writeForm {
 										cols="100" rows="10" placeholder="내용을 입력해 주세요"></textarea>
 								</div>
 							</td>
-						</tr>
-						<tr>
-							<button type="submit" class="btn btn-sm btn-primary"
-								id="wrtieBtn">등록</button>
 						</tr>
 					</form>
 				</div>

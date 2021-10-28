@@ -13,9 +13,11 @@
 	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 	crossorigin="anonymous"></script>
 <script>
-	
+	var duplicate = false;
+	//닉네임 function
+	var duplicatenickname = false;
 	$(document).ready(function() {
-		var duplicate = false;
+		
 		//function
       	const getAjax = function(url, email) {
 			
@@ -41,8 +43,7 @@
       		
 		};
 		
-		//닉네임 function
-		var duplicatenickname = false;
+		
       	const getAjax1 = function(url, nickname) {
 			
       		return new Promise( (resolve, reject) => {
@@ -300,7 +301,7 @@
 				<form action="${pageContext.request.contextPath}/join.do"
 					method="post" id="joinForm">
 
-					<!-- 아이디(이메일) <br><input class="--inputBox" type="email" name="email" id="email"> -->
+					 <!-- 아이디(이메일) <br><input class="--inputBox" type="email" name="email" id="email"> -->
 					<label for="email"></label> <input class="--inputBox" type="email"
 						name="email" id="email" placeholder="E-MAIL">
 

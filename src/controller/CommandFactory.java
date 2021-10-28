@@ -61,27 +61,11 @@ public class CommandFactory {
 		map.put("/sendMail.do", "controller.MailCommand");
 		
 
-		// 게시글 목록 조회
-//		map.put("/viewListArticleContent.do", "controller.article.ListArticleCommand");
-//				
-//		// 게시글 상세 조회
-//		map.put("/viewDetailArticleContent.do", "controller.article.DetailArticleCommand");
-//		
-//		// 게시글 작성 페이지로 이동
-//		map.put("/viewWriteArticleForm.do", "controller.article.WriteArticleFormCommand");
-//
-//		// 게시글 삭제
-//		map.put("/removeArticle.do", "controller.article.RemoveArticleCommand");
-//
-//		// 게시글 수정폼이동
-//		map.put("/viewModifyArticleForm.do", "controller.article.ModifyArticleFormCommand");
-//		
 //		//게시글 검색
 		map.put("/searchAjax.do", "controller.article.SearchAjaxCommand");
 		
 
 //		map.put("/writeArticle.do", "controller.article.WriteArticleCommand");
-		
 		
 		//2021. 10. 25 이후 수정내용
 		//카테고리+게시판 목록 조회 (관리자페이지용)
@@ -103,7 +87,6 @@ public class CommandFactory {
 		map.put("/removeBoard.do", "controller.board.RemoveBoardCommand");
 		
 
-				
 
 		/* 게시글(강종훈)*/				
 
