@@ -96,8 +96,8 @@ public class CategoryDao {
 						checkCategory.put(category.getCategoryName(), category);
 						categoryList.add(category);
 					}
-					
-					category.addBoardList(new BoardVo(rs.getInt(4), rs.getString(2)));
+					if(rs.getString(2) != null)
+						category.addBoardList(new BoardVo(rs.getInt(4), rs.getString(2)));
 				}
 
 				

@@ -70,15 +70,19 @@
 					<td>${pageScope.category.categoryName}</td>	
 				</tr>
 				
+				<c:if test="${not empty pageScope.category.boardList}">
 				<c:forEach var="board" items="${pageScope.category.boardList }">
 					<c:url var="url" value="/viewListArticleContent.do"> <%-- 게시판별 게시글 목록 조회.do --%>
 						<c:param name="boardNo" value="${pageScope.board.boardNo}" />
 						<c:param name="boardName" value="${pageScope.board.boardName }"/>
 					</c:url>
+					
 					<tr id=board>
-						<td><a href="${pageScope.url}">${pageScope.board.boardName}</a></td>
+						<td>ㄴ<a href="${pageScope.url}">${pageScope.board.boardName}</a></td>
 					</tr>
+					
 				</c:forEach>
+				</c:if>
 			</c:forEach>
 		</c:if>	
 	</tbody>

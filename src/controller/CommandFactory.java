@@ -20,6 +20,36 @@ public class CommandFactory {
 		map.put("/login.do", "controller.member.LoginCommand");
 		map.put("/logout.do", "controller.member.LogOutCommand");
 		map.put("/side.do", "controller.SideCommand");
+    
+     
+    // 회원 목록
+		map.put("/viewMemberList.do", "controller.manager.MemberListCommand");
+		
+		// 회원 검색 시
+		map.put("/searchMember.do", "controller.manager.SearchMemberCommand");
+		
+		// 회원 상세 정보
+		map.put("/viewDetailMember.do", "controller.manager.DetailMemberCommand");
+		
+		// 회원 정지 기간 적용
+		map.put("/modifyBan.do", "controller.manager.ModifyBanCommand");
+		
+		
+		//등급 조회 시
+		map.put("/viewGradeList.do", "controller.grade.GradeListCommand");
+		
+		// 등급 수정 시
+		map.put("/modifyGradeList.do", "controller.grade.ModifyGradeListCommand");
+		
+		// 등급 확인 시
+		map.put("/viewGradeBoardList.do", "controller.grade.GradeBoardListCommand");
+		
+		// 쪽지
+		map.put("/noteList.do", "controller.NoteListFormCommand");
+		map.put("/noteDetailBoard.do", "controller.NoteDetailFormCommand");
+		map.put("/writeNote.do", "controller.WriteNoteCommand");
+		map.put("/deleteNote.do", "controller.NoteDeleteCommand");
+		map.put("/sendMail.do", "controller.MailCommand");
 		
 		// 게시글 목록 조회
 		map.put("/viewListArticleContent.do", "controller.article.ListArticleCommand");
@@ -35,6 +65,9 @@ public class CommandFactory {
 
 		// 게시글 수정폼이동
 		map.put("/viewModifyArticleForm.do", "controller.article.ModifyArticleFormCommand");
+		
+		//게시글 검색
+		map.put("/searchAjax.do", "controller.article.SearchAjaxCommand");
 		
 		/* ----------------------댓글------------------------------------- */
 		map.put("/writeReply.do", "controller.reply.RegisterReplyCommand");
@@ -68,3 +101,4 @@ public class CommandFactory {
 
 	}
 }
+

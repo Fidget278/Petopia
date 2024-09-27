@@ -29,8 +29,8 @@ public class SendNote extends HttpServlet {
 		note.setCounterpart_nickname(request.getParameter("counterpartNickname"));
 		note.setContent(request.getParameter("content"));
 		try {
-			//NoteService.getInstance().registerNote(note, user.getNo());
-			NoteService.getInstance().registerNote(note, 3);
+			NoteService.getInstance().registerNote(note, user);
+			//NoteService.getInstance().registerNote(note, 3);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

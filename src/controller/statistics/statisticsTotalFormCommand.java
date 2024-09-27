@@ -17,6 +17,8 @@ public class statisticsTotalFormCommand implements Command {
 
 		StatisticsService statisticsService = StatisticsService.getInstance();
 
+		statisticsService.modifyTotalData();
+		
 		StatisticsVo statisticsTotalList = statisticsService.retriveTotalData();
 
 		request.setAttribute("totalList", statisticsTotalList);

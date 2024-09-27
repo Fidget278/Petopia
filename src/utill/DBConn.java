@@ -18,7 +18,7 @@ public class DBConn {
 		
 		 String url = "jdbc:mysql://localhost:3306/cafedb";
 		 String user = "root";
-		 String password = "mymysql";
+		 String password = "russia387";
 		 
 		
 		

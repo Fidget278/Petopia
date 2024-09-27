@@ -44,7 +44,7 @@ a:hover {
 	<c:if test= "${ param.isRecieve == 0}">
 	<th>받은사람</th>
 	</c:if>
-	<th>내용</th><th>보낸날짜</th><th>읽은날짜</th><th>선택</th>
+	<th>내용</th><th>보낸날짜</th><th>읽은날짜</th><!-- <th>선택</th> -->
 	</tr>
 	</thead>
 	<tbody>

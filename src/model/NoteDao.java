@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import model.member.MemberVo;
 import utill.DBConn;
 
 public class NoteDao {
@@ -55,7 +56,7 @@ public class NoteDao {
 		}
 	}
 
-	public void insertNote(NoteVo note, int memberNo, Connection conn) throws Exception {
+	public void insertNote(NoteVo note, MemberVo user, Connection conn) throws Exception {
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -69,7 +70,7 @@ public class NoteDao {
 			pstmt = conn.prepareStatement(sql.toString());
 
 			pstmt.setInt(1, note.getNote_no());
-			pstmt.setInt(2, memberNo);
+			pstmt.setInt(2, user.getNo());
 			pstmt.setInt(3, note.getCounterpart_no());
 			pstmt.setString(4, note.getCounterpart_nickname());
 			pstmt.setInt(5, note.getSendrecieve());
@@ -83,8 +84,8 @@ public class NoteDao {
 
 			pstmt.setInt(1, note.getNote_no());
 			pstmt.setInt(2, note.getCounterpart_no());
-			pstmt.setInt(3, memberNo);
-			pstmt.setString(4, note.getCounterpart_nickname());
+			pstmt.setInt(3, user.getNo());
+			pstmt.setString(4, user.getNickname());
 
 			if (note.getSendrecieve() == 1)
 				pstmt.setInt(5, 0);
